@@ -1,0 +1,7 @@
+{
+  "name": "grupo-musical",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
