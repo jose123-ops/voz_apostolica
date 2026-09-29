@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": ".",
+    "public": "grupo-musical/www",
     "ignore": [
       "firebase.json",
       "**/.*",
