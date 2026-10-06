@@ -1,0 +1,430 @@
+
+<ion-header class="ion-no-border">
+
+  <ion-toolbar>
+
+    <div class="topbar">
+
+      <button
+        class="back-button"
+        (click)="volver()"
+      >
+
+        <ion-icon
+          name="arrow-back-outline">
+        </ion-icon>
+
+      </button>
+
+
+      <div class="topbar-title">
+
+        <span>VOZ APOSTÓLICA</span>
+
+        <h1>Agregar canción</h1>
+
+      </div>
+
+    </div>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div class="form-container">
+
+
+    <!-- ========================= -->
+    <!-- ENCABEZADO -->
+    <!-- ========================= -->
+
+    <div class="page-intro">
+
+      <div class="intro-icon">
+
+        <ion-icon
+          name="musical-note-outline">
+        </ion-icon>
+
+      </div>
+
+
+      <div>
+
+        <h2>Nueva canción</h2>
+
+        <p>
+          Agregá una canción al repertorio
+          de Voz Apostólica.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- MENSAJE DE ÉXITO -->
+    <!-- ========================= -->
+
+    @if (mensaje) {
+
+      <div class="success-message">
+
+        <ion-icon
+          name="checkmark-circle-outline">
+        </ion-icon>
+
+        <span>
+          {{ mensaje }}
+        </span>
+
+      </div>
+
+    }
+
+
+    <!-- ========================= -->
+    <!-- MENSAJE DE ERROR -->
+    <!-- ========================= -->
+
+    @if (error) {
+
+      <div class="error-message">
+
+        <ion-icon
+          name="alert-circle-outline">
+        </ion-icon>
+
+        <span>
+          {{ error }}
+        </span>
+
+      </div>
+
+    }
+
+
+    <!-- ========================= -->
+    <!-- INFORMACIÓN -->
+    <!-- ========================= -->
+
+    <section class="form-section">
+
+      <div class="section-title">
+
+        <span class="section-number">
+          1
+        </span>
+
+        <div>
+
+          <span class="section-label">
+            INFORMACIÓN
+          </span>
+
+          <h3>Datos de la canción</h3>
+
+        </div>
+
+      </div>
+
+
+      <!-- TÍTULO -->
+
+      <div class="field">
+
+        <label>
+          Título de la canción
+        </label>
+
+        <ion-input
+          [(ngModel)]="titulo"
+          placeholder="Ej. Yeshua"
+          fill="outline">
+        </ion-input>
+
+      </div>
+
+
+      <!-- ARTISTA -->
+
+      <div class="field">
+
+        <label>
+          Artista / Autor
+        </label>
+
+        <ion-input
+          [(ngModel)]="artista"
+          placeholder="Ej. Montesanto"
+          fill="outline">
+        </ion-input>
+
+      </div>
+
+
+      <!-- CATEGORÍA -->
+
+      <div class="field">
+
+        <label>
+          Categoría
+        </label>
+
+        <ion-select
+          [(ngModel)]="categoria"
+          placeholder="Seleccione una categoría"
+          fill="outline"
+          interface="popover">
+
+          <ion-select-option value="alabanza">
+            Alabanza
+          </ion-select-option>
+
+          <ion-select-option value="adoracion">
+            Adoración
+          </ion-select-option>
+
+          <ion-select-option value="coros">
+            Coros
+          </ion-select-option>
+
+          <ion-select-option value="especial">
+            Especial
+          </ion-select-option>
+
+          <ion-select-option value="himnos">
+            Himnos
+          </ion-select-option>
+
+          <ion-select-option value="otros">
+            Otros
+          </ion-select-option>
+
+        </ion-select>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- ACORDES -->
+    <!-- ========================= -->
+
+    <section class="form-section">
+
+      <div class="section-title">
+
+        <span class="section-number">
+          2
+        </span>
+
+        <div>
+
+          <span class="section-label">
+            MÚSICA
+          </span>
+
+          <h3>Acordes</h3>
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Acordes de la canción
+        </label>
+
+        <ion-textarea
+          [(ngModel)]="acordes"
+          placeholder="Ej.
+
+A        B
+Mi orgullo me sacó del jardín
+
+C#m      G#m
+Su humildad puso el Edén"
+          fill="outline"
+          [autoGrow]="true"
+          rows="8">
+        </ion-textarea>
+
+        <small>
+          Podés escribir los acordes respetando
+          los saltos de línea.
+        </small>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- LETRA -->
+    <!-- ========================= -->
+
+    <section class="form-section">
+
+      <div class="section-title">
+
+        <span class="section-number">
+          3
+        </span>
+
+        <div>
+
+          <span class="section-label">
+            LETRA
+          </span>
+
+          <h3>Letra de la canción</h3>
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Letra
+        </label>
+
+        <ion-textarea
+          [(ngModel)]="letra"
+          placeholder="Escribí aquí la letra...
+
+Ejemplo:
+
+Mi orgullo me sacó del jardín
+Su humildad puso el Edén
+
+Mi preferido
+Mi predilecto
+Jesús, Jesús
+
+Tú eres santo
+Tú eres digno"
+          fill="outline"
+          [autoGrow]="true"
+          rows="15">
+        </ion-textarea>
+
+
+        <small>
+          Respetá los espacios entre estrofas.
+          Los saltos de línea se conservarán.
+        </small>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- YOUTUBE -->
+    <!-- ========================= -->
+
+    <section class="form-section">
+
+      <div class="section-title">
+
+        <span class="section-number">
+          4
+        </span>
+
+        <div>
+
+          <span class="section-label">
+            VIDEO
+          </span>
+
+          <h3>YouTube</h3>
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Enlace de YouTube
+        </label>
+
+        <ion-input
+          [(ngModel)]="youtube"
+          type="url"
+          placeholder="https://www.youtube.com/watch?v=..."
+          fill="outline">
+        </ion-input>
+
+        <small>
+          Este enlace se utilizará para mostrar
+          el video dentro de la aplicación.
+        </small>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- GUARDAR -->
+    <!-- ========================= -->
+
+    <div class="form-actions">
+
+      <ion-button
+        expand="block"
+        class="save-button"
+        [disabled]="guardando"
+        (click)="guardarCancion()">
+
+        @if (guardando) {
+
+          <ion-icon
+            name="sync-outline">
+          </ion-icon>
+
+          Guardando...
+
+        } @else {
+
+          <ion-icon
+            name="save-outline">
+          </ion-icon>
+
+          Guardar canción
+
+        }
+
+      </ion-button>
+
+
+      <ion-button
+        expand="block"
+        fill="clear"
+        class="cancel-button"
+        [disabled]="guardando"
+        (click)="volver()">
+
+        Cancelar
+
+      </ion-button>
+
+    </div>
+
+
+  </div>
+
+</ion-content>
+

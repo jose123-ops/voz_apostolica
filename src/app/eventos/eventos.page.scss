@@ -1,0 +1,345 @@
+ion-content {
+  --background: #0b0f14;
+}
+
+ion-toolbar {
+  --background: #0b0f14;
+  --color: white;
+  padding: 10px 16px;
+  border-bottom: 1px solid #252e3a;
+}
+
+ion-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.eventos-container {
+  padding: 10px 16px 90px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* =========================
+   ENCABEZADO
+========================= */
+
+.encabezado {
+  margin: 10px 0 28px;
+}
+
+.encabezado h1 {
+  margin: 4px 0 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+}
+
+.encabezado p {
+  margin: 7px 0 0;
+  color: #7d8794;
+  font-size: 13px;
+}
+
+/* =========================
+   LISTA DE EVENTOS
+========================= */
+
+.lista-eventos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* =========================
+   TARJETA EVENTO
+========================= */
+
+.evento-card {
+  width: 100%;
+  min-height: 82px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+  padding: 15px;
+
+  background: #151b23;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  border-radius: 16px;
+
+  color: white;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.evento-card:active {
+  transform: scale(0.98);
+}
+
+/* =========================
+   ICONO EVENTO
+========================= */
+
+.evento-icono {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: rgba(77, 163, 255, 0.12);
+  color: #4da3ff;
+
+  font-size: 24px;
+
+  flex-shrink: 0;
+}
+
+.evento-icono ion-icon {
+  font-size: 24px;
+}
+
+/* =========================
+   INFORMACIÓN
+========================= */
+
+.evento-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.evento-info h2 {
+  margin: 0;
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.evento-info p {
+  margin: 5px 0;
+
+  color: #8d98a8;
+
+  font-size: 12px;
+}
+
+.evento-info span {
+  display: inline-block;
+
+  padding: 3px 8px;
+
+  border-radius: 20px;
+
+  background: rgba(77, 163, 255, 0.08);
+
+  color: #4da3ff;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* =========================
+   FLECHA
+========================= */
+
+.evento-flecha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.evento-flecha ion-icon {
+  color: #66717e;
+  font-size: 18px;
+}
+
+/* =========================
+   ESTADO CARGANDO
+========================= */
+
+.estado {
+  padding: 40px 20px;
+
+  text-align: center;
+
+  color: #8d98a8;
+}
+
+.estado ion-icon {
+  font-size: 42px;
+  color: #4da3ff;
+  margin-bottom: 10px;
+}
+
+.estado p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* =========================
+   SIN EVENTOS
+========================= */
+
+.sin-eventos {
+  padding: 40px 20px;
+
+  text-align: center;
+
+  background: #151b23;
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  border-radius: 16px;
+
+  color: #8d98a8;
+}
+
+.sin-eventos ion-icon {
+  font-size: 42px;
+  color: #4da3ff;
+}
+
+.sin-eventos h2 {
+  margin: 10px 0 5px;
+
+  color: white;
+
+  font-size: 16px;
+}
+
+.sin-eventos p {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+/* =========================
+   BOTÓN CREAR PRIMER EVENTO
+========================= */
+
+.crear-primer-evento {
+  margin-top: 20px;
+
+  min-height: 44px;
+
+  padding: 0 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #4da3ff;
+  color: white;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.crear-primer-evento ion-icon {
+  font-size: 19px;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.mensaje-error {
+  padding: 30px 20px;
+
+  text-align: center;
+
+  background: #151b23;
+
+  border-radius: 16px;
+
+  color: #ff7777;
+}
+
+.mensaje-error ion-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.mensaje-error p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* =========================
+   BOTÓN AGREGAR EVENTO
+========================= */
+
+ion-toolbar ion-button {
+  --color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+ion-toolbar ion-button ion-icon {
+  font-size: 23px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+
+  .eventos-container {
+    padding: 10px 16px 90px;
+  }
+
+  .encabezado h1 {
+    font-size: 23px;
+  }
+
+  .encabezado p {
+    font-size: 12px;
+  }
+
+  .evento-card {
+    padding: 13px;
+    border-radius: 15px;
+  }
+
+  .evento-icono {
+    width: 45px;
+    height: 45px;
+    border-radius: 13px;
+  }
+
+  .evento-info h2 {
+    font-size: 14px;
+  }
+
+}

@@ -1,0 +1,60 @@
+<ion-content [fullscreen]="true">
+
+  <div class="login-container">
+
+    <div class="login-card">
+
+      <div class="logo">
+        🎵
+      </div>
+
+      <h1>Voz Apostólica</h1>
+
+      <p class="subtitulo">
+        Inicie sesión para continuar
+      </p>
+
+      <ion-item>
+        <ion-label position="stacked">Usuario</ion-label>
+        <ion-input
+          type="text"
+          [(ngModel)]="usuario"
+          placeholder="Ingrese su usuario">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input
+          type="password"
+          [(ngModel)]="password"
+          placeholder="Ingrese su contraseña">
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="error">
+        <p class="error">{{ error }}</p>
+      </ion-text>
+
+      <ion-button 
+        expand="block"
+        class="btn-login"
+        (click)="iniciarSesion()"
+        [disabled]="cargando">
+
+        <ion-spinner
+          *ngIf="cargando"
+          name="crescent">
+        </ion-spinner>
+
+        <span *ngIf="!cargando">
+          Iniciar sesión
+        </span>
+
+      </ion-button>
+
+    </div>
+
+  </div>
+
+</ion-content>

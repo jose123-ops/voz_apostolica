@@ -1,0 +1,565 @@
+<ion-header>
+  <ion-toolbar>
+
+    <div class="topbar">
+
+      <button
+        type="button"
+        class="back-button"
+        (click)="volver()"
+      >
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+
+      <div class="topbar-title">
+        <span>PROGRAMACIÓN</span>
+        <strong>Crear evento</strong>
+      </div>
+
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div class="event-container">
+
+    <!-- =====================================
+         INFORMACIÓN DEL EVENTO
+         ===================================== -->
+
+    <section class="event-section">
+
+      <div class="section-title">
+
+        <ion-icon name="calendar-outline"></ion-icon>
+
+        <div>
+          <span>NUEVO EVENTO</span>
+          <h2>Información del evento</h2>
+        </div>
+
+      </div>
+
+
+      <!-- NOMBRE -->
+
+      <ion-input
+        label="Nombre del evento"
+        labelPlacement="stacked"
+        placeholder="Ej. Culto dominical"
+        fill="outline"
+        [(ngModel)]="nombre">
+      </ion-input>
+
+
+      <!-- FECHA -->
+
+      <div class="date-field">
+
+        <label for="fecha">
+          Fecha del evento
+        </label>
+
+        <input
+          id="fecha"
+          type="date"
+          [(ngModel)]="fecha"
+        />
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         MINISTRACIÓN
+         ===================================== -->
+
+    <section class="event-section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+
+          <ion-icon name="musical-notes-outline"></ion-icon>
+
+          <div>
+            <span>ADORACIÓN</span>
+            <h2>Ministración</h2>
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="add-song"
+          (click)="agregarCancion('ministracion')"
+        >
+          + Agregar
+        </button>
+
+      </div>
+
+
+      @for (
+        item of ministracion;
+        track $index
+      ) {
+
+        <div class="song-row">
+
+          <ion-select
+            label="Canción"
+            labelPlacement="stacked"
+            placeholder="Seleccione una canción"
+            [value]="item.cancionId"
+            (ionChange)="item.cancionId = $event.detail.value"
+            fill="outline"
+            interface="popover"
+            [interfaceOptions]="{
+              header: 'Seleccionar canción'
+            }">
+
+            @for (
+              cancion of canciones;
+              track cancion.id
+            ) {
+
+              <ion-select-option
+                [value]="cancion.id"
+              >
+                {{ cancion.titulo }}
+              </ion-select-option>
+
+            }
+
+          </ion-select>
+
+
+          <ion-input
+            label="Dirige"
+            labelPlacement="stacked"
+            placeholder="Nombre"
+            fill="outline"
+            [(ngModel)]="item.dirige">
+          </ion-input>
+
+
+          <button
+            type="button"
+            class="delete-song"
+            (click)="eliminarCancion('ministracion', $index)"
+          >
+            ×
+          </button>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- =====================================
+         LECTURA
+         ===================================== -->
+
+    <section class="event-section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+
+          <ion-icon name="book-outline"></ion-icon>
+
+          <div>
+            <span>PALABRA</span>
+            <h2>Cantos para la lectura</h2>
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="add-song"
+          (click)="agregarCancion('lectura')"
+        >
+          + Agregar
+        </button>
+
+      </div>
+
+
+      @for (
+        item of lectura;
+        track $index
+      ) {
+
+        <div class="song-row">
+
+          <ion-select
+            label="Canción"
+            labelPlacement="stacked"
+            placeholder="Seleccione una canción"
+            [value]="item.cancionId"
+            (ionChange)="item.cancionId = $event.detail.value"
+            fill="outline"
+            interface="popover"
+            [interfaceOptions]="{
+              header: 'Seleccionar canción'
+            }">
+
+            @for (
+              cancion of canciones;
+              track cancion.id
+            ) {
+
+              <ion-select-option
+                [value]="cancion.id"
+              >
+                {{ cancion.titulo }}
+              </ion-select-option>
+
+            }
+
+          </ion-select>
+
+
+          <ion-input
+            label="Dirige"
+            labelPlacement="stacked"
+            placeholder="Nombre"
+            fill="outline"
+            [(ngModel)]="item.dirige">
+          </ion-input>
+
+
+          <button
+            type="button"
+            class="delete-song"
+            (click)="eliminarCancion('lectura', $index)"
+          >
+            ×
+          </button>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- =====================================
+         OFRENDA
+         ===================================== -->
+
+    <section class="event-section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+
+          <ion-icon name="heart-outline"></ion-icon>
+
+          <div>
+            <span>OFRENDA</span>
+            <h2>Cantos para la ofrenda</h2>
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="add-song"
+          (click)="agregarCancion('ofrenda')"
+        >
+          + Agregar
+        </button>
+
+      </div>
+
+
+      @for (
+        item of ofrenda;
+        track $index
+      ) {
+
+        <div class="song-row">
+
+          <ion-select
+            label="Canción"
+            labelPlacement="stacked"
+            placeholder="Seleccione una canción"
+            [value]="item.cancionId"
+            (ionChange)="item.cancionId = $event.detail.value"
+            fill="outline"
+            interface="popover"
+            [interfaceOptions]="{
+              header: 'Seleccionar canción'
+            }">
+
+            @for (
+              cancion of canciones;
+              track cancion.id
+            ) {
+
+              <ion-select-option
+                [value]="cancion.id"
+              >
+                {{ cancion.titulo }}
+              </ion-select-option>
+
+            }
+
+          </ion-select>
+
+
+          <ion-input
+            label="Dirige"
+            labelPlacement="stacked"
+            placeholder="Nombre"
+            fill="outline"
+            [(ngModel)]="item.dirige">
+          </ion-input>
+
+
+          <button
+            type="button"
+            class="delete-song"
+            (click)="eliminarCancion('ofrenda', $index)"
+          >
+            ×
+          </button>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- =====================================
+         ESPECIALES
+         ===================================== -->
+
+    <section class="event-section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+
+          <ion-icon name="star-outline"></ion-icon>
+
+          <div>
+            <span>PARTICIPACIÓN</span>
+            <h2>Cantos especiales</h2>
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="add-song"
+          (click)="agregarCancion('especiales')"
+        >
+          + Agregar
+        </button>
+
+      </div>
+
+
+      @for (
+        item of especiales;
+        track $index
+      ) {
+
+        <div class="song-row">
+
+          <ion-select
+            label="Canción"
+            labelPlacement="stacked"
+            placeholder="Seleccione una canción"
+            [value]="item.cancionId"
+            (ionChange)="item.cancionId = $event.detail.value"
+            fill="outline"
+            interface="popover"
+            [interfaceOptions]="{
+              header: 'Seleccionar canción'
+            }">
+
+            @for (
+              cancion of canciones;
+              track cancion.id
+            ) {
+
+              <ion-select-option
+                [value]="cancion.id"
+              >
+                {{ cancion.titulo }}
+              </ion-select-option>
+
+            }
+
+          </ion-select>
+
+
+          <ion-input
+            label="Dirige"
+            labelPlacement="stacked"
+            placeholder="Nombre"
+            fill="outline"
+            [(ngModel)]="item.dirige">
+          </ion-input>
+
+
+          <button
+            type="button"
+            class="delete-song"
+            (click)="eliminarCancion('especiales', $index)"
+          >
+            ×
+          </button>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- =====================================
+         DESPEDIDA
+         ===================================== -->
+
+    <section class="event-section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+
+          <ion-icon name="musical-note-outline"></ion-icon>
+
+          <div>
+            <span>CIERRE</span>
+            <h2>Cantos para despedir</h2>
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="add-song"
+          (click)="agregarCancion('despedida')"
+        >
+          + Agregar
+        </button>
+
+      </div>
+
+
+      @for (
+        item of despedida;
+        track $index
+      ) {
+
+        <div class="song-row">
+
+          <ion-select
+            label="Canción"
+            labelPlacement="stacked"
+            placeholder="Seleccione una canción"
+            [value]="item.cancionId"
+            (ionChange)="item.cancionId = $event.detail.value"
+            fill="outline"
+            interface="popover"
+            [interfaceOptions]="{
+              header: 'Seleccionar canción'
+            }">
+
+            @for (
+              cancion of canciones;
+              track cancion.id
+            ) {
+
+              <ion-select-option
+                [value]="cancion.id"
+              >
+                {{ cancion.titulo }}
+              </ion-select-option>
+
+            }
+
+          </ion-select>
+
+
+          <ion-input
+            label="Dirige"
+            labelPlacement="stacked"
+            placeholder="Nombre"
+            fill="outline"
+            [(ngModel)]="item.dirige">
+          </ion-input>
+
+
+          <button
+            type="button"
+            class="delete-song"
+            (click)="eliminarCancion('despedida', $index)"
+          >
+            ×
+          </button>
+
+        </div>
+
+      }
+
+    </section>
+
+
+    <!-- =====================================
+         MENSAJES
+         ===================================== -->
+
+    @if (error) {
+
+      <div class="error-message">
+        {{ error }}
+      </div>
+
+    }
+
+
+    @if (mensaje) {
+
+      <div class="success-message">
+        {{ mensaje }}
+      </div>
+
+    }
+
+
+    <!-- =====================================
+         GUARDAR
+         ===================================== -->
+
+    <button
+      type="button"
+      class="save-button"
+      [disabled]="guardando"
+      (click)="guardarEvento()"
+    >
+
+      @if (guardando) {
+        Guardando evento...
+      } @else {
+        Guardar evento
+      }
+
+    </button>
+
+  </div>
+
+</ion-content>

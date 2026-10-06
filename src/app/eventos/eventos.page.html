@@ -1,0 +1,187 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-button
+      slot="start"
+      fill="clear"
+      (click)="volver()"
+    >
+      <ion-icon
+        name="arrow-back-outline"
+      ></ion-icon>
+    </ion-button>
+
+    <ion-title>
+      Eventos
+    </ion-title>
+
+    @if (esAdmin) {
+  <ion-button
+    slot="end"
+    fill="clear"
+    (click)="crearEvento()"
+  >
+    <ion-icon
+      name="add-circle-outline"
+    ></ion-icon>
+  </ion-button>
+}
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div class="eventos-container">
+
+    <div class="encabezado">
+
+      <div>
+
+        <h1>
+          Programas y cultos
+        </h1>
+
+        <p>
+          Consulta los eventos y los cantos programados.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    @if (cargando) {
+
+      <div class="estado">
+
+        <ion-icon
+          name="calendar-outline"
+        ></ion-icon>
+
+        <p>
+          Cargando eventos...
+        </p>
+
+      </div>
+
+    }
+
+
+    @if (!cargando && error) {
+
+      <div class="mensaje-error">
+
+        <ion-icon
+          name="alert-circle-outline"
+        ></ion-icon>
+
+        <p>
+          {{ error }}
+        </p>
+
+      </div>
+
+    }
+
+
+    @if (!cargando && !error && eventos.length === 0) {
+
+      <div class="sin-eventos">
+
+        <ion-icon
+          name="calendar-outline"
+        ></ion-icon>
+
+        <h2>
+          No hay eventos
+        </h2>
+
+        <p>
+          Todavía no se han creado eventos.
+        </p>
+
+        @if (esAdmin) {
+
+          <button
+            class="crear-primer-evento"
+            type="button"
+            (click)="crearEvento()"
+          >
+
+            <ion-icon
+              name="add-circle-outline"
+            ></ion-icon>
+
+            Crear primer evento
+
+          </button>
+
+        }
+
+      </div>
+
+    }
+
+
+    @if (!cargando && eventos.length > 0) {
+
+      <div class="lista-eventos">
+
+        @for (
+          evento of eventos;
+          track evento.id
+        ) {
+
+          <button
+            class="evento-card"
+            type="button"
+            (click)="verEvento(evento.id)"
+          >
+
+            <div class="evento-icono">
+
+              <ion-icon
+                name="calendar-outline"
+              ></ion-icon>
+
+            </div>
+
+
+            <div class="evento-info">
+
+              <h2>
+                {{ evento.nombre }}
+              </h2>
+
+              <p>
+                {{ formatearFecha(evento.fecha) }}
+              </p>
+
+              <span>
+                Ver programa
+              </span>
+
+            </div>
+
+
+            <div class="evento-flecha">
+
+              <ion-icon
+                name="arrow-forward-outline"
+              ></ion-icon>
+
+            </div>
+
+          </button>
+
+        }
+
+      </div>
+
+    }
+
+  </div>
+
+</ion-content>

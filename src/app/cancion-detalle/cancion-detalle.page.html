@@ -1,0 +1,386 @@
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+
+    <div class="topbar">
+
+      <button
+        class="back-button"
+        (click)="volver()"
+      >
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+
+
+      <div class="topbar-title">
+
+        <span>
+          Voz Apostólica
+        </span>
+
+        <strong>
+          Detalle de canción
+        </strong>
+
+      </div>
+
+
+      <!-- FAVORITO SUPERIOR -->
+
+      <button
+        class="favorite-button"
+        [class.active]="esFavorito"
+        [disabled]="actualizandoFavorito"
+        (click)="cambiarFavorito()"
+      >
+
+        <ion-icon
+          [name]="esFavorito ? 'heart' : 'heart-outline'">
+        </ion-icon>
+
+      </button>
+
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+
+  <!-- ========================= -->
+  <!-- CARGANDO -->
+  <!-- ========================= -->
+
+  @if (cargando) {
+
+    <div class="loading">
+
+      <div class="loader"></div>
+
+      <p>
+        Cargando canción...
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ========================= -->
+  <!-- ERROR -->
+  <!-- ========================= -->
+
+  @if (!cargando && error) {
+
+    <div class="empty">
+
+      <div class="empty-icon">
+
+        <ion-icon
+          name="alert-circle-outline">
+        </ion-icon>
+
+      </div>
+
+
+      <h2>
+        No se pudo cargar
+      </h2>
+
+
+      <p>
+        {{ error }}
+      </p>
+
+
+      <button
+        class="action-button"
+        (click)="volver()"
+      >
+
+        <span>
+          Volver
+        </span>
+
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- ========================= -->
+  <!-- CANCIÓN -->
+  <!-- ========================= -->
+
+  @if (!cargando && cancion) {
+
+    <div class="detail-container">
+
+
+      <!-- ========================= -->
+      <!-- ENCABEZADO -->
+      <!-- ========================= -->
+
+      <div class="song-header">
+
+
+        <div class="music-icon">
+
+          <ion-icon
+            name="musical-notes-outline">
+          </ion-icon>
+
+        </div>
+
+
+        @if (cancion.categoria) {
+
+          <span class="category">
+            {{ cancion.categoria }}
+          </span>
+
+        }
+
+
+        <h1>
+          {{ cancion.titulo }}
+        </h1>
+
+
+        <p>
+          {{ cancion.artista }}
+        </p>
+
+      </div>
+
+
+
+      <!-- ========================= -->
+      <!-- ACCIONES -->
+      <!-- ========================= -->
+
+      <div class="actions">
+
+
+        <!-- FAVORITO -->
+
+        <button
+          class="action-button favorite-action"
+          [class.active]="esFavorito"
+          [disabled]="actualizandoFavorito"
+          (click)="cambiarFavorito()"
+        >
+
+          <ion-icon
+            [name]="esFavorito ? 'heart' : 'heart-outline'">
+          </ion-icon>
+
+
+          <span>
+
+            {{
+              esFavorito
+                ? 'En favoritos'
+                : 'Favorito'
+            }}
+
+          </span>
+
+        </button>
+
+
+
+        <!-- YOUTUBE -->
+
+        @if (cancion.youtube) {
+
+          <a
+            class="action-button youtube"
+            [href]="cancion.youtube"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+
+            <ion-icon
+              name="logo-youtube">
+            </ion-icon>
+
+
+            <span>
+              YouTube
+            </span>
+
+          </a>
+
+        }
+
+      </div>
+
+
+
+      <!-- ========================= -->
+      <!-- ACORDES -->
+      <!-- ========================= -->
+
+     @if (puedeVerAcordes && cancion.acordes){
+
+        <section class="song-section">
+
+
+          <div class="section-title">
+
+            <ion-icon
+              name="musical-note-outline">
+            </ion-icon>
+
+
+            <div>
+
+              <span>
+                MÚSICA
+              </span>
+
+
+              <h2>
+                Acordes
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div class="chords">
+
+            <pre>
+{{ cancion.acordes }}
+            </pre>
+
+          </div>
+
+        </section>
+
+      }
+
+
+
+      <!-- ========================= -->
+      <!-- LETRA -->
+      <!-- ========================= -->
+
+      @if (puedeVerLetra) {
+
+  <section class="song-section">
+
+    <div class="section-title">
+      <ion-icon name="document-text-outline"></ion-icon>
+
+      <div>
+        <span>LETRA</span>
+        <h2>Letra de la canción</h2>
+      </div>
+    </div>
+
+    @if (cancion.letra) {
+
+      <div class="lyrics">
+
+        @for (
+          estrofa of separarEstrofas(cancion.letra);
+          track $index
+        ) {
+
+          <div class="estrofa">
+            {{ estrofa }}
+          </div>
+
+        }
+
+      </div>
+
+    } @else {
+
+      <div class="no-content">
+        Esta canción todavía no tiene
+        letra registrada.
+      </div>
+
+    }
+
+  </section>
+
+}
+
+
+      <!-- ========================= -->
+      <!-- VIDEO YOUTUBE -->
+      <!-- ========================= -->
+
+      @if (
+        cancion.youtube &&
+        obtenerYoutubeId(cancion.youtube)
+      ) {
+
+
+        <section
+          class="song-section youtube-section"
+        >
+
+
+          <div class="section-title">
+
+
+            <ion-icon
+              name="logo-youtube">
+            </ion-icon>
+
+
+            <div>
+
+              <span>
+                VIDEO
+              </span>
+
+
+              <h2>
+                Escuchar canción
+              </h2>
+
+            </div>
+
+
+          </div>
+
+
+
+          <div class="youtube-player">
+
+
+            <iframe
+              [src]="obtenerYoutubeUrlSegura(cancion.youtube)"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+
+
+          </div>
+
+
+        </section>
+
+
+      }
+
+
+    </div>
+
+  }
+
+
+</ion-content>
+

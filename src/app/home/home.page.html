@@ -1,20 +1,469 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
+
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+
+    <div class="topbar">
+
+      <div>
+
+        <span class="app-label">
+          Voz Apostólica
+        </span>
+
+        <h1>
+          Bienvenido 👋
+        </h1>
+
+      </div>
+
+
+      <button class="profile-button">
+
+        <ion-icon name="person-outline">
+        </ion-icon>
+
+      </button>
+
+    </div>
+
   </ion-toolbar>
+
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
+<ion-content>
+
+  <div class="home-container">
+
+
+    <!-- ================================= -->
+    <!-- BUSCADOR -->
+    <!-- ================================= -->
+
+    <div class="search-box">
+
+      <ion-icon name="search-outline">
+      </ion-icon>
+
+      <span>
+        Buscar una canción...
+      </span>
+
+    </div>
+
+
+
+    <!-- ================================= -->
+    <!-- ACCESOS RÁPIDOS -->
+    <!-- ================================= -->
+
+    <section>
+
+
+      <div class="section-header">
+
+        <h2>
+          Accesos rápidos
+        </h2>
+
+      </div>
+
+
+
+      <div class="quick-grid">
+
+@if (esAdmin) {
+        <!-- CANCIONES -->
+
+        <button class="quick-card agregar" (click)="abrirAgregarCancion()">
+          <div class="icon-box">
+
+            <ion-icon name="add-circle-outline">
+            </ion-icon>
+
+          </div>
+
+          <div>
+
+            <strong>Agregar</strong>
+
+            <span>Nueva canción</span>  
+
+          </div>
+
+        </button>
+      }
+
+
+
+        <button class="quick-card canciones" (click)="abrirCanciones()">
+
+          <div class="icon-box">
+
+            <ion-icon name="musical-notes-outline">
+            </ion-icon>
+
+          </div>
+
+
+          <div>
+
+            <strong>
+              Canciones
+            </strong>
+
+            <span>
+              Ver repertorio
+            </span>
+
+          </div>
+
+        </button>
+
+
+
+        <!-- FAVORITOS -->
+
+        <button class="quick-card favoritos" (click)="abrirFavoritos()">
+
+          <div class="icon-box">
+
+            <ion-icon name="heart-outline">
+            </ion-icon>
+
+          </div>
+
+
+          <div>
+
+            <strong>
+              Favoritos
+            </strong>
+
+            <span>
+              Mis canciones
+            </span>
+
+          </div>
+
+        </button>
+
+
+
+        <!-- EVENTOS -->
+
+        <button class="quick-card eventos" type="button" (click)="abrirEventos()">
+  <div class="icon-box">
+    <ion-icon name="calendar-outline"></ion-icon>
   </div>
+
+  <div>
+    <strong>Eventos</strong>
+    <span>Programas y cultos</span>
+  </div>
+</button>
+
+
+        <!-- YOUTUBE -->
+
+        <button class="quick-card youtube">
+
+          <div class="icon-box">
+
+            <ion-icon name="logo-youtube">
+            </ion-icon>
+
+          </div>
+
+
+          <div>
+
+            <strong>
+              YouTube
+            </strong>
+
+            <span>
+              Reproducir
+            </span>
+
+          </div>
+
+        </button>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ================================= -->
+    <!-- ÚLTIMAS CANCIONES -->
+    <!-- ================================= -->
+
+    <section class="songs-section">
+
+
+      <div class="section-header">
+
+
+        <div>
+
+          <span class="section-subtitle">
+            BIBLIOTECA
+          </span>
+
+          <h2>
+            Últimas canciones
+          </h2>
+
+        </div>
+
+
+        <button class="see-all">
+
+          Ver todas
+
+        </button>
+
+
+      </div>
+
+
+
+      <!-- ================================= -->
+      <!-- CARGANDO -->
+      <!-- ================================= -->
+
+      @if (cargando) {
+
+      <div class="loading">
+
+        <div class="loader"></div>
+
+        <p>
+          Cargando canciones...
+        </p>
+
+      </div>
+
+      }
+
+
+
+      <!-- ================================= -->
+      <!-- ERROR -->
+      <!-- ================================= -->
+
+      @if (!cargando && error) {
+
+      <div class="empty">
+
+        <ion-icon name="alert-circle-outline">
+        </ion-icon>
+
+
+        <h3>
+          Error
+        </h3>
+
+
+        <p>
+          {{ error }}
+        </p>
+
+      </div>
+
+      }
+
+
+
+      <!-- ================================= -->
+      <!-- CANCIONES -->
+      <!-- ================================= -->
+
+      @if (!cargando && !error) {
+
+
+      <div class="songs-list">
+
+
+        <!-- ============================= -->
+        <!-- RECORRER CANCIONES -->
+        <!-- ============================= -->
+
+        @for (
+        cancion of canciones;
+        track cancion.id
+        ) {
+
+
+        <div class="song-card" (click)="abrirCancion(cancion)">
+
+
+          <!-- ICONO -->
+
+          <div class="song-icon">
+
+            <ion-icon name="musical-notes-outline">
+            </ion-icon>
+
+          </div>
+
+
+
+          <!-- INFORMACIÓN -->
+
+          <div class="song-info">
+
+
+            <h3>
+
+              {{ cancion.titulo }}
+
+            </h3>
+
+
+            <p>
+
+              {{ cancion.artista }}
+
+            </p>
+
+
+            <span class="category">
+
+              {{ cancion.categoria }}
+
+            </span>
+
+
+          </div>
+
+
+
+          <!-- PLAY -->
+
+          <button class="play-button" (click)="$event.stopPropagation()">
+
+            <ion-icon name="play">
+            </ion-icon>
+
+          </button>
+
+
+        </div>
+
+
+        }
+
+
+
+        <!-- ============================= -->
+        <!-- SIN CANCIONES -->
+        <!-- ============================= -->
+
+        @if (canciones.length === 0) {
+
+        <div class="empty">
+
+
+          <ion-icon name="musical-notes-outline">
+          </ion-icon>
+
+
+          <h3>
+            No hay canciones
+          </h3>
+
+
+          <p>
+            Todavía no se han agregado canciones
+            a la biblioteca.
+          </p>
+
+
+        </div>
+
+        }
+
+
+      </div>
+
+      }
+
+
+    </section>
+
+
+  </div>
+
 </ion-content>
+
+
+
+<!-- ================================= -->
+<!-- NAVEGACIÓN INFERIOR -->
+<!-- ================================= -->
+
+<ion-footer class="ion-no-border">
+
+
+  <div class="bottom-nav">
+
+
+    <button class="nav-item active">
+
+      <ion-icon name="home">
+      </ion-icon>
+
+      <span>
+        Inicio
+      </span>
+
+    </button>
+
+
+
+    <button class="nav-item">
+
+      <ion-icon name="musical-notes-outline">
+      </ion-icon>
+
+      <span>
+        Canciones
+      </span>
+
+    </button>
+
+
+
+    <button class="nav-item">
+
+      <ion-icon name="heart-outline">
+      </ion-icon>
+
+      <span>
+        Favoritos
+      </span>
+
+    </button>
+
+
+
+    <button class="nav-item">
+
+      <ion-icon name="person-outline">
+      </ion-icon>
+
+      <span>
+        Perfil
+      </span>
+
+    </button>
+
+
+  </div>
+
+</ion-footer>

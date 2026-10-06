@@ -1,0 +1,244 @@
+
+<ion-header class="ion-no-border">
+
+  <ion-toolbar>
+
+    <div class="topbar">
+
+      <button
+        class="back-button"
+        (click)="volver()"
+      >
+        <ion-icon
+          name="arrow-back-outline">
+        </ion-icon>
+      </button>
+
+
+      <div class="topbar-title">
+
+        <span>Voz Apostólica</span>
+
+        <strong>
+          Mis favoritos
+        </strong>
+
+      </div>
+
+
+      <div class="topbar-icon">
+
+        <ion-icon
+          name="heart">
+        </ion-icon>
+
+      </div>
+
+    </div>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  @if (cargando) {
+
+    <div class="loading">
+
+      <div class="loader"></div>
+
+      <p>
+        Cargando favoritos...
+      </p>
+
+    </div>
+
+  }
+
+
+  @if (!cargando && error) {
+
+    <div class="empty">
+
+      <div class="empty-icon">
+
+        <ion-icon
+          name="alert-circle-outline">
+        </ion-icon>
+
+      </div>
+
+      <h2>
+        No se pudieron cargar
+      </h2>
+
+      <p>
+        {{ error }}
+      </p>
+
+
+      <button
+        class="action-button"
+        (click)="volver()"
+      >
+
+        <span>
+          Volver
+        </span>
+
+      </button>
+
+    </div>
+
+  }
+
+
+  @if (
+    !cargando &&
+    !error &&
+    canciones.length === 0
+  ) {
+
+    <div class="empty">
+
+      <div class="empty-icon favorite-empty">
+
+        <ion-icon
+          name="heart-outline">
+        </ion-icon>
+
+      </div>
+
+
+      <h2>
+        No tienes favoritos
+      </h2>
+
+
+      <p>
+        Las canciones que marques como
+        favoritas aparecerán aquí.
+      </p>
+
+
+      <button
+        class="action-button"
+        (click)="volver()"
+      >
+
+        <span>
+          Explorar canciones
+        </span>
+
+      </button>
+
+    </div>
+
+  }
+
+
+  @if (
+    !cargando &&
+    !error &&
+    canciones.length > 0
+  ) {
+
+    <div class="page-container">
+
+      <div class="page-heading">
+
+        <div>
+
+          <span>
+            TU COLECCIÓN
+          </span>
+
+          <h1>
+            Canciones favoritas
+          </h1>
+
+        </div>
+
+
+        <div class="count">
+
+          {{ canciones.length }}
+
+        </div>
+
+      </div>
+
+
+      <div class="songs-list">
+
+        @for (
+          cancion of canciones;
+          track cancion.id
+        ) {
+
+          <button
+            class="song-card"
+            (click)="abrirCancion(cancion)"
+          >
+
+            <div class="song-icon">
+
+              <ion-icon
+                name="musical-notes-outline">
+              </ion-icon>
+
+            </div>
+
+
+            <div class="song-info">
+
+              <h2>
+                {{ cancion.titulo }}
+              </h2>
+
+              <p>
+                {{ cancion.artista }}
+              </p>
+
+
+              @if (cancion.categoria) {
+
+                <span class="category">
+
+                  {{ cancion.categoria }}
+
+                </span>
+
+              }
+
+            </div>
+
+
+            <div class="favorite-icon">
+
+              <ion-icon
+                name="heart">
+              </ion-icon>
+
+            </div>
+
+
+            <ion-icon
+              class="arrow"
+              name="arrow-forward-outline">
+            </ion-icon>
+
+          </button>
+
+        }
+
+      </div>
+
+    </div>
+
+  }
+
+</ion-content>
+

@@ -1,0 +1,325 @@
+
+<ion-header class="ion-no-border">
+
+  <ion-toolbar>
+
+    <div class="topbar">
+
+      <button
+        class="back-button"
+        type="button"
+        (click)="volver()"
+      >
+
+        <ion-icon
+          name="arrow-back-outline">
+        </ion-icon>
+
+      </button>
+
+
+      <div class="topbar-title">
+
+        <span>
+          VOZ APOSTÓLICA
+        </span>
+
+        <strong>
+          Canciones
+        </strong>
+
+      </div>
+
+
+     @if (esAdmin) {
+
+  <button
+    class="add-button"
+    type="button"
+    (click)="abrirAgregarCancion()"
+  >
+
+    <ion-icon
+      name="add-circle-outline">
+    </ion-icon>
+
+  </button>
+
+}
+
+    </div>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  @if (cargando) {
+
+    <div class="loading">
+
+      <div class="loader"></div>
+
+      <p>
+        Cargando canciones...
+      </p>
+
+    </div>
+
+  }
+
+
+  @if (!cargando && error) {
+
+    <div class="empty">
+
+      <div class="empty-icon">
+
+        <ion-icon
+          name="alert-circle-outline">
+        </ion-icon>
+
+      </div>
+
+
+      <h2>
+        No se pudieron cargar
+      </h2>
+
+
+      <p>
+        {{ error }}
+      </p>
+
+
+      <button
+        class="action-button"
+        type="button"
+        (click)="cargarCanciones()"
+      >
+
+        Intentar nuevamente
+
+      </button>
+
+    </div>
+
+  }
+
+
+  @if (!cargando && !error) {
+
+    <div class="page-container">
+
+
+      <!-- ENCABEZADO -->
+
+      <div class="page-heading">
+
+        <div>
+
+          <span>
+            BIBLIOTECA MUSICAL
+          </span>
+
+          <h1>
+            Todas las canciones
+          </h1>
+
+        </div>
+
+
+        <div class="count">
+
+          {{ cancionesFiltradas.length }}
+
+        </div>
+
+      </div>
+
+
+      <!-- BUSCADOR -->
+
+      <div class="search-box">
+
+        <ion-icon
+          name="search-outline">
+        </ion-icon>
+
+
+        <ion-input
+          [(ngModel)]="busqueda"
+          (ionInput)="buscar()"
+          placeholder="Buscar canción, artista o categoría"
+          type="search"
+          clearInput>
+        </ion-input>
+
+      </div>
+
+
+      <!-- CATEGORÍAS -->
+
+      <div class="filter-container">
+
+        <div class="filter-label">
+
+          <ion-icon
+            name="folder-open-outline">
+          </ion-icon>
+
+          <span>
+            Categoría
+          </span>
+
+        </div>
+
+
+        <ion-select
+          [(ngModel)]="categoriaSeleccionada"
+          (ionChange)="cambiarCategoria()"
+          interface="popover"
+          aria-label="Seleccionar categoría"
+        >
+
+          <ion-select-option value="todas">
+            Todas
+          </ion-select-option>
+
+          @for (
+            categoria of categorias;
+            track categoria
+          ) {
+
+            <ion-select-option
+              [value]="categoria"
+            >
+              {{ categoria }}
+            </ion-select-option>
+
+          }
+
+        </ion-select>
+
+      </div>
+
+
+      <!-- SIN RESULTADOS -->
+
+      @if (
+        cancionesFiltradas.length === 0
+      ) {
+
+        <div class="no-results">
+
+          <div class="no-results-icon">
+
+            <ion-icon
+              name="musical-notes-outline">
+            </ion-icon>
+
+          </div>
+
+
+          <h2>
+            No encontramos canciones
+          </h2>
+
+
+          <p>
+            Probá con otro título, artista
+            o categoría.
+          </p>
+
+        </div>
+
+      }
+
+
+      <!-- LISTA -->
+
+      @if (
+        cancionesFiltradas.length > 0
+      ) {
+
+        <div class="songs-list">
+
+          @for (
+            cancion of cancionesFiltradas;
+            track cancion.id
+          ) {
+
+            <button
+              class="song-card"
+              type="button"
+              (click)="abrirCancion(cancion)"
+            >
+
+
+              <div class="song-icon">
+
+                <ion-icon
+                  name="musical-notes-outline">
+                </ion-icon>
+
+              </div>
+
+
+              <div class="song-info">
+
+                <h2>
+                  {{ cancion.titulo }}
+                </h2>
+
+
+                <p>
+                  {{ cancion.artista }}
+                </p>
+
+
+                @if (cancion.categoria) {
+
+                  <span class="category">
+
+                    {{ cancion.categoria }}
+
+                  </span>
+
+                }
+
+              </div>
+
+
+              @if (cancion.youtube) {
+
+                <ion-icon
+                  class="youtube-icon"
+                  name="logo-youtube">
+                </ion-icon>
+
+              }
+
+
+              <ion-icon
+                class="arrow"
+                name="arrow-forward-outline">
+              </ion-icon>
+
+
+            </button>
+
+          }
+
+        </div>
+
+      }
+
+
+    </div>
+
+  }
+
+</ion-content>
+

@@ -1,0 +1,305 @@
+.event-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 18px 50px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+}
+
+.back-button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 12px;
+  background: #151b2d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.back-button ion-icon {
+  font-size: 22px;
+}
+
+.topbar-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar-title span {
+  font-size: 12px;
+  color: #8d96aa;
+}
+
+.topbar-title strong {
+  font-size: 18px;
+  color: white;
+}
+
+.event-section {
+  background: #101625;
+  border: 1px solid #202a40;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 18px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title > ion-icon {
+  font-size: 28px;
+  color: #5f8cff;
+}
+
+.section-title span {
+  font-size: 11px;
+  color: #7f899e;
+  letter-spacing: 1px;
+}
+
+.section-title h2 {
+  margin: 2px 0 0;
+  color: white;
+  font-size: 19px;
+}
+
+.event-section > .section-title {
+  margin-bottom: 20px;
+}
+
+.date-field {
+  margin-top: 18px;
+}
+
+.date-field label {
+  display: block;
+  color: #9ba4b8;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.date-field input {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  border: 1px solid #303a52;
+  background: #151c2d;
+  color: white;
+  font-size: 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.add-song {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #1c2740;
+  color: white;
+  cursor: pointer;
+}
+
+.song-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 240px) 42px;
+  gap: 12px;
+  align-items: end;
+  margin-top: 12px;
+}
+
+.delete-song {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 10px;
+  background: #321d28;
+  color: #ff8c9e;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.save-button {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 16px;
+  background: #315ee8;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-message,
+.success-message {
+  border-radius: 12px;
+  padding: 13px 15px;
+  margin-bottom: 15px;
+}
+
+.error-message {
+  background: #351d26;
+  color: #ff9baa;
+}
+
+.success-message {
+  background: #183325;
+  color: #8ee0aa;
+}
+
+@media (max-width: 650px) {
+
+  .event-container {
+    padding: 18px 12px 40px;
+  }
+
+  .event-section {
+    padding: 16px;
+  }
+
+  .section-header {
+    align-items: flex-start;
+  }
+
+  .song-row {
+    grid-template-columns: 1fr;
+  }
+
+  .delete-song {
+    width: 100%;
+  }
+}
+
+/* ================================
+   CAMPOS DINÁMICOS: TEXTO BLANCO
+   ================================ */
+
+.song-row ion-input {
+  --color: #ffffff;
+  --placeholder-color: #8d96aa;
+  --placeholder-opacity: 1;
+  color: #ffffff;
+}
+
+.song-row ion-input::part(native) {
+  color: #ffffff;
+}
+
+.song-row ion-select {
+  --color: #ffffff;
+  --placeholder-color: #8d96aa;
+  --placeholder-opacity: 1;
+  color: #ffffff;
+}
+
+.song-row ion-select::part(container) {
+  color: #ffffff;
+}
+
+.song-row ion-select::part(text) {
+  color: #ffffff;
+}
+
+.song-row ion-select::part(icon) {
+  color: #ffffff;
+}
+
+/* Cuando el campo tiene un valor seleccionado */
+.song-row ion-select.select-expanded {
+  color: #ffffff;
+}
+
+/* Labels de los campos */
+.song-row ion-input::part(label),
+.song-row ion-select::part(label) {
+  color: #ffffff;
+}
+
+/* ================================
+   SELECT / INPUT AL ENFOCAR
+   ================================ */
+
+.song-row ion-input:focus-within,
+.song-row ion-select:focus-within {
+  --color: #ffffff;
+}
+
+/* ================================
+   CAMPOS EN DISPOSITIVOS MÓVILES
+   ================================ */
+
+@media (max-width: 650px) {
+
+  .song-row ion-input {
+    --color: #ffffff;
+  }
+
+  .song-row ion-select {
+    --color: #ffffff;
+  }
+
+}
+
+.song-row ion-select {
+  --color: #ffffff;
+  --placeholder-color: #8d96aa;
+  --placeholder-opacity: 1;
+}
+
+.song-row ion-select::part(text) {
+  color: #ffffff !important;
+}
+
+.song-row ion-select::part(container) {
+  color: #ffffff !important;
+}
+
+.song-row ion-select::part(icon) {
+  color: #ffffff;
+}
+
+/* =========================================
+   NOMBRE DEL EVENTO - TEXTO BLANCO
+   ========================================= */
+
+.event-section > ion-input {
+  --color: #ffffff;
+  --placeholder-color: #8d96aa;
+  --placeholder-opacity: 1;
+}
+
+.event-section > ion-input::part(native) {
+  color: #ffffff !important;
+  caret-color: #ffffff;
+}
+
+.event-section > ion-input::part(label) {
+  color: #ffffff;
+}
+
+/* Texto mientras se está escribiendo */
+.event-section > ion-input:focus-within {
+  --color: #ffffff;
+}
