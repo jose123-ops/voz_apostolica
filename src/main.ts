@@ -37,6 +37,16 @@ import {
   calendarOutline,
   bookOutline,
   starOutline,
+  createOutline,
+  trashOutline,
+  chevronForwardOutline,
+  checkmarkCircleOutline,
+  listOutline,
+  playOutline,
+  shareSocialOutline,
+  copyOutline,
+   peopleOutline
+
 } from 'ionicons/icons';
 
 import { routes } from './app/app.routes';
@@ -102,6 +112,23 @@ addIcons({
   'book-outline': bookOutline,
 
   'star-outline': starOutline,
+  'create-outline': createOutline,
+
+  'trash-outline': trashOutline,
+
+  'chevron-forward-outline': chevronForwardOutline,
+
+  'checkmark-circle-outline': checkmarkCircleOutline,
+
+  'list-outline': listOutline,
+
+  'play-outline': playOutline,
+
+  'share-social-outline': shareSocialOutline,
+  
+  'people-outline': peopleOutline,
+
+  'copy-outline': copyOutline
 
 });
 

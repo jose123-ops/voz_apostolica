@@ -1,266 +1,512 @@
+
+:host {
+  --fondo: #0b0f14;
+  --tarjeta: #151b23;
+  --borde: #252e3a;
+  --azul: #4da3ff;
+  --texto: #ffffff;
+  --secundario: #8d98a8;
+}
+
 ion-content {
-  --background: #0b0f14;
+  --background: var(--fondo);
 }
 
 ion-toolbar {
-  --background: #0b0f14;
+  --background: var(--fondo);
   --color: white;
-  padding: 10px 16px;
-  border-bottom: 1px solid #252e3a;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--borde);
 }
 
 ion-title {
-  color: white;
   font-size: 18px;
   font-weight: 700;
 }
 
-/* =========================
-   CONTENEDOR
-========================= */
-
-.eventos-container {
-  padding: 10px 16px 90px;
-  max-width: 900px;
-  margin: auto;
+ion-toolbar ion-button {
+  --color: white;
 }
 
-/* =========================
-   ENCABEZADO
-========================= */
+ion-toolbar ion-button ion-icon {
+  font-size: 23px;
+}
+
+/* CONTENEDOR */
+
+.eventos-container {
+  max-width: 950px;
+  margin: auto;
+  padding: 22px 16px 90px;
+}
+
+/* ENCABEZADO */
 
 .encabezado {
-  margin: 10px 0 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.etiqueta {
+  color: var(--azul);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
 }
 
 .encabezado h1 {
-  margin: 4px 0 0;
-  font-size: 24px;
-  font-weight: 700;
+  margin: 7px 0;
   color: white;
+  font-size: 28px;
+  font-weight: 800;
 }
 
 .encabezado p {
-  margin: 7px 0 0;
-  color: #7d8794;
+  margin: 0;
+  color: var(--secundario);
   font-size: 13px;
+  line-height: 1.5;
 }
 
-/* =========================
-   LISTA DE EVENTOS
-========================= */
-
-.lista-eventos {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* =========================
-   TARJETA EVENTO
-========================= */
-
-.evento-card {
-  width: 100%;
-  min-height: 82px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 14px;
-  padding: 15px;
-
-  background: #151b23;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  border-radius: 16px;
-
-  color: white;
-  text-align: left;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-.evento-card:active {
-  transform: scale(0.98);
-}
-
-/* =========================
-   ICONO EVENTO
-========================= */
-
-.evento-icono {
-  width: 48px;
-  height: 48px;
+.encabezado-icono {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 14px;
+  border-radius: 16px;
+  background: #1b2a4d;
+  color: var(--azul);
+  font-size: 27px;
+}
 
-  background: rgba(77, 163, 255, 0.12);
-  color: #4da3ff;
+/* ESTADÍSTICAS */
 
-  font-size: 24px;
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 11px;
+  margin-bottom: 25px;
+}
 
+.estadistica {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  min-width: 0;
+  padding: 16px;
+
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  background: var(--tarjeta);
+}
+
+.estadistica.principal {
+  border-color: #29375c;
+  background: #17223a;
+}
+
+.estadistica span {
+  color: var(--secundario);
+  font-size: 12px;
+}
+
+.estadistica strong {
+  color: white;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.estadistica small {
+  color: #758395;
+  font-size: 10px;
+}
+
+/* BUSCADOR */
+
+.buscador {
+  height: 53px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 0 15px;
+  margin-bottom: 18px;
+
+  border: 1px solid var(--borde);
+  border-radius: 15px;
+  background: var(--tarjeta);
+}
+
+.buscador:focus-within {
+  border-color: var(--azul);
+}
+
+.buscador > ion-icon {
+  color: var(--secundario);
+  font-size: 21px;
+}
+
+.buscador input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+  color: white;
+  font-size: 14px;
+}
+
+.buscador input::placeholder {
+  color: #758395;
+}
+
+.buscador button {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 23px;
+}
+
+/* FILTROS */
+
+.filtros {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  margin-bottom: 32px;
+  padding-bottom: 4px;
+}
+
+.filtros button {
   flex-shrink: 0;
+
+  padding: 10px 17px;
+
+  border: 1px solid var(--borde);
+  border-radius: 25px;
+
+  background: var(--tarjeta);
+  color: var(--secundario);
+
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.evento-icono ion-icon {
-  font-size: 24px;
+.filtros button.activo {
+  background: #1b2a4d;
+  border-color: #35588d;
+  color: #8bbcff;
 }
 
-/* =========================
-   INFORMACIÓN
-========================= */
+/* LISTADO */
+
+.lista-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 17px;
+}
+
+.lista-encabezado h2 {
+  margin: 5px 0 0;
+  color: white;
+  font-size: 21px;
+}
+
+.contador {
+  padding: 7px 11px;
+  border-radius: 10px;
+  background: #1b2a4d;
+  color: var(--azul);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.lista-eventos {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+/* TARJETAS */
+
+.evento-card {
+  width: 100%;
+  padding: 17px;
+
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+
+  background: var(--tarjeta);
+  color: white;
+
+  text-align: left;
+  cursor: pointer;
+
+  transition: background 0.2s, transform 0.2s;
+}
+
+.evento-card:hover {
+  background: #1a2330;
+  border-color: #36445a;
+}
+
+.evento-card:active {
+  transform: scale(0.985);
+}
+
+.evento-superior {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fecha-cuadro {
+  width: 62px;
+  min-width: 62px;
+  height: 67px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+
+  border-radius: 14px;
+  background: #1b2a4d;
+}
+
+.fecha-cuadro strong {
+  color: var(--azul);
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.fecha-cuadro span {
+  color: #a8caff;
+  font-size: 11px;
+  font-weight: 700;
+}
 
 .evento-info {
   flex: 1;
   min-width: 0;
 }
 
-.evento-info h2 {
-  margin: 0;
-
+.evento-info h3 {
+  margin: 0 0 7px;
   color: white;
-
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
 
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
 }
 
 .evento-info p {
-  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 
-  color: #8d98a8;
+  margin: 0 0 9px;
+  color: var(--secundario);
+  font-size: 12px;
+  text-transform: capitalize;
+}
 
+.evento-info p ion-icon {
+  flex-shrink: 0;
+  color: var(--azul);
+}
+
+.estado-etiqueta {
+  display: inline-block;
+
+  padding: 5px 9px;
+  border-radius: 20px;
+
+  background: rgba(77, 163, 255, 0.1);
+  color: #83b8ff;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.estado-etiqueta.anterior {
+  background: #262d36;
+  color: #a0aab7;
+}
+
+.flecha {
+  flex-shrink: 0;
+  color: #738095;
+  font-size: 20px;
+}
+
+.evento-inferior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 16px;
+  padding-top: 14px;
+
+  border-top: 1px solid var(--borde);
+}
+
+.evento-inferior span,
+.evento-inferior strong {
+  display: flex;
+  align-items: center;
+  gap: 7px;
   font-size: 12px;
 }
 
-.evento-info span {
-  display: inline-block;
+.evento-inferior span {
+  color: var(--secundario);
+}
 
-  padding: 3px 8px;
+.evento-inferior span ion-icon {
+  color: var(--azul);
+  font-size: 17px;
+}
 
-  border-radius: 20px;
-
-  background: rgba(77, 163, 255, 0.08);
-
-  color: #4da3ff;
-
-  font-size: 10px;
+.evento-inferior strong {
+  color: var(--azul);
   font-weight: 600;
 }
 
-/* =========================
-   FLECHA
-========================= */
+/* BOTÓN CREAR */
 
-.evento-flecha {
+.boton-crear {
+  width: 100%;
+  min-height: 52px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 9px;
 
-  flex-shrink: 0;
-}
+  margin-top: 24px;
+  padding: 12px;
 
-.evento-flecha ion-icon {
-  color: #66717e;
-  font-size: 18px;
-}
+  border: none;
+  border-radius: 14px;
 
-/* =========================
-   ESTADO CARGANDO
-========================= */
-
-.estado {
-  padding: 40px 20px;
-
-  text-align: center;
-
-  color: #8d98a8;
-}
-
-.estado ion-icon {
-  font-size: 42px;
-  color: #4da3ff;
-  margin-bottom: 10px;
-}
-
-.estado p {
-  margin: 0;
-  font-size: 13px;
-}
-
-/* =========================
-   SIN EVENTOS
-========================= */
-
-.sin-eventos {
-  padding: 40px 20px;
-
-  text-align: center;
-
-  background: #151b23;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  border-radius: 16px;
-
-  color: #8d98a8;
-}
-
-.sin-eventos ion-icon {
-  font-size: 42px;
-  color: #4da3ff;
-}
-
-.sin-eventos h2 {
-  margin: 10px 0 5px;
-
+  background: #2563eb;
   color: white;
 
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.sin-eventos p {
+.boton-crear ion-icon {
+  font-size: 21px;
+}
+
+.boton-crear:hover {
+  background: #3477fa;
+}
+
+/* CARGANDO */
+
+.estado {
+  padding: 45px 20px;
+  text-align: center;
+  color: var(--secundario);
+}
+
+.loader {
+  width: 32px;
+  height: 32px;
+
+  margin: 0 auto 14px;
+
+  border: 3px solid #28303b;
+  border-top-color: var(--azul);
+  border-radius: 50%;
+
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* SIN EVENTOS */
+
+.sin-eventos,
+.mensaje-error {
+  padding: 42px 20px;
+
+  border: 1px solid var(--borde);
+  border-radius: 17px;
+
+  background: var(--tarjeta);
+  text-align: center;
+}
+
+.sin-eventos > ion-icon,
+.mensaje-error > ion-icon {
+  color: var(--azul);
+  font-size: 45px;
+}
+
+.sin-eventos h2,
+.mensaje-error h3 {
+  margin: 12px 0 8px;
+  color: white;
+  font-size: 17px;
+}
+
+.sin-eventos p,
+.mensaje-error p {
   margin: 0;
-
-  font-size: 12px;
+  color: var(--secundario);
+  font-size: 13px;
+  line-height: 1.6;
 }
 
-/* =========================
-   BOTÓN CREAR PRIMER EVENTO
-========================= */
+.mensaje-error > ion-icon {
+  color: #ff7777;
+}
 
-.crear-primer-evento {
-  margin-top: 20px;
-
-  min-height: 44px;
-
-  padding: 0 18px;
-
+.crear-primer-evento,
+.limpiar-filtros,
+.mensaje-error button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   gap: 8px;
+
+  min-height: 43px;
+  margin-top: 19px;
+  padding: 0 17px;
 
   border: none;
   border-radius: 12px;
 
-  background: #4da3ff;
+  background: #2563eb;
   color: white;
 
   font-size: 13px;
   font-weight: 600;
-
   cursor: pointer;
 }
 
@@ -268,78 +514,74 @@ ion-title {
   font-size: 19px;
 }
 
-/* =========================
-   ERROR
-========================= */
-
-.mensaje-error {
-  padding: 30px 20px;
-
-  text-align: center;
-
-  background: #151b23;
-
-  border-radius: 16px;
-
-  color: #ff7777;
-}
-
-.mensaje-error ion-icon {
-  font-size: 42px;
-  margin-bottom: 10px;
-}
-
-.mensaje-error p {
-  margin: 0;
-  font-size: 13px;
-}
-
-/* =========================
-   BOTÓN AGREGAR EVENTO
-========================= */
-
-ion-toolbar ion-button {
-  --color: #ffffff;
-
-  font-size: 13px;
-  font-weight: 600;
-}
-
-ion-toolbar ion-button ion-icon {
-  font-size: 23px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
+/* RESPONSIVE */
 
 @media (max-width: 600px) {
-
   .eventos-container {
-    padding: 10px 16px 90px;
+    padding: 17px 12px 90px;
   }
 
   .encabezado h1 {
-    font-size: 23px;
+    font-size: 24px;
   }
 
-  .encabezado p {
-    font-size: 12px;
+  .encabezado-icono {
+    width: 48px;
+    height: 48px;
+  }
+
+  .estadisticas {
+    gap: 8px;
+  }
+
+  .estadistica {
+    padding: 12px 9px;
+  }
+
+  .estadistica span {
+    font-size: 10px;
+  }
+
+  .estadistica strong {
+    font-size: 25px;
+  }
+
+  .estadistica small {
+    font-size: 9px;
   }
 
   .evento-card {
     padding: 13px;
-    border-radius: 15px;
   }
 
-  .evento-icono {
-    width: 45px;
-    height: 45px;
-    border-radius: 13px;
+  .fecha-cuadro {
+    width: 53px;
+    min-width: 53px;
+    height: 62px;
   }
 
-  .evento-info h2 {
+  .fecha-cuadro strong {
+    font-size: 22px;
+  }
+
+  .evento-info h3 {
     font-size: 14px;
   }
 
+  .evento-info p {
+    font-size: 11px;
+  }
+
+  .evento-inferior strong,
+  .evento-inferior span {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evento-card,
+  .loader {
+    transition: none;
+    animation: none;
+  }
 }

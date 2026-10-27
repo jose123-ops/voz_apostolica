@@ -1,199 +1,230 @@
 
 <ion-header class="ion-no-border">
+
   <ion-toolbar>
 
     <div class="topbar">
 
       <button
+        type="button"
         class="back-button"
         (click)="volver()"
+        aria-label="Volver"
       >
         <ion-icon name="arrow-back-outline"></ion-icon>
       </button>
 
-
       <div class="topbar-title">
-
-        <span>
-          Voz Apostólica
-        </span>
+        <span>VOZ APOSTÓLICA</span>
 
         <strong>
-          Detalle de canción
+          {{ eventoId ? 'Cancionero del evento' : 'Detalle de canción' }}
         </strong>
-
       </div>
 
-
-      <!-- FAVORITO SUPERIOR -->
-
       <button
+        type="button"
         class="favorite-button"
         [class.active]="esFavorito"
-        [disabled]="actualizandoFavorito"
+        [disabled]="actualizandoFavorito || !cancion"
         (click)="cambiarFavorito()"
+        aria-label="Cambiar favorito"
       >
-
         <ion-icon
           [name]="esFavorito ? 'heart' : 'heart-outline'">
         </ion-icon>
-
       </button>
 
     </div>
 
   </ion-toolbar>
+
 </ion-header>
 
 
 <ion-content>
 
-
-  <!-- ========================= -->
-  <!-- CARGANDO -->
-  <!-- ========================= -->
-
   @if (cargando) {
 
     <div class="loading">
-
       <div class="loader"></div>
-
-      <p>
-        Cargando canción...
-      </p>
-
+      <p>Cargando canción...</p>
     </div>
 
-  }
-
-
-  <!-- ========================= -->
-  <!-- ERROR -->
-  <!-- ========================= -->
-
-  @if (!cargando && error) {
+  } @else if (error) {
 
     <div class="empty">
 
       <div class="empty-icon">
-
-        <ion-icon
-          name="alert-circle-outline">
-        </ion-icon>
-
+        <ion-icon name="alert-circle-outline"></ion-icon>
       </div>
 
-
-      <h2>
-        No se pudo cargar
-      </h2>
-
-
-      <p>
-        {{ error }}
-      </p>
-
+      <h2>No se pudo cargar</h2>
+      <p>{{ error }}</p>
 
       <button
+        type="button"
         class="action-button"
         (click)="volver()"
       >
-
-        <span>
-          Volver
-        </span>
-
+        Volver
       </button>
 
     </div>
 
-  }
+  } @else if (cancion) {
+
+    <main class="detail-container">
+
+      <!-- CONTEXTO DEL EVENTO -->
+
+      @if (enPrograma && cancionActualPrograma) {
+
+        <section class="program-context">
+
+          <div class="program-context-top">
+
+            <div class="program-icon">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+
+            <div class="program-info">
+              <span>PROGRAMA DEL CULTO</span>
+
+              <strong>
+                {{ evento?.nombre || 'Evento' }}
+              </strong>
+            </div>
+
+            <button
+              type="button"
+              class="program-list-button"
+              (click)="volverAlPrograma()"
+              aria-label="Ver programa completo"
+            >
+              <ion-icon name="list-outline"></ion-icon>
+            </button>
+
+          </div>
+
+          <div class="program-section">
+
+            <span class="section-badge">
+              {{ cancionActualPrograma.seccion }}
+            </span>
+
+            <span class="section-position">
+              Canción
+              {{ cancionActualPrograma.indiceSeccion }}
+              de
+              {{ cancionActualPrograma.totalSeccion }}
+            </span>
+
+          </div>
+
+          <div class="program-progress">
+            <div
+              class="program-progress-fill"
+              [style.width.%]="numeroActual / totalPrograma * 100"
+            ></div>
+          </div>
+
+          <div class="program-progress-text">
+            {{ numeroActual }} de {{ totalPrograma }}
+            canciones del programa
+          </div>
+
+          @if (cancionActualPrograma.dirige) {
+
+            <div class="program-leader">
+              <ion-icon name="person-outline"></ion-icon>
+              Dirige: {{ cancionActualPrograma.dirige }}
+            </div>
+
+          }
+
+        </section>
+
+      }
 
 
-  <!-- ========================= -->
-  <!-- CANCIÓN -->
-  <!-- ========================= -->
+      <!-- INFORMACIÓN DE CANCIÓN -->
 
-  @if (!cargando && cancion) {
-
-    <div class="detail-container">
-
-
-      <!-- ========================= -->
-      <!-- ENCABEZADO -->
-      <!-- ========================= -->
-
-      <div class="song-header">
-
+      <header class="song-header">
 
         <div class="music-icon">
-
-          <ion-icon
-            name="musical-notes-outline">
-          </ion-icon>
-
+          <ion-icon name="musical-notes-outline"></ion-icon>
         </div>
 
-
         @if (cancion.categoria) {
-
           <span class="category">
             {{ cancion.categoria }}
           </span>
-
         }
 
+        <h1>{{ cancion.titulo }}</h1>
 
-        <h1>
-          {{ cancion.titulo }}
-        </h1>
+        @if (cancion.artista) {
+          <p>{{ cancion.artista }}</p>
+        }
 
-
-        <p>
-          {{ cancion.artista }}
-        </p>
-
-      </div>
+      </header>
 
 
+      <!-- NAVEGACIÓN SUPERIOR -->
 
-      <!-- ========================= -->
+      @if (enPrograma) {
+
+        <nav class="song-navigation" aria-label="Navegación de canciones">
+
+          <button
+            type="button"
+            class="navigation-button"
+            [disabled]="!tieneAnterior"
+            (click)="anteriorCancion()"
+          >
+            <ion-icon name="chevron-back-outline"></ion-icon>
+            Anterior
+          </button>
+
+          <span class="navigation-counter">
+            {{ numeroActual }} / {{ totalPrograma }}
+          </span>
+
+          <button
+            type="button"
+            class="navigation-button next"
+            [disabled]="!tieneSiguiente"
+            (click)="siguienteCancion()"
+          >
+            Siguiente
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+
+        </nav>
+
+      }
+
+
       <!-- ACCIONES -->
-      <!-- ========================= -->
 
       <div class="actions">
 
-
-        <!-- FAVORITO -->
-
         <button
+          type="button"
           class="action-button favorite-action"
           [class.active]="esFavorito"
           [disabled]="actualizandoFavorito"
           (click)="cambiarFavorito()"
         >
-
           <ion-icon
             [name]="esFavorito ? 'heart' : 'heart-outline'">
           </ion-icon>
 
-
           <span>
-
-            {{
-              esFavorito
-                ? 'En favoritos'
-                : 'Favorito'
-            }}
-
+            {{ esFavorito ? 'En favoritos' : 'Favorito' }}
           </span>
-
         </button>
-
-
-
-        <!-- YOUTUBE -->
 
         @if (cancion.youtube) {
 
@@ -203,16 +234,8 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-
-            <ion-icon
-              name="logo-youtube">
-            </ion-icon>
-
-
-            <span>
-              YouTube
-            </span>
-
+            <ion-icon name="logo-youtube"></ion-icon>
+            <span>YouTube</span>
           </a>
 
         }
@@ -220,45 +243,34 @@
       </div>
 
 
+      <!-- AVISO NO BLOQUEANTE -->
 
-      <!-- ========================= -->
+      @if (errorPrograma) {
+        <p class="program-warning">
+          {{ errorPrograma }}
+        </p>
+      }
+
+
       <!-- ACORDES -->
-      <!-- ========================= -->
 
-     @if (puedeVerAcordes && cancion.acordes){
+      @if (puedeVerAcordes && cancion.acordes) {
 
-        <section class="song-section">
+        <section class="music-content chords-section">
 
+          <div class="content-title">
 
-          <div class="section-title">
-
-            <ion-icon
-              name="musical-note-outline">
-            </ion-icon>
-
+            <ion-icon name="musical-note-outline"></ion-icon>
 
             <div>
-
-              <span>
-                MÚSICA
-              </span>
-
-
-              <h2>
-                Acordes
-              </h2>
-
+              <span>MÚSICA</span>
+              <h2>Acordes</h2>
             </div>
 
           </div>
 
-
           <div class="chords">
-
-            <pre>
-{{ cancion.acordes }}
-            </pre>
-
+            <pre>{{ cancion.acordes }}</pre>
           </div>
 
         </section>
@@ -266,121 +278,162 @@
       }
 
 
-
-      <!-- ========================= -->
       <!-- LETRA -->
-      <!-- ========================= -->
 
       @if (puedeVerLetra) {
 
-  <section class="song-section">
+        <section class="music-content lyrics-section">
 
-    <div class="section-title">
-      <ion-icon name="document-text-outline"></ion-icon>
+          <div class="content-title">
 
-      <div>
-        <span>LETRA</span>
-        <h2>Letra de la canción</h2>
-      </div>
-    </div>
+            <ion-icon name="document-text-outline"></ion-icon>
 
-    @if (cancion.letra) {
+            <div>
+              <span>LETRA</span>
+              <h2>Letra de la canción</h2>
+            </div>
 
-      <div class="lyrics">
-
-        @for (
-          estrofa of separarEstrofas(cancion.letra);
-          track $index
-        ) {
-
-          <div class="estrofa">
-            {{ estrofa }}
           </div>
 
-        }
+          @if (cancion.letra) {
 
-      </div>
+            <div class="lyrics">
 
-    } @else {
+              @for (
+                estrofa of separarEstrofas(cancion.letra);
+                track $index
+              ) {
 
-      <div class="no-content">
-        Esta canción todavía no tiene
-        letra registrada.
-      </div>
+                <div class="estrofa">
+                  {{ estrofa }}
+                </div>
 
-    }
+              }
 
-  </section>
+            </div>
 
-}
+          } @else {
+
+            <div class="no-content">
+              Esta canción todavía no tiene letra registrada.
+            </div>
+
+          }
+
+        </section>
+
+      }
 
 
-      <!-- ========================= -->
-      <!-- VIDEO YOUTUBE -->
-      <!-- ========================= -->
+      <!-- YOUTUBE -->
 
       @if (
         cancion.youtube &&
         obtenerYoutubeId(cancion.youtube)
       ) {
 
+        <section class="youtube-section">
 
-        <section
-          class="song-section youtube-section"
-        >
+          <div class="content-title">
 
-
-          <div class="section-title">
-
-
-            <ion-icon
-              name="logo-youtube">
-            </ion-icon>
-
+            <ion-icon name="logo-youtube"></ion-icon>
 
             <div>
-
-              <span>
-                VIDEO
-              </span>
-
-
-              <h2>
-                Escuchar canción
-              </h2>
-
+              <span>VIDEO</span>
+              <h2>Escuchar canción</h2>
             </div>
-
 
           </div>
 
-
-
           <div class="youtube-player">
-
 
             <iframe
               [src]="obtenerYoutubeUrlSegura(cancion.youtube)"
               title="YouTube video player"
-              frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen>
             </iframe>
 
-
           </div>
 
-
         </section>
-
 
       }
 
 
-    </div>
+      <!-- NAVEGACIÓN INFERIOR -->
+
+      @if (enPrograma) {
+
+        <section class="bottom-program-navigation">
+
+          <div class="bottom-program-heading">
+
+            <span>CONTINUAR PROGRAMA</span>
+
+            <strong>
+              {{ cancionActualPrograma?.seccion }}
+            </strong>
+
+          </div>
+
+          <nav class="song-navigation" aria-label="Continuar programa">
+
+            <button
+              type="button"
+              class="navigation-button"
+              [disabled]="!tieneAnterior"
+              (click)="anteriorCancion()"
+            >
+              <ion-icon name="chevron-back-outline"></ion-icon>
+              Anterior
+            </button>
+
+            <span class="navigation-counter">
+              {{ numeroActual }} / {{ totalPrograma }}
+            </span>
+
+            <button
+              type="button"
+              class="navigation-button next"
+              [disabled]="!tieneSiguiente"
+              (click)="siguienteCancion()"
+            >
+              Siguiente
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </button>
+
+          </nav>
+
+          @if (!tieneSiguiente) {
+
+            <div class="program-complete">
+
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+
+              <span>
+                Llegaste al final del programa.
+              </span>
+
+            </div>
+
+          }
+
+          <button
+            type="button"
+            class="return-program-button"
+            (click)="volverAlPrograma()"
+          >
+            <ion-icon name="list-outline"></ion-icon>
+            Ver programa completo
+          </button>
+
+        </section>
+
+      }
+
+    </main>
 
   }
 
-
 </ion-content>
-

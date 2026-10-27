@@ -1,0 +1,411 @@
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="topbar">
+
+      <!-- REGRESAR -->
+      <button
+        type="button"
+        class="back-button"
+        (click)="volver()"
+        aria-label="Volver"
+      >
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+
+      <!-- TÍTULO -->
+      <div class="topbar-title">
+        <span>VOZ APOSTÓLICA</span>
+
+        <strong>
+          {{ modoEdicion ? 'Editar ensayo' : 'Programar ensayo' }}
+        </strong>
+      </div>
+
+      <div class="header-icon">
+        <ion-icon name="musical-notes-outline"></ion-icon>
+      </div>
+
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div class="form-container">
+
+    <!-- ENCABEZADO -->
+
+    <div class="page-intro">
+
+      <div class="intro-icon">
+        <ion-icon
+          [name]="modoEdicion ? 'create-outline' : 'calendar-outline'">
+        </ion-icon>
+      </div>
+
+      <span>ORGANIZACIÓN MUSICAL</span>
+
+      <h1>
+        {{ modoEdicion ? 'Editar ensayo' : 'Nuevo ensayo' }}
+      </h1>
+
+      <p>
+        @if (modoEdicion) {
+          Modifica la información del ensayo, actualiza
+          el repertorio y guarda los cambios.
+        } @else {
+          Programa una práctica musical y selecciona
+          las canciones que el grupo debe preparar.
+        }
+      </p>
+
+    </div>
+
+
+    <!-- CARGANDO -->
+
+    @if (cargando) {
+
+      <div class="loading">
+        <ion-icon name="musical-notes-outline"></ion-icon>
+
+        <p>
+          {{
+            modoEdicion
+              ? 'Cargando información del ensayo...'
+              : 'Cargando canciones...'
+          }}
+        </p>
+      </div>
+
+    }
+
+
+    <!-- FORMULARIO -->
+
+    @if (!cargando) {
+
+      <form (ngSubmit)="guardarEnsayo()">
+
+        <!-- ================================= -->
+        <!-- INFORMACIÓN GENERAL -->
+        <!-- ================================= -->
+
+        <section class="form-card">
+
+          <div class="card-heading">
+
+            <ion-icon
+              name="information-circle-outline">
+            </ion-icon>
+
+            <div>
+              <span>INFORMACIÓN</span>
+              <h2>Datos del ensayo</h2>
+            </div>
+
+          </div>
+
+
+          <!-- NOMBRE -->
+
+          <div class="field">
+
+            <label>Nombre del ensayo *</label>
+
+            <ion-input
+              fill="outline"
+              placeholder="Ej. Ensayo general de alabanza"
+              [(ngModel)]="nombre"
+              name="nombre"
+              maxlength="120">
+            </ion-input>
+
+          </div>
+
+
+          <!-- FECHA Y HORA -->
+
+          <div class="two-columns">
+
+            <div class="field">
+
+              <label>Fecha del ensayo *</label>
+
+              <input
+                class="native-input"
+                type="date"
+                [(ngModel)]="fecha"
+                name="fecha"
+                required
+              />
+
+            </div>
+
+
+            <div class="field">
+
+              <label>Hora del ensayo *</label>
+
+              <input
+                class="native-input"
+                type="time"
+                [(ngModel)]="hora"
+                name="hora"
+                required
+              />
+
+            </div>
+
+          </div>
+
+
+          <!-- LUGAR -->
+
+          <div class="field">
+
+            <label>Lugar del ensayo *</label>
+
+            <ion-input
+              fill="outline"
+              placeholder="Ej. Templo principal"
+              [(ngModel)]="lugar"
+              name="lugar">
+            </ion-input>
+
+          </div>
+
+        </section>
+
+
+        <!-- ================================= -->
+        <!-- CANCIONES -->
+        <!-- ================================= -->
+
+        <section class="form-card">
+
+          <div class="card-heading">
+
+            <ion-icon
+              name="musical-notes-outline">
+            </ion-icon>
+
+            <div>
+              <span>REPERTORIO</span>
+              <h2>Canciones para practicar</h2>
+            </div>
+
+          </div>
+
+
+          <p class="helper-text">
+            Selecciona las canciones que se practicarán
+            durante el ensayo. El orden en que las agregues
+            será el orden del repertorio.
+          </p>
+
+
+          <!-- LISTA DE CANCIONES -->
+
+          @for (
+            item of cancionesSeleccionadas;
+            track item;
+            let i = $index
+          ) {
+
+            <div class="song-row">
+
+              <!-- NÚMERO -->
+
+              <div class="song-number">
+                {{ i + 1 }}
+              </div>
+
+
+              <!-- SELECCIONAR CANCIÓN -->
+
+              <ion-select
+                interface="alert"
+                label="Seleccionar canción"
+                label-placement="stacked"
+                placeholder="Elige una canción"
+                [(ngModel)]="item.cancionId"
+                [name]="'cancion_' + i"
+              >
+
+                @for (
+                  cancion of canciones;
+                  track cancion.id
+                ) {
+
+                  <ion-select-option
+                    [value]="cancion.id"
+                  >
+                    {{ cancion.titulo }}
+                    -
+                    {{ cancion.artista }}
+                  </ion-select-option>
+
+                }
+
+              </ion-select>
+
+
+              <!-- ELIMINAR CANCIÓN -->
+
+              <button
+                type="button"
+                class="remove-button"
+                (click)="eliminarCancion(i)"
+                aria-label="Quitar canción"
+              >
+                <ion-icon name="trash-outline"></ion-icon>
+              </button>
+
+            </div>
+
+          }
+
+
+          <!-- AGREGAR CANCIÓN -->
+
+          <button
+            type="button"
+            class="add-song-button"
+            (click)="agregarCancion()"
+          >
+            <ion-icon name="add-outline"></ion-icon>
+            Agregar otra canción
+          </button>
+
+
+          <!-- SIN CANCIONES DISPONIBLES -->
+
+          @if (canciones.length === 0) {
+
+            <div class="error-message">
+              <ion-icon
+                name="alert-circle-outline">
+              </ion-icon>
+
+              No hay canciones registradas.
+              Primero debes agregar canciones al sistema.
+            </div>
+
+          }
+
+        </section>
+
+
+        <!-- ================================= -->
+        <!-- OBSERVACIONES -->
+        <!-- ================================= -->
+
+        <section class="form-card">
+
+          <div class="card-heading">
+
+            <ion-icon
+              name="document-text-outline">
+            </ion-icon>
+
+            <div>
+              <span>INDICACIONES</span>
+              <h2>Observaciones</h2>
+            </div>
+
+          </div>
+
+
+          <p class="helper-text">
+            Escribe indicaciones para los músicos
+            y cantantes que participarán en el ensayo.
+          </p>
+
+
+          <ion-textarea
+            fill="outline"
+            [autoGrow]="true"
+            placeholder="Ej. Practicar entradas, armonías vocales, cambios de tonalidad y coordinación de instrumentos..."
+            [(ngModel)]="observaciones"
+            name="observaciones"
+            [rows]="5">
+          </ion-textarea>
+
+        </section>
+
+
+        <!-- ================================= -->
+        <!-- MENSAJES -->
+        <!-- ================================= -->
+
+        @if (error) {
+
+          <div class="error-message">
+
+            <ion-icon
+              name="alert-circle-outline">
+            </ion-icon>
+
+            <span>{{ error }}</span>
+
+          </div>
+
+        }
+
+
+        <!-- ================================= -->
+        <!-- BOTONES -->
+        <!-- ================================= -->
+
+        <div class="form-actions">
+
+          <!-- CANCELAR -->
+
+          <button
+            type="button"
+            class="cancel-button"
+            (click)="volver()"
+            [disabled]="guardando"
+          >
+            Cancelar
+          </button>
+
+
+          <!-- GUARDAR -->
+
+          <button
+            type="submit"
+            class="save-button"
+            [disabled]="guardando || cargando"
+          >
+
+            <ion-icon
+              [name]="modoEdicion
+                ? 'checkmark-circle-outline'
+                : 'save-outline'">
+            </ion-icon>
+
+            {{
+              guardando
+                ? 'Guardando...'
+                : (
+                    modoEdicion
+                      ? 'Guardar cambios'
+                      : 'Guardar ensayo'
+                  )
+            }}
+
+          </button>
+
+        </div>
+
+      </form>
+
+    }
+
+  </div>
+
+</ion-content>

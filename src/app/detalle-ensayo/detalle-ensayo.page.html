@@ -1,0 +1,166 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="topbar">
+
+      <button type="button" class="back-button" (click)="volver()" aria-label="Volver a ensayos">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+
+      <div class="topbar-title">
+        <span>VOZ APOSTÓLICA</span>
+        <strong>Detalle del ensayo</strong>
+      </div>
+
+      <div class="header-icon">
+        <ion-icon name="people-outline"></ion-icon>
+      </div>
+
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="detail-container">
+
+    @if (cargando) {
+    <div class="loading">
+      <div class="loader"></div>
+      <p>Cargando ensayo...</p>
+    </div>
+    }
+
+    @if (!cargando && error) {
+    <div class="error-message">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <span>{{ error }}</span>
+    </div>
+    }
+
+    @if (!cargando && ensayo) {
+
+    <section class="hero">
+      <div class="hero-icon">
+        <ion-icon name="musical-notes-outline"></ion-icon>
+      </div>
+
+      <span class="eyebrow">ENSAYO MUSICAL</span>
+
+      <h1>{{ ensayo.nombre }}</h1>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <div>
+            <span>FECHA</span>
+            <strong>{{ formatearFecha(ensayo.fecha) }}</strong>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <ion-icon name="time-outline"></ion-icon>
+          <div>
+            <span>HORA</span>
+            <strong>{{ formatearHora(ensayo.hora) }}</strong>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <ion-icon name="location-outline"></ion-icon>
+          <div>
+            <span>LUGAR</span>
+            <strong>{{ ensayo.lugar }}</strong>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="content-section">
+
+      <div class="section-heading">
+        <div>
+          <span>REPERTORIO</span>
+          <h2>Canciones para practicar</h2>
+        </div>
+
+        <span class="count">
+          {{ ensayo.canciones?.length || 0 }}
+        </span>
+      </div>
+
+      @for (
+      item of ensayo.canciones;
+      track $index;
+      let i = $index
+      ) {
+
+      <button type="button" class="song-card" (click)="abrirCancion(item.cancionId)">
+
+        <span class="song-number">
+          {{ i + 1 }}
+        </span>
+
+        <div class="song-info">
+
+          @if (obtenerCancion(item.cancionId); as cancion) {
+          <h3>{{ cancion.titulo }}</h3>
+          <p>{{ cancion.artista }}</p>
+          } @else {
+          <h3>Canción no disponible</h3>
+          <p>Puede haber sido eliminada</p>
+          }
+
+        </div>
+
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+
+      </button>
+
+      }
+
+      @if (!ensayo.canciones?.length) {
+      <p class="muted">
+        Este ensayo no tiene canciones registradas.
+      </p>
+      }
+
+    </section>
+
+    @if (ensayo.observaciones) {
+    <section class="content-section">
+
+      <div class="section-heading">
+        <div>
+          <span>INDICACIONES</span>
+          <h2>Observaciones</h2>
+        </div>
+      </div>
+
+      <div class="observations">
+        {{ ensayo.observaciones }}
+      </div>
+
+    </section>
+    }
+
+    @if (esAdmin) {
+    <section class="admin-actions">
+
+      <button type="button" class="delete-button" [disabled]="eliminando" (click)="eliminarEnsayo()">
+        <ion-icon name="trash-outline"></ion-icon>
+        {{ eliminando ? 'Eliminando...' : 'Eliminar ensayo' }}
+      </button>
+
+      <button type="button" class="edit-button" (click)="editarEnsayo()">
+        <ion-icon name="create-outline"></ion-icon>
+        Editar ensayo
+      </button>
+
+    </section>
+    }
+
+    }
+
+  </div>
+</ion-content>

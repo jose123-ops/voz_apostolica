@@ -1,0 +1,225 @@
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="topbar">
+      <button
+        type="button"
+        class="back-button"
+        (click)="volver()"
+        aria-label="Volver al inicio"
+      >
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+
+      <div class="topbar-title">
+        <span>VOZ APOSTÓLICA</span>
+        <strong>Ensayos musicales</strong>
+      </div>
+
+      <div class="header-icon">
+        <ion-icon name="people-outline"></ion-icon>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher
+    slot="fixed"
+    (ionRefresh)="refrescar($event)"
+  >
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ensayos-container">
+
+    <section class="hero">
+      <div class="hero-icon">
+        <ion-icon name="musical-notes-outline"></ion-icon>
+      </div>
+
+      <span class="eyebrow">ORGANIZACIÓN MUSICAL</span>
+
+      <h1>Nuestros ensayos</h1>
+
+      <p>
+        Organiza las prácticas, prepara las canciones
+        y mantén informado al grupo musical.
+      </p>
+
+      @if (esAdmin) {
+        <button
+          type="button"
+          class="create-button"
+          (click)="crearEnsayo()"
+        >
+          <ion-icon name="add-outline"></ion-icon>
+          Programar ensayo
+        </button>
+      }
+    </section>
+
+    @if (cargando) {
+      <div class="loading">
+        <div class="loader"></div>
+        <p>Cargando ensayos...</p>
+      </div>
+    }
+
+    @if (!cargando && error) {
+      <div class="empty">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <h3>No se pudieron cargar los ensayos</h3>
+        <p>{{ error }}</p>
+
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="cargarEnsayos()"
+        >
+          Reintentar
+        </button>
+      </div>
+    }
+
+    @if (!cargando && !error) {
+
+      <section class="section-block">
+
+        <div class="section-heading">
+          <div>
+            <span>AGENDA</span>
+            <h2>Próximos ensayos</h2>
+          </div>
+
+          <span class="count">
+            {{ proximosEnsayos.length }}
+          </span>
+        </div>
+
+        @for (ensayo of proximosEnsayos; track ensayo.id) {
+
+          <button
+            type="button"
+            class="ensayo-card"
+            (click)="abrirEnsayo(ensayo)"
+          >
+            <div class="card-top">
+              <div class="card-icon">
+                <ion-icon name="calendar-outline"></ion-icon>
+              </div>
+
+              <span class="status upcoming">
+                Próximo
+              </span>
+            </div>
+
+            <h3>{{ ensayo.nombre }}</h3>
+
+            <div class="detail-line">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span>{{ formatearFecha(ensayo.fecha) }}</span>
+            </div>
+
+            <div class="detail-line">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>{{ formatearHora(ensayo.hora) }}</span>
+            </div>
+
+            <div class="detail-line">
+              <ion-icon name="location-outline"></ion-icon>
+              <span>{{ ensayo.lugar || 'Lugar por definir' }}</span>
+            </div>
+
+            <div class="card-footer">
+              <span>
+                <ion-icon name="musical-notes-outline"></ion-icon>
+                {{ ensayo.canciones?.length || 0 }} canciones
+              </span>
+
+              <span class="view-detail">
+                Ver detalle
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+              </span>
+            </div>
+          </button>
+        }
+
+        @if (proximosEnsayos.length === 0) {
+          <div class="empty">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <h3>No hay próximos ensayos</h3>
+            <p>
+              Los ensayos que se programen aparecerán aquí.
+            </p>
+          </div>
+        }
+
+      </section>
+
+      @if (ensayosAnteriores.length > 0) {
+        <section class="section-block">
+
+          <div class="section-heading">
+            <div>
+              <span>HISTORIAL</span>
+              <h2>Ensayos anteriores</h2>
+            </div>
+
+            <span class="count">
+              {{ ensayosAnteriores.length }}
+            </span>
+          </div>
+
+          @for (ensayo of ensayosAnteriores; track ensayo.id) {
+
+            <button
+              type="button"
+              class="ensayo-card past"
+              (click)="abrirEnsayo(ensayo)"
+            >
+              <div class="card-top">
+                <div class="card-icon">
+                  <ion-icon name="calendar-outline"></ion-icon>
+                </div>
+
+                <span class="status completed">
+                  Anterior
+                </span>
+              </div>
+
+              <h3>{{ ensayo.nombre }}</h3>
+
+              <div class="detail-line">
+                <ion-icon name="calendar-outline"></ion-icon>
+                <span>{{ formatearFecha(ensayo.fecha) }}</span>
+              </div>
+
+              <div class="detail-line">
+                <ion-icon name="time-outline"></ion-icon>
+                <span>{{ formatearHora(ensayo.hora) }}</span>
+              </div>
+
+              <div class="card-footer">
+                <span>
+                  <ion-icon name="musical-notes-outline"></ion-icon>
+                  {{ ensayo.canciones?.length || 0 }} canciones
+                </span>
+
+                <span class="view-detail">
+                  Ver detalle
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </span>
+              </div>
+            </button>
+          }
+
+        </section>
+      }
+
+    }
+
+  </div>
+</ion-content>

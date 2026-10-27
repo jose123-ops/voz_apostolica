@@ -101,6 +101,18 @@ export const routes: Routes = [
     import('./detalle-evento/detalle-evento.page')
       .then(m => m.DetalleEventoPage)
 },
+  {
+    path: 'ensayos',
+    loadComponent: () => import('./ensayos/ensayos.page').then( m => m.EnsayosPage)
+  },
+  {
+    path: 'crear-ensayo',
+    loadComponent: () => import('./crear-ensayo/crear-ensayo.page').then( m => m.CrearEnsayoPage)
+  },
+  {
+    path: 'detalle-ensayo',
+    loadComponent: () => import('./detalle-ensayo/detalle-ensayo.page').then( m => m.DetalleEnsayoPage)
+  },
 
 
 

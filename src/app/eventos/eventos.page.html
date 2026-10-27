@@ -1,138 +1,194 @@
-<ion-header>
+
+<ion-header class="ion-no-border">
   <ion-toolbar>
 
     <ion-button
       slot="start"
       fill="clear"
       (click)="volver()"
+      aria-label="Volver al inicio"
     >
-      <ion-icon
-        name="arrow-back-outline"
-      ></ion-icon>
+      <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-button>
 
-    <ion-title>
-      Eventos
-    </ion-title>
+    <ion-title>Eventos</ion-title>
 
     @if (esAdmin) {
-  <ion-button
-    slot="end"
-    fill="clear"
-    (click)="crearEvento()"
-  >
-    <ion-icon
-      name="add-circle-outline"
-    ></ion-icon>
-  </ion-button>
-}
+      <ion-button
+        slot="end"
+        fill="clear"
+        (click)="crearEvento()"
+        aria-label="Crear evento"
+      >
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    }
 
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content>
 
   <div class="eventos-container">
 
+    <!-- ENCABEZADO -->
+
     <div class="encabezado">
 
       <div>
+        <span class="etiqueta">VOZ APOSTÓLICA</span>
+        <h1>Mis eventos</h1>
+        <p>Organiza y consulta tus programas y cultos.</p>
+      </div>
 
-        <h1>
-          Programas y cultos
-        </h1>
-
-        <p>
-          Consulta los eventos y los cantos programados.
-        </p>
-
+      <div class="encabezado-icono">
+        <ion-icon name="calendar-outline"></ion-icon>
       </div>
 
     </div>
 
 
+    <!-- ESTADÍSTICAS -->
+
+    <div class="estadisticas">
+
+      <div class="estadistica principal">
+        <span>Total de eventos</span>
+        <strong>{{ totalEventos }}</strong>
+        <small>Registrados</small>
+      </div>
+
+      <div class="estadistica">
+        <span>Próximos</span>
+        <strong>{{ totalProximos }}</strong>
+        <small>Por realizar</small>
+      </div>
+
+      <div class="estadistica">
+        <span>Anteriores</span>
+        <strong>{{ totalAnteriores }}</strong>
+        <small>Finalizados por fecha</small>
+      </div>
+
+    </div>
+
+
+    <!-- BUSCADOR -->
+
+    <div class="buscador">
+
+      <ion-icon name="search-outline"></ion-icon>
+
+      <input
+        type="search"
+        placeholder="Buscar evento o fecha..."
+        aria-label="Buscar eventos"
+        [value]="busqueda"
+        (input)="actualizarBusqueda($event)"
+      />
+
+      @if (busqueda) {
+        <button
+          type="button"
+          (click)="limpiarBusqueda()"
+          aria-label="Limpiar búsqueda"
+        >
+          ×
+        </button>
+      }
+
+    </div>
+
+
+    <!-- FILTROS -->
+
+    <div class="filtros">
+
+      <button
+        type="button"
+        [class.activo]="filtro === 'proximos'"
+        (click)="cambiarFiltro('proximos')"
+      >
+        Próximos
+      </button>
+
+      <button
+        type="button"
+        [class.activo]="filtro === 'anteriores'"
+        (click)="cambiarFiltro('anteriores')"
+      >
+        Anteriores
+      </button>
+
+      <button
+        type="button"
+        [class.activo]="filtro === 'todos'"
+        (click)="cambiarFiltro('todos')"
+      >
+        Todos
+      </button>
+
+    </div>
+
+
+    <!-- ENCABEZADO LISTADO -->
+
+    <div class="lista-encabezado">
+      <div>
+        <span class="etiqueta">PROGRAMACIÓN</span>
+        <h2>
+          {{
+            filtro === 'proximos'
+              ? 'Próximos eventos'
+              : filtro === 'anteriores'
+                ? 'Eventos anteriores'
+                : 'Todos los eventos'
+          }}
+        </h2>
+      </div>
+
+      <span class="contador">
+        {{ eventosFiltrados.length }}
+      </span>
+    </div>
+
+
+    <!-- CARGANDO -->
+
     @if (cargando) {
 
       <div class="estado">
-
-        <ion-icon
-          name="calendar-outline"
-        ></ion-icon>
-
-        <p>
-          Cargando eventos...
-        </p>
-
+        <div class="loader"></div>
+        <p>Cargando eventos...</p>
       </div>
 
     }
 
+
+    <!-- ERROR -->
 
     @if (!cargando && error) {
 
       <div class="mensaje-error">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <h3>No se pudieron cargar los eventos</h3>
+        <p>{{ error }}</p>
 
-        <ion-icon
-          name="alert-circle-outline"
-        ></ion-icon>
-
-        <p>
-          {{ error }}
-        </p>
-
+        <button type="button" (click)="cargarEventos()">
+          Reintentar
+        </button>
       </div>
 
     }
 
 
-    @if (!cargando && !error && eventos.length === 0) {
+    <!-- EVENTOS -->
 
-      <div class="sin-eventos">
-
-        <ion-icon
-          name="calendar-outline"
-        ></ion-icon>
-
-        <h2>
-          No hay eventos
-        </h2>
-
-        <p>
-          Todavía no se han creado eventos.
-        </p>
-
-        @if (esAdmin) {
-
-          <button
-            class="crear-primer-evento"
-            type="button"
-            (click)="crearEvento()"
-          >
-
-            <ion-icon
-              name="add-circle-outline"
-            ></ion-icon>
-
-            Crear primer evento
-
-          </button>
-
-        }
-
-      </div>
-
-    }
-
-
-    @if (!cargando && eventos.length > 0) {
+    @if (!cargando && !error) {
 
       <div class="lista-eventos">
 
-        @for (
-          evento of eventos;
-          track evento.id
-        ) {
+        @for (evento of eventosFiltrados; track evento.id) {
 
           <button
             class="evento-card"
@@ -140,37 +196,55 @@
             (click)="verEvento(evento.id)"
           >
 
-            <div class="evento-icono">
+            <div class="evento-superior">
+
+              <div class="fecha-cuadro">
+                <strong>{{ obtenerDia(evento.fecha) }}</strong>
+                <span>{{ obtenerMes(evento.fecha) }}</span>
+              </div>
+
+              <div class="evento-info">
+
+                <h3>{{ evento.nombre }}</h3>
+
+                <p>
+                  <ion-icon name="calendar-outline"></ion-icon>
+                  {{ formatearFecha(evento.fecha) }}
+                </p>
+
+                <span
+                  class="estado-etiqueta"
+                  [class.anterior]="esAnterior(evento)"
+                >
+                  {{
+                    esAnterior(evento)
+                      ? 'Evento anterior'
+                      : esProximo(evento)
+                        ? 'Próximo evento'
+                        : 'Fecha no disponible'
+                  }}
+                </span>
+
+              </div>
 
               <ion-icon
-                name="calendar-outline"
-              ></ion-icon>
-
-            </div>
-
-
-            <div class="evento-info">
-
-              <h2>
-                {{ evento.nombre }}
-              </h2>
-
-              <p>
-                {{ formatearFecha(evento.fecha) }}
-              </p>
-
-              <span>
-                Ver programa
-              </span>
-
-            </div>
-
-
-            <div class="evento-flecha">
-
-              <ion-icon
+                class="flecha"
                 name="arrow-forward-outline"
               ></ion-icon>
+
+            </div>
+
+            <div class="evento-inferior">
+
+              <span>
+                <ion-icon name="musical-notes-outline"></ion-icon>
+                {{ cantidadCanciones(evento) }} canciones
+              </span>
+
+              <strong>
+                Ver programa
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+              </strong>
 
             </div>
 
@@ -178,7 +252,79 @@
 
         }
 
+
+        @if (eventosFiltrados.length === 0) {
+
+          <div class="sin-eventos">
+
+            <ion-icon name="calendar-outline"></ion-icon>
+
+            <h2>
+              {{
+                busqueda
+                  ? 'No encontramos resultados'
+                  : filtro === 'proximos'
+                    ? 'No hay próximos eventos'
+                    : filtro === 'anteriores'
+                      ? 'No hay eventos anteriores'
+                      : 'No hay eventos'
+              }}
+            </h2>
+
+            <p>
+              {{
+                busqueda
+                  ? 'Prueba con otro nombre o fecha.'
+                  : 'No hay eventos que coincidan con este filtro.'
+              }}
+            </p>
+
+            @if (esAdmin && eventos.length === 0) {
+
+              <button
+                class="crear-primer-evento"
+                type="button"
+                (click)="crearEvento()"
+              >
+                <ion-icon name="add-circle-outline"></ion-icon>
+                Crear primer evento
+              </button>
+
+            }
+
+            @if (busqueda) {
+
+              <button
+                class="limpiar-filtros"
+                type="button"
+                (click)="limpiarBusqueda()"
+              >
+                Limpiar búsqueda
+              </button>
+
+            }
+
+          </div>
+
+        }
+
       </div>
+
+    }
+
+
+    <!-- BOTÓN CREAR -->
+
+    @if (esAdmin && !cargando && !error && eventos.length > 0) {
+
+      <button
+        class="boton-crear"
+        type="button"
+        (click)="crearEvento()"
+      >
+        <ion-icon name="add-circle-outline"></ion-icon>
+        Crear nuevo evento
+      </button>
 
     }
 

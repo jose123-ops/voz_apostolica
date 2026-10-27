@@ -1,833 +1,848 @@
-ion-content {
-    --background: #070b16;
+
+/* =========================================
+   VOZ APOSTÓLICA
+   DETALLE DE CANCIÓN + NAVEGACIÓN DE EVENTOS
+   ========================================= */
+
+:host {
+  display: block;
+  height: 100%;
+  --ion-background-color: #070b16;
+  --ion-text-color: #ffffff;
+  color: #ffffff;
 }
 
-
-/* ========================= */
-/* HEADER */
-/* ========================= */
+ion-content {
+  --background: #070b16;
+  --color: #ffffff;
+}
 
 ion-toolbar {
-    --background: #0b1020;
-    --border-width: 0;
+  --background: #0b1020;
+  --color: #ffffff;
+  --border-width: 0;
 }
 
+/* =========================================
+   BARRA SUPERIOR
+   ========================================= */
 
 .topbar {
-    height: 64px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 0 18px;
-
-    gap: 14px;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 16px;
 }
-
 
 .topbar-title {
-    flex: 1;
-
-    display: flex;
-    flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-
 
 .topbar-title span {
-    font-size: 10px;
-
-    color: #737b91;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1.5px;
+  color: #8bbcff;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
 }
-
 
 .topbar-title strong {
-    font-size: 16px;
-
-    color: #ffffff;
-
-    margin-top: 2px;
-}
-
-
-.back-button,
-.favorite-button {
-    width: 42px;
-    height: 42px;
-
-    border: none;
-
-    border-radius: 13px;
-
-    background: #151c30;
-
-    color: #dfe4f1;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 21px;
-
-    cursor: pointer;
-}
-
-
-.favorite-button {
-    color: #7f89a5;
-}
-
-
-/* ========================= */
-/* CONTENEDOR */
-/* ========================= */
-
-.detail-container {
-    max-width: 900px;
-
-    margin: 0 auto;
-
-    padding: 25px 18px 60px;
-}
-
-
-/* ========================= */
-/* CABECERA */
-/* ========================= */
-
-.song-header {
-    text-align: center;
-
-    padding: 25px 10px 22px;
-}
-
-
-.music-icon {
-    width: 82px;
-    height: 82px;
-
-    margin: 0 auto 18px;
-
-    border-radius: 25px;
-
-    background: linear-gradient(135deg,
-            #18234b,
-            #30468e);
-
-    color: #ffffff;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 39px;
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, .35);
-}
-
-
-.category {
-    display: inline-block;
-
-    padding: 6px 14px;
-
-    border-radius: 20px;
-
-    background: #18234a;
-
-    color: #8297ff;
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-
-    letter-spacing: .7px;
-
-    margin-bottom: 12px;
-}
-
-
-.song-header h1 {
-    margin: 5px 0 5px;
-
-    color: #ffffff;
-
-    font-size: 30px;
-
-    font-weight: 700;
-
-    text-transform: capitalize;
-}
-
-
-.song-header p {
-    margin: 0;
-
-    color: #858da2;
-
-    font-size: 15px;
-
-    text-transform: capitalize;
-}
-
-
-/* ========================= */
-/* ACCIONES */
-/* ========================= */
-
-.actions {
-    display: flex;
-
-    justify-content: center;
-
-    gap: 10px;
-
-    margin: 4px 0 28px;
-}
-
-
-.action-button {
-    min-height: 44px;
-
-    padding: 0 18px;
-
-    border: 1px solid #202942;
-
-    border-radius: 13px;
-
-    background: #11182a;
-
-    color: #dce1ec;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 8px;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    text-decoration: none;
-
-    cursor: pointer;
-}
-
-
-.action-button ion-icon {
-    font-size: 19px;
-}
-
-
-.action-button.youtube {
-    background: #211416;
-
-    border-color: #432124;
-
-    color: #ff6b73;
-}
-
-
-/* ========================= */
-/* SECCIONES */
-/* ========================= */
-
-.song-section {
-    background: #0d1322;
-
-    border: 1px solid #1b2438;
-
-    border-radius: 20px;
-
-    padding: 22px;
-
-    margin-bottom: 18px;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, .18);
-}
-
-
-.section-title {
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    margin-bottom: 20px;
-}
-
-
-.section-title>ion-icon {
-    width: 42px;
-    height: 42px;
-
-    padding: 10px;
-
-    border-radius: 12px;
-
-    background: #172348;
-
-    color: #8297ff;
-
-    font-size: 20px;
-}
-
-
-.section-title span {
-    display: block;
-
-    color: #69738b;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 1.2px;
-}
-
-
-.section-title h2 {
-    margin: 2px 0 0;
-
-    color: #f2f4f9;
-
-    font-size: 18px;
-}
-
-
-/* ========================= */
-/* ACORDES */
-/* ========================= */
-
-.chords {
-    background: #080d19;
-
-    border: 1px solid #192238;
-
-    border-radius: 14px;
-
-    padding: 18px;
-
-    overflow-x: auto;
-}
-
-
-.chords pre {
-    margin: 0;
-
-    color: #aeb8d0;
-
-    font-family:
-        'Courier New',
-        monospace;
-
-    font-size: 14px;
-
-    line-height: 1.85;
-
-    white-space: pre-wrap;
-}
-
-
-/* ========================= */
-/* LETRA */
-/* ========================= */
-
-.lyrics {
-  color: #e6e9f0;
-
-  font-size: 17px;
-
-  line-height: 1.9;
-
-  padding: 4px 5px;
-}
-
-
-/* ========================= */
-/* ESTROFAS */
-/* ========================= */
-
-.estrofa {
-  white-space: pre-line;
-
-  margin-bottom: 28px;
-
-  padding-bottom: 24px;
-
-  border-bottom: 1px solid #1c263b;
-}
-
-
-.estrofa:last-child {
-  margin-bottom: 0;
-
-  padding-bottom: 0;
-
-  border-bottom: none;
-}
-
-
-/* ========================= */
-/* TEXTO SIN LETRA */
-/* ========================= */
-
-.no-content {
-  color: #69738a;
-
-  font-style: italic;
-}
-
-
-
-/*
- * Cada salto de línea guardado en Firestore
- * se respeta gracias a white-space: pre-wrap.
- *
- * Los espacios entre estrofas también
- * se conservan.
- */
-
-.no-content {
-    color: #69738a;
-
-    font-style: italic;
-}
-
-
-/* ========================= */
-/* YOUTUBE */
-/* ========================= */
-
-.youtube-section {
-    margin-bottom: 20px;
-}
-
-
-.youtube-card {
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 15px;
-
-    border-radius: 15px;
-
-    background: #181116;
-
-    border: 1px solid #352027;
-
-    text-decoration: none;
-
-    color: #ffffff;
-}
-
-
-.youtube-icon {
-    width: 45px;
-    height: 45px;
-
-    border-radius: 13px;
-
-    background: #e21d2e;
-
-    color: white;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 24px;
-}
-
-
-.youtube-card div:nth-child(2) {
-    flex: 1;
-
-    display: flex;
-
-    flex-direction: column;
-}
-
-
-.youtube-card strong {
-    font-size: 14px;
-
-    color: #f3f4f7;
-}
-
-
-.youtube-card span {
-    color: #7d8699;
-
-    font-size: 12px;
-
-    margin-top: 3px;
-}
-
-
-.youtube-card>ion-icon {
-    font-size: 20px;
-
-    color: #717b91;
-}
-
-
-/* ========================= */
-/* CARGANDO */
-/* ========================= */
-
-.loading {
-    min-height: 70vh;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    color: #7e879b;
-}
-
-
-.loader {
-    width: 42px;
-    height: 42px;
-
-    border: 4px solid #1b2438;
-
-    border-top-color: #7187ff;
-
-    border-radius: 50%;
-
-    animation: spin .8s linear infinite;
-
-    margin-bottom: 15px;
-}
-
-
-.loading p {
-    font-size: 14px;
-}
-
-
-@keyframes spin {
-
-    to {
-        transform: rotate(360deg);
-    }
-
-}
-
-
-/* ========================= */
-/* ERROR */
-/* ========================= */
-
-.empty {
-    min-height: 70vh;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    padding: 30px;
-}
-
-
-.empty-icon {
-    width: 70px;
-    height: 70px;
-
-    border-radius: 22px;
-
-    background: #21151a;
-
-    color: #ff6975;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 35px;
-
-    margin-bottom: 15px;
-}
-
-
-.empty h2 {
-    margin: 0 0 8px;
-
-    color: #ffffff;
-}
-
-
-.empty p {
-    margin: 0 0 20px;
-
-    color: #7e879a;
-}
-
-
-.empty .action-button {
-    background: #273568;
-
-    border: none;
-
-    color: white;
-}
-
-
-/* ========================= */
-/* MÓVIL */
-/* ========================= */
-
-@media (max-width: 600px) {
-
-    .detail-container {
-        padding: 15px 12px 45px;
-    }
-
-
-    .song-header {
-        padding-top: 18px;
-    }
-
-
-    .song-header h1 {
-        font-size: 25px;
-    }
-
-
-    .music-icon {
-        width: 70px;
-        height: 70px;
-
-        font-size: 32px;
-    }
-
-
-    .song-section {
-        padding: 18px;
-
-        border-radius: 17px;
-    }
-
-
-    .lyrics {
-        font-size: 16px;
-
-        line-height: 1.9;
-    }
-
-
-    .actions {
-        gap: 8px;
-    }
-
-
-    .action-button {
-        padding: 0 14px;
-    }
-
-/* ========================= */
-/* YOUTUBE */
-/* ========================= */
-
-.youtube-section {
-  overflow: hidden;
-}
-
-
-.youtube-player {
-  width: 100%;
-
-  aspect-ratio: 16 / 9;
-
-  background: #000000;
-
-  border-radius: 15px;
-
-  overflow: hidden;
-
-  border: 1px solid #202a42;
-}
-
-
-.youtube-player iframe {
-  width: 100%;
-
-  height: 100%;
-
-  border: 0;
-
-  display: block;
-}
-
-
-.youtube-link {
-  margin-top: 14px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 8px;
-
-  color: #ff626b;
-
-  font-size: 13px;
-
-  font-weight: 600;
-
-  text-decoration: none;
-}
-
-
-.youtube-link ion-icon {
-  font-size: 18px;
-}
-
-}
-
-/* ========================= */
-/* LETRA */
-/* ========================= */
-
-.lyrics {
-  width: 100%;
-}
-
-.estrofa {
-  margin-bottom: 18px;
-
-  color: #e6e9f0;
-
-  font-size: 17px;
-
-  line-height: 1.7;
-
-  white-space: pre-line;
-
-  word-break: break-word;
-}
-
-.estrofa:last-child {
-  margin-bottom: 0;
-}
-
-@media (max-width: 600px) {
-
-  .estrofa {
-    font-size: 16px;
-    line-height: 1.65;
-    margin-bottom: 16px;
-  }
-
-}
-
-
-/* Número de la estrofa */
-
-.estrofa-number {
-  width: 28px;
-  height: 28px;
-
-  min-width: 28px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 8px;
-
-  background: #18264b;
-
-  color: #8497ff;
-
-  font-size: 11px;
-
+  color: #ffffff;
+  font-size: 16px;
   font-weight: 700;
 }
 
-
-/* Texto */
-
-.estrofa-text {
-
-  flex: 1;
-
-  color: #e6e9f0;
-
-  font-size: 17px;
-
-  line-height: 1.9;
-
-  /*
-   * MUY IMPORTANTE:
-   * conserva los saltos de línea
-   * que escribimos en Firestore.
-   */
-
-  white-space: pre-line;
-
-  word-break: break-word;
-
+.back-button,
+.favorite-button {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 12px;
+  background: #151c30;
+  color: #ffffff;
+  cursor: pointer;
 }
 
+.back-button ion-icon,
+.favorite-button ion-icon {
+  font-size: 22px;
+}
 
-/* ========================= */
-/* MÓVIL */
-/* ========================= */
+.favorite-button.active {
+  color: #ff5c75;
+}
+
+.favorite-button:disabled {
+  opacity: 0.5;
+}
+
+/* =========================================
+   CONTENEDOR PRINCIPAL
+   ========================================= */
+
+.detail-container {
+  width: 100%;
+  max-width: 1000px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 22px 20px 75px;
+  box-sizing: border-box;
+  background: #070b16;
+  color: #ffffff;
+}
+
+/* =========================================
+   INFORMACIÓN DEL EVENTO
+   ========================================= */
+
+.program-context {
+  margin-bottom: 26px;
+  padding: 20px;
+  border: 1px solid #263653;
+  border-radius: 18px;
+  background: #10192c;
+}
+
+.program-context-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.program-icon {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #1b2a4d;
+  color: #4da3ff;
+  font-size: 22px;
+}
+
+.program-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.program-info span {
+  color: #8bbcff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.program-info strong {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.program-list-button {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 11px;
+  background: #1b2a4d;
+  color: #8bbcff;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+/* SECCIÓN ACTUAL */
+
+.program-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 7px 13px;
+  border-radius: 20px;
+  background: #20365a;
+  color: #8bbcff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.section-position {
+  color: #a0aabc;
+  font-size: 12px;
+}
+
+/* PROGRESO */
+
+.program-progress {
+  height: 6px;
+  margin-top: 17px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #2a3549;
+}
+
+.program-progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #2563eb,
+    #4da3ff
+  );
+  transition: width 0.25s ease;
+}
+
+.program-progress-text {
+  margin-top: 9px;
+  color: #8e9bb0;
+  font-size: 11px;
+  text-align: right;
+}
+
+.program-leader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  padding-top: 13px;
+  border-top: 1px solid #293955;
+  color: #c5d7f5;
+  font-size: 12px;
+}
+
+.program-leader ion-icon {
+  color: #4da3ff;
+  font-size: 17px;
+}
+
+/* =========================================
+   CABECERA DE CANCIÓN
+   ========================================= */
+
+.song-header {
+  width: 100%;
+  padding: 20px 10px 24px;
+  text-align: center;
+}
+
+.music-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  background: linear-gradient(
+    135deg,
+    #18234b,
+    #30468e
+  );
+  color: #ffffff;
+  font-size: 35px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.category {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #18234a;
+  color: #8bbcff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.song-header h1 {
+  margin: 8px 0;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-transform: capitalize;
+  overflow-wrap: anywhere;
+}
+
+.song-header p {
+  margin: 7px 0 0;
+  color: #929bad;
+  font-size: 15px;
+  text-transform: capitalize;
+}
+
+/* =========================================
+   ANTERIOR Y SIGUIENTE
+   ========================================= */
+
+.song-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0 26px;
+}
+
+.navigation-button {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 18px;
+  border: 1px solid #334563;
+  border-radius: 12px;
+  background: #17243a;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.navigation-button ion-icon {
+  font-size: 18px;
+}
+
+.navigation-button.next {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.navigation-button:disabled {
+  background: #29313d;
+  color: #a0a8b5;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.navigation-counter {
+  color: #a6b5cf;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================
+   FAVORITOS Y YOUTUBE
+   ========================================= */
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 6px 0 35px;
+}
+
+.action-button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px;
+  border: 1px solid #263653;
+  border-radius: 13px;
+  background: #11182a;
+  color: #dce1ec;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action-button ion-icon {
+  font-size: 19px;
+}
+
+.favorite-action.active {
+  color: #ff5c75;
+  border-color: rgba(255, 92, 117, 0.35);
+  background: rgba(255, 92, 117, 0.08);
+}
+
+.action-button.youtube {
+  background: #211416;
+  border-color: #432124;
+  color: #ff6b73;
+}
+
+.action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   CONTENIDO MUSICAL
+   SIN RECUADROS
+   ========================================= */
+
+.music-content {
+  width: 100%;
+  margin: 0 0 42px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* TÍTULOS */
+
+.content-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.content-title > ion-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background: #172348;
+  color: #8297ff;
+  font-size: 21px;
+}
+
+.content-title span {
+  display: block;
+  color: #8995aa;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.content-title h2 {
+  margin: 3px 0 0;
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+/* =========================================
+   ACORDES AMARILLOS
+   ========================================= */
+
+.chords-section {
+  width: 100%;
+}
+
+.chords {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  background: transparent;
+  border: none;
+}
+
+.chords pre {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #ffd54a;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  tab-size: 4;
+}
+
+/* =========================================
+   LETRA BLANCA SIN RECUADROS
+   ========================================= */
+
+.lyrics-section {
+  width: 100%;
+  margin-top: 10px;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.lyrics {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: #f0f2f7;
+}
+
+.estrofa {
+  width: 100%;
+  margin: 0 0 30px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: #f0f2f7;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.8;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+}
+
+.estrofa:last-child {
+  margin-bottom: 0;
+}
+
+.chord {
+  color: #ffd54a;
+  font-weight: 700;
+}
+
+.no-content {
+  padding: 15px 0;
+  color: #929bad;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* =========================================
+   REPRODUCTOR YOUTUBE
+   ========================================= */
+
+.youtube-section {
+  width: 100%;
+  margin-top: 45px;
+  margin-bottom: 25px;
+}
+
+.youtube-player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid #202a42;
+  border-radius: 15px;
+  background: #000000;
+}
+
+.youtube-player iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* =========================================
+   NAVEGACIÓN INFERIOR
+   ========================================= */
+
+.bottom-program-navigation {
+  margin-top: 35px;
+  padding: 20px;
+  border: 1px solid #263653;
+  border-radius: 18px;
+  background: #10192c;
+}
+
+.bottom-program-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 17px;
+}
+
+.bottom-program-heading span {
+  color: #8bbcff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.bottom-program-heading strong {
+  color: #ffffff;
+  font-size: 17px;
+}
+
+.bottom-program-navigation .song-navigation {
+  margin-bottom: 15px;
+}
+
+.return-program-button {
+  width: 100%;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  border: 1px solid #344b70;
+  border-radius: 12px;
+  background: transparent;
+  color: #8bbcff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.return-program-button ion-icon {
+  font-size: 19px;
+}
+
+.program-complete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px 0;
+  color: #9fd5b2;
+  font-size: 12px;
+}
+
+.program-complete ion-icon {
+  font-size: 19px;
+}
+
+.program-warning {
+  margin: 10px 0 20px;
+  color: #ffb4b4;
+  font-size: 12px;
+}
+
+/* =========================================
+   CARGANDO
+   ========================================= */
+
+.loading {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #929bad;
+}
+
+.loading p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.loader {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 15px;
+  border: 4px solid #1b2438;
+  border-top-color: #7187ff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   ERRORES
+   ========================================= */
+
+.empty {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  border-radius: 22px;
+  background: #21151a;
+  color: #ff6975;
+  font-size: 35px;
+}
+
+.empty h2 {
+  margin: 0 0 8px;
+  color: #ffffff;
+}
+
+.empty p {
+  margin: 0 0 20px;
+  color: #929bad;
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 800px) {
+  .detail-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* =========================================
+   TELÉFONOS
+   ========================================= */
 
 @media (max-width: 600px) {
+  .topbar {
+    padding: 0 10px;
+    gap: 10px;
+  }
+
+  .topbar-title strong {
+    font-size: 14px;
+  }
+
+  .detail-container {
+    padding: 14px 12px 65px;
+  }
+
+  .program-context {
+    padding: 14px;
+  }
+
+  .program-info strong {
+    font-size: 13px;
+  }
+
+  .song-header {
+    padding: 18px 2px;
+  }
+
+  .music-icon {
+    width: 68px;
+    height: 68px;
+    font-size: 31px;
+  }
+
+  .song-header h1 {
+    font-size: 24px;
+  }
+
+  .song-header p {
+    font-size: 14px;
+  }
+
+  .navigation-button {
+    min-height: 43px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .navigation-counter {
+    font-size: 11px;
+  }
+
+  .actions {
+    margin-bottom: 30px;
+  }
+
+  .action-button {
+    min-height: 42px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  .content-title h2 {
+    font-size: 17px;
+  }
+
+  .chords pre {
+    font-size: 15px;
+    line-height: 1.75;
+  }
 
   .estrofa {
-
-    gap: 10px;
-
-    padding: 16px;
-
-    border-radius: 13px;
-
-  }
-
-
-  .estrofa-text {
-
     font-size: 16px;
-
-    line-height: 1.85;
-
+    line-height: 1.75;
+    margin-bottom: 27px;
   }
 
+  .bottom-program-navigation {
+    padding: 14px;
+  }
+
+  .youtube-player {
+    border-radius: 12px;
+  }
 }
 
+/* =========================================
+   TELÉFONOS PEQUEÑOS
+   ========================================= */
+
+@media (max-width: 380px) {
+  .detail-container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .song-header h1 {
+    font-size: 22px;
+  }
+
+  .navigation-button {
+    padding: 0 7px;
+    font-size: 11px;
+  }
+
+  .chords pre {
+    font-size: 14px;
+  }
+
+  .estrofa {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    animation: none;
+  }
+
+  .program-progress-fill {
+    transition: none;
+  }
+}

@@ -1,5 +1,5 @@
-<ion-header>
 
+<ion-header class="ion-no-border">
   <ion-toolbar>
 
     <div class="topbar">
@@ -8,25 +8,17 @@
         type="button"
         class="back-button"
         (click)="volver()"
+        aria-label="Regresar a eventos"
       >
-
-        <ion-icon
-          name="arrow-back-outline">
-        </ion-icon>
-
+        <ion-icon name="arrow-back-outline"></ion-icon>
       </button>
 
-
       <div class="topbar-title">
-
-        <span>PROGRAMACIÓN</span>
-
+        <span>VOZ APOSTÓLICA</span>
         <strong>Detalle del evento</strong>
-
       </div>
 
-
-      @if (esAdmin) {
+      @if (esAdmin && evento) {
 
         <div class="topbar-actions">
 
@@ -34,25 +26,18 @@
             type="button"
             class="edit-button"
             (click)="editarEvento()"
+            aria-label="Editar evento"
           >
-
-            <ion-icon
-              name="create-outline">
-            </ion-icon>
-
+            <ion-icon name="create-outline"></ion-icon>
           </button>
-
 
           <button
             type="button"
             class="delete-button"
-            (click)="eliminarEvento()"
+            (click)="solicitarEliminar()"
+            aria-label="Eliminar evento"
           >
-
-            <ion-icon
-              name="trash-outline">
-            </ion-icon>
-
+            <ion-icon name="trash-outline"></ion-icon>
           </button>
 
         </div>
@@ -62,7 +47,6 @@
     </div>
 
   </ion-toolbar>
-
 </ion-header>
 
 
@@ -70,124 +54,147 @@
 
   <div class="event-container">
 
-
-    <!-- =================================
-         CARGANDO
-         ================================= -->
-
     @if (cargando) {
 
       <div class="estado">
-
         <div class="loader"></div>
-
-        <p>
-          Cargando evento...
-        </p>
-
+        <p>Cargando programación...</p>
       </div>
 
-    }
-
-
-    <!-- =================================
-         ERROR
-         ================================= -->
-
-    @else if (error) {
+    } @else if (error && !evento) {
 
       <div class="error-message">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <h2>Ocurrió un problema</h2>
+        <p>{{ error }}</p>
 
-        <ion-icon
-          name="alert-circle-outline">
-        </ion-icon>
-
-        <p>
-          {{ error }}
-        </p>
-
+        <button
+          type="button"
+          (click)="cargarDatos()"
+        >
+          Reintentar
+        </button>
       </div>
 
-    }
+    } @else if (evento) {
 
-
-    <!-- =================================
-         EVENTO
-         ================================= -->
-
-    @else if (evento) {
-
-
-      <!-- INFORMACIÓN -->
+      <!-- ENCABEZADO -->
 
       <section class="event-header">
 
-        <div class="event-icon">
+        <div class="event-header-top">
 
-          <ion-icon
-            name="calendar-outline">
-          </ion-icon>
+          <div class="event-icon">
+            <ion-icon name="calendar-outline"></ion-icon>
+          </div>
+
+          <div class="event-info">
+            <span class="event-label">PROGRAMA DE CULTO</span>
+            <h1>{{ evento.nombre }}</h1>
+            <p>
+              <ion-icon name="calendar-outline"></ion-icon>
+              {{ formatearFecha(evento.fecha) }}
+            </p>
+          </div>
 
         </div>
 
+        <div class="event-stats">
 
-        <div class="event-info">
+          <div>
+            <ion-icon name="musical-notes-outline"></ion-icon>
+            <span>
+              <strong>{{ obtenerCantidadCanciones() }}</strong>
+              Canciones
+            </span>
+          </div>
 
-          <span class="event-label">
-            EVENTO
-          </span>
-
-          <h1>
-            {{ evento.nombre }}
-          </h1>
-
-          <p>
-            <ion-icon
-              name="calendar-outline">
-            </ion-icon>
-
-            {{ formatearFecha(evento.fecha) }}
-          </p>
-
-          <span class="song-count">
-
-            {{ obtenerCantidadCanciones() }}
-
-            {{
-              obtenerCantidadCanciones() === 1
-                ? 'canción'
-                : 'canciones'
-            }}
-
-          </span>
+          <div>
+            <ion-icon name="list-outline"></ion-icon>
+            <span>
+              <strong>{{ obtenerCantidadSecciones() }}</strong>
+              Secciones
+            </span>
+          </div>
 
         </div>
 
       </section>
 
 
-      <!-- =================================
-           MINISTRACIÓN
-           ================================= -->
+      <!-- ACCIONES PRINCIPALES -->
 
-      @if (evento.ministracion.length > 0) {
+      <div class="acciones-programa">
+
+        @if (obtenerCantidadCanciones() > 0) {
+
+          <button
+            type="button"
+            class="accion-iniciar"
+            (click)="abrirPrimeraCancion()"
+          >
+            <ion-icon name="play-outline"></ion-icon>
+            Iniciar programa
+          </button>
+
+        }
+
+        <button
+          type="button"
+          class="accion-compartir"
+          (click)="compartirWhatsApp()"
+        >
+          <ion-icon name="share-social-outline"></ion-icon>
+          Compartir
+        </button>
+
+      </div>
+
+
+      <!-- TÍTULO DEL PROGRAMA -->
+
+      <div class="programa-titulo">
+
+        <div>
+          <span>ORDEN DEL CULTO</span>
+          <h2>Programación musical</h2>
+        </div>
+
+        <div class="programa-contador">
+          {{ obtenerCantidadSecciones() }}
+          secciones
+        </div>
+
+      </div>
+
+
+      <!-- SECCIONES DINÁMICAS -->
+
+      @for (
+        seccion of secciones;
+        track seccion.clave;
+        let numeroSeccion = $index
+      ) {
 
         <section class="event-section">
 
           <div class="section-title">
 
-            <ion-icon
-              name="musical-notes-outline">
-            </ion-icon>
+            <div class="section-icon">
+              <ion-icon [name]="seccion.icono"></ion-icon>
+            </div>
 
-            <div>
+            <div class="section-info">
+              <span>
+                SECCIÓN {{ numeroSeccion + 1 }}
+                · {{ seccion.subtitulo }}
+              </span>
 
-              <span>ADORACIÓN</span>
+              <h2>{{ seccion.titulo }}</h2>
+            </div>
 
-              <h2>
-                Ministración
-              </h2>
-
+            <div class="section-count">
+              {{ seccion.canciones.length }}
             </div>
 
           </div>
@@ -196,24 +203,24 @@
           <div class="song-list">
 
             @for (
-              item of evento.ministracion;
-              track $index
+              item of seccion.canciones;
+              track $index;
+              let indice = $index
             ) {
 
               <button
                 type="button"
                 class="song-card"
-                (click)="abrirCancion(item.cancionId)"
+                (click)="abrirCancion(
+                  item,
+                  seccion.clave,
+                  indice
+                )"
               >
 
-                <div class="song-icon">
-
-                  <ion-icon
-                    name="musical-note-outline">
-                  </ion-icon>
-
+                <div class="song-number">
+                  {{ indice + 1 }}
                 </div>
-
 
                 <div class="song-info">
 
@@ -221,9 +228,16 @@
                     {{ obtenerNombreCancion(item.cancionId) }}
                   </strong>
 
+                  @if (obtenerArtista(item.cancionId)) {
+                    <span class="song-artist">
+                      {{ obtenerArtista(item.cancionId) }}
+                    </span>
+                  }
+
                   @if (item.dirige) {
 
-                    <span>
+                    <span class="song-leader">
+                      <ion-icon name="person-outline"></ion-icon>
                       Dirige: {{ item.dirige }}
                     </span>
 
@@ -231,11 +245,9 @@
 
                 </div>
 
-
-                <ion-icon
-                  class="arrow"
-                  name="arrow-forward-outline">
-                </ion-icon>
+                <div class="song-arrow">
+                  <ion-icon name="chevron-forward-outline"></ion-icon>
+                </div>
 
               </button>
 
@@ -243,86 +255,14 @@
 
           </div>
 
-        </section>
-
-      }
-
-
-      <!-- =================================
-           LECTURA
-           ================================= -->
-
-      @if (evento.lectura.length > 0) {
-
-        <section class="event-section">
-
-          <div class="section-title">
-
-            <ion-icon
-              name="book-outline">
-            </ion-icon>
-
-            <div>
-
-              <span>PALABRA</span>
-
-              <h2>
-                Cantos para la lectura
-              </h2>
-
-            </div>
-
-          </div>
-
-
-          <div class="song-list">
-
-            @for (
-              item of evento.lectura;
-              track $index
-            ) {
-
-              <button
-                type="button"
-                class="song-card"
-                (click)="abrirCancion(item.cancionId)"
-              >
-
-                <div class="song-icon">
-
-                  <ion-icon
-                    name="musical-note-outline">
-                  </ion-icon>
-
-                </div>
-
-
-                <div class="song-info">
-
-                  <strong>
-                    {{ obtenerNombreCancion(item.cancionId) }}
-                  </strong>
-
-                  @if (item.dirige) {
-
-                    <span>
-                      Dirige: {{ item.dirige }}
-                    </span>
-
-                  }
-
-                </div>
-
-
-                <ion-icon
-                  class="arrow"
-                  name="arrow-forward-outline">
-                </ion-icon>
-
-              </button>
-
-            }
-
+          <div class="section-footer">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            {{ seccion.canciones.length }}
+            {{
+              seccion.canciones.length === 1
+                ? 'canción programada'
+                : 'canciones programadas'
+            }}
           </div>
 
         </section>
@@ -330,278 +270,99 @@
       }
 
 
-      <!-- =================================
-           OFRENDA
-           ================================= -->
-
-      @if (evento.ofrenda.length > 0) {
-
-        <section class="event-section">
-
-          <div class="section-title">
-
-            <ion-icon
-              name="heart-outline">
-            </ion-icon>
-
-            <div>
-
-              <span>OFRENDA</span>
-
-              <h2>
-                Cantos para la ofrenda
-              </h2>
-
-            </div>
-
-          </div>
-
-
-          <div class="song-list">
-
-            @for (
-              item of evento.ofrenda;
-              track $index
-            ) {
-
-              <button
-                type="button"
-                class="song-card"
-                (click)="abrirCancion(item.cancionId)"
-              >
-
-                <div class="song-icon">
-
-                  <ion-icon
-                    name="musical-note-outline">
-                  </ion-icon>
-
-                </div>
-
-
-                <div class="song-info">
-
-                  <strong>
-                    {{ obtenerNombreCancion(item.cancionId) }}
-                  </strong>
-
-                  @if (item.dirige) {
-
-                    <span>
-                      Dirige: {{ item.dirige }}
-                    </span>
-
-                  }
-
-                </div>
-
-
-                <ion-icon
-                  class="arrow"
-                  name="arrow-forward-outline">
-                </ion-icon>
-
-              </button>
-
-            }
-
-          </div>
-
-        </section>
-
-      }
-
-
-      <!-- =================================
-           ESPECIALES
-           ================================= -->
-
-      @if (evento.especiales.length > 0) {
-
-        <section class="event-section">
-
-          <div class="section-title">
-
-            <ion-icon
-              name="star-outline">
-            </ion-icon>
-
-            <div>
-
-              <span>PARTICIPACIÓN</span>
-
-              <h2>
-                Cantos especiales
-              </h2>
-
-            </div>
-
-          </div>
-
-
-          <div class="song-list">
-
-            @for (
-              item of evento.especiales;
-              track $index
-            ) {
-
-              <button
-                type="button"
-                class="song-card"
-                (click)="abrirCancion(item.cancionId)"
-              >
-
-                <div class="song-icon">
-
-                  <ion-icon
-                    name="musical-note-outline">
-                  </ion-icon>
-
-                </div>
-
-
-                <div class="song-info">
-
-                  <strong>
-                    {{ obtenerNombreCancion(item.cancionId) }}
-                  </strong>
-
-                  @if (item.dirige) {
-
-                    <span>
-                      Dirige: {{ item.dirige }}
-                    </span>
-
-                  }
-
-                </div>
-
-
-                <ion-icon
-                  class="arrow"
-                  name="arrow-forward-outline">
-                </ion-icon>
-
-              </button>
-
-            }
-
-          </div>
-
-        </section>
-
-      }
-
-
-      <!-- =================================
-           DESPEDIDA
-           ================================= -->
-
-      @if (evento.despedida.length > 0) {
-
-        <section class="event-section">
-
-          <div class="section-title">
-
-            <ion-icon
-              name="musical-note-outline">
-            </ion-icon>
-
-            <div>
-
-              <span>CIERRE</span>
-
-              <h2>
-                Cantos para despedir
-              </h2>
-
-            </div>
-
-          </div>
-
-
-          <div class="song-list">
-
-            @for (
-              item of evento.despedida;
-              track $index
-            ) {
-
-              <button
-                type="button"
-                class="song-card"
-                (click)="abrirCancion(item.cancionId)"
-              >
-
-                <div class="song-icon">
-
-                  <ion-icon
-                    name="musical-note-outline">
-                  </ion-icon>
-
-                </div>
-
-
-                <div class="song-info">
-
-                  <strong>
-                    {{ obtenerNombreCancion(item.cancionId) }}
-                  </strong>
-
-                  @if (item.dirige) {
-
-                    <span>
-                      Dirige: {{ item.dirige }}
-                    </span>
-
-                  }
-
-                </div>
-
-
-                <ion-icon
-                  class="arrow"
-                  name="arrow-forward-outline">
-                </ion-icon>
-
-              </button>
-
-            }
-
-          </div>
-
-        </section>
-
-      }
-
-
-      <!-- =================================
-           SIN CANCIONES
-           ================================= -->
+      <!-- SIN CANCIONES -->
 
       @if (obtenerCantidadCanciones() === 0) {
 
         <div class="empty">
-
-          <ion-icon
-            name="musical-notes-outline">
-          </ion-icon>
-
-          <h2>
-            Sin canciones
-          </h2>
-
+          <ion-icon name="musical-notes-outline"></ion-icon>
+          <h2>Sin canciones programadas</h2>
           <p>
             Este evento todavía no tiene canciones asignadas.
           </p>
-
         </div>
 
+      }
+
+
+      <!-- COPIAR -->
+
+      @if (obtenerCantidadCanciones() > 0) {
+
+        <button
+          type="button"
+          class="copiar-programa"
+          (click)="copiarPrograma()"
+        >
+          <ion-icon name="copy-outline"></ion-icon>
+          Copiar programación
+        </button>
+
+      }
+
+
+      @if (error) {
+        <div class="error-inline">
+          {{ error }}
+        </div>
       }
 
     }
 
   </div>
+
+
+  <!-- CONFIRMACIÓN DE ELIMINACIÓN -->
+
+  @if (mostrarConfirmacion) {
+
+    <div class="modal-overlay">
+
+      <div
+        class="modal-confirmacion"
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="titulo-eliminar"
+        aria-describedby="mensaje-eliminar"
+      >
+
+        <div class="modal-icono">
+          <ion-icon name="trash-outline"></ion-icon>
+        </div>
+
+        <h2 id="titulo-eliminar">¿Eliminar evento?</h2>
+
+        <p id="mensaje-eliminar">
+          Esta acción eliminará permanentemente
+          la programación del evento.
+        </p>
+
+        <div class="modal-botones">
+
+          <button
+            type="button"
+            class="cancelar"
+            [disabled]="eliminando"
+            (click)="cancelarEliminar()"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="button"
+            class="confirmar"
+            [disabled]="eliminando"
+            (click)="confirmarEliminar()"
+          >
+            {{ eliminando ? 'Eliminando...' : 'Sí, eliminar' }}
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
 
 </ion-content>
