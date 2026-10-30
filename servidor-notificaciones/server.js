@@ -4,7 +4,25 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
-const admin = require('firebase-admin');
+
+const {
+  initializeApp,
+  cert
+} = require('firebase-admin/app');
+
+const {
+  getAuth
+} = require('firebase-admin/auth');
+
+const {
+  getFirestore,
+  FieldValue
+} = require('firebase-admin/firestore');
+
+const {
+  getMessaging
+} = require('firebase-admin/messaging');
+
 
 const app = express();
 
@@ -34,14 +52,19 @@ if (!ADMIN_UID) {
   );
 }
 
-admin.initializeApp({
-  credential: admin.credential.cert(
+
+initializeApp({
+  credential: cert(
     JSON.parse(credenciales)
   )
 });
 
-const db = admin.firestore();
-const messaging = admin.messaging();
+const db = getFirestore();
+const auth = getAuth();
+const messaging = getMessaging();
+
+console.log('Firebase Admin inicializado correctamente');
+
 
 // ========================================
 // MIDDLEWARES
@@ -79,11 +102,11 @@ async function verificarAdmin(req, res, next) {
     const token =
       autorizacion.substring(7);
 
-    const usuario =
-      await admin.auth().verifyIdToken(
-        token,
-        true
-      );
+ const usuario =
+  await auth.verifyIdToken(
+    token,
+    true
+  );
 
     if (usuario.uid !== ADMIN_UID) {
       return res.status(403).json({
@@ -220,8 +243,7 @@ app.post(
           tipo,
           documentoId,
           creadoPor: req.usuario.uid,
-          fecha: admin.firestore
-            .FieldValue.serverTimestamp(),
+         fecha: FieldValue.serverTimestamp(),
           estado: 'procesando'
         });
       } catch (error) {
