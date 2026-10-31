@@ -362,69 +362,26 @@ app.post(
                 const lote =
                     listaTokens.slice(i, i + 500);
 
-                const respuesta =
-                    await messaging.sendEachForMulticast({
 
-                        tokens: lote,
+                const respuesta = await messaging.sendEachForMulticast({
+                    tokens: lote,
 
-                        notification: {
-                            title: `Voz Apostólica - ${titulo}`,
-                            body: cuerpo
-                        },
+                    data: {
+                        titulo: `Voz Apostólica - ${titulo}`,
+                        mensaje: cuerpo,
+                        tipo: tipo,
+                        documentoId: documentoId,
+                        ruta: configuracion.ruta
+                    },
 
-
-                        webpush: {
-                            headers: {
-                                Urgency: 'high',
-                                TTL: '86400'
-                            },
-
-                            notification: {
-                                icon: `${ORIGEN}/icons/icon-192x192.png`
-                            },
-
-                            fcmOptions: {
-                                link: ORIGEN + configuracion.ruta
-                            }
-                        },
-
-
-                        data: {
-                            tipo,
-                            documentoId,
-                            ruta: configuracion.ruta
+                    webpush: {
+                        headers: {
+                            Urgency: 'high',
+                            TTL: '86400'
                         }
-
-                    });
-
-                enviados += respuesta.successCount;
-                fallidos += respuesta.failureCount;
-
-
-                respuesta.responses.forEach((resultado, indice) => {
-
-                    if (resultado.success) {
-                        return;
                     }
-
-                    const codigo =
-                        resultado.error?.code || 'desconocido';
-
-                    console.warn(
-                        '[FCM] Error en destinatario:',
-                        i + indice,
-                        'Código:',
-                        codigo
-                    );
-
-                    if (
-                        codigo ===
-                        'messaging/registration-token-not-registered'
-                    ) {
-                        tokensInvalidos.add(lote[indice]);
-                    }
-
                 });
+
 
             }
 
