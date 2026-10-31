@@ -292,6 +292,47 @@ app.post(
 
             if (listaTokens.length === 0) {
 
+
+                if (tokensInvalidos.size > 0) {
+
+                    try {
+
+                        for (const dispositivo of dispositivos.docs) {
+
+                            const actuales =
+                                dispositivo.data().tokens || [];
+
+                            const eliminar = actuales.filter(
+                                token => tokensInvalidos.has(token)
+                            );
+
+                            if (eliminar.length > 0) {
+
+                                await dispositivo.ref.update({
+                                    tokens: FieldValue.arrayRemove(
+                                        ...eliminar
+                                    )
+                                });
+
+                            }
+                        }
+
+                        console.log(
+                            'Tokens FCM inválidos eliminados:',
+                            tokensInvalidos.size
+                        );
+
+                    } catch (error) {
+
+                        console.error(
+                            'No se pudieron limpiar algunos tokens:',
+                            error
+                        );
+
+                    }
+                }
+
+
                 await controlRef.update({
                     estado: 'sin_destinatarios'
                 });
@@ -308,6 +349,8 @@ app.post(
 
             let enviados = 0;
             let fallidos = 0;
+
+            const tokensInvalidos = new Set();
 
             // FCM permite lotes de hasta 500 tokens
             for (
@@ -356,6 +399,33 @@ app.post(
 
                 enviados += respuesta.successCount;
                 fallidos += respuesta.failureCount;
+
+
+                respuesta.responses.forEach((resultado, indice) => {
+
+                    if (resultado.success) {
+                        return;
+                    }
+
+                    const codigo =
+                        resultado.error?.code || 'desconocido';
+
+                    console.warn(
+                        '[FCM] Error en destinatario:',
+                        i + indice,
+                        'Código:',
+                        codigo
+                    );
+
+                    if (
+                        codigo ===
+                        'messaging/registration-token-not-registered'
+                    ) {
+                        tokensInvalidos.add(lote[indice]);
+                    }
+
+                });
+
             }
 
             await controlRef.update({
