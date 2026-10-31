@@ -1,31 +1,69 @@
-/* =========================================
-   COLORES GENERALES
-   ========================================= */
+
+/* ==========================================
+   COLORES DEL HOME
+========================================== */
 
 :host {
   --app-bg: #0b0f14;
   --card-bg: #151b23;
+  --card-hover: #19212c;
   --border-color: #252e3a;
   --primary-color: #4da3ff;
   --text-primary: #ffffff;
   --text-secondary: #8d98a8;
+  --nav-bg: #11161d;
+  --input-placeholder: #788392;
+  --soft-bg: #202832;
+  --ensayo-bg: #10272a;
+  --ensayo-bg-end: #142027;
+  --profile-bg: #1b2a4d;
+  --profile-border: #29375c;
+  --profile-text: #8ea1ff;
 }
+
+/* MODO CLARO */
+
+:host-context(.tema-claro) {
+  --app-bg: #f4f7fb;
+  --card-bg: #ffffff;
+  --card-hover: #edf4fc;
+  --border-color: #e2e8f0;
+  --primary-color: #2563eb;
+  --text-primary: #172033;
+  --text-secondary: #64748b;
+  --nav-bg: #ffffff;
+  --input-placeholder: #94a3b8;
+  --soft-bg: #eaf1fb;
+  --ensayo-bg: #e9faf6;
+  --ensayo-bg-end: #f2fcfa;
+  --profile-bg: #e8efff;
+  --profile-border: #cbd9fa;
+  --profile-text: #2563eb;
+}
+
+/* FONDO GENERAL */
 
 ion-content {
   --background: var(--app-bg);
+  --color: var(--text-primary);
 }
 
 ion-toolbar {
   --background: var(--app-bg);
-  --color: white;
-
+  --color: var(--text-primary);
   padding: 10px 16px;
 }
 
+ion-footer {
+  background: var(--nav-bg);
+}
 
-/* =========================================
-   ENCABEZADO
-   ========================================= */
+button,
+input {
+  font-family: inherit;
+}
+
+/* ENCABEZADO */
 
 .topbar {
   display: flex;
@@ -49,7 +87,7 @@ ion-toolbar {
   margin: 6px 0 4px;
   font-size: 27px;
   font-weight: 800;
-  color: white;
+  color: var(--text-primary);
 }
 
 .brand-info p {
@@ -63,43 +101,58 @@ ion-toolbar {
   font-size: 25px;
 }
 
+/* BOTONES SUPERIORES */
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.theme-button,
 .profile-button {
   width: 46px;
   height: 46px;
-  flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 15px;
-  border: 1px solid #29375c;
-
-  background: #1b2a4d;
-  color: #8ea1ff;
-
+  border: 1px solid var(--profile-border);
+  background: var(--profile-bg);
+  color: var(--profile-text);
   font-size: 23px;
 }
 
+.theme-button {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-/* =========================================
-   CONTENEDOR
-   ========================================= */
+.theme-button:hover {
+  transform: translateY(-2px);
+}
+
+.theme-button:active {
+  transform: scale(0.95);
+}
+
+.theme-button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+/* CONTENEDOR */
 
 .home-container {
   width: 100%;
   max-width: 1100px;
-
   margin: 0 auto;
-  padding: 18px 18px 110px;
-
+  padding: 24px 18px 110px;
   box-sizing: border-box;
 }
 
-
-/* =========================================
-   BUSCADOR
-   ========================================= */
+/* BUSCADOR */
 
 .search-section {
   margin-bottom: 32px;
@@ -108,28 +161,25 @@ ion-toolbar {
 .search-box {
   width: 100%;
   height: 54px;
-
   display: flex;
   align-items: center;
   gap: 12px;
-
   padding: 0 16px;
-
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 16px;
-
+  box-sizing: border-box;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-box:focus-within {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.12);
 }
 
 .search-icon {
   font-size: 21px;
-  color: #788392;
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 
@@ -137,19 +187,15 @@ ion-toolbar {
   flex: 1;
   min-width: 0;
   height: 100%;
-
   border: none;
   outline: none;
-
   background: transparent;
-  color: white;
-
+  color: var(--text-primary);
   font-size: 14px;
-  font-family: inherit;
 }
 
 .search-box input::placeholder {
-  color: #788392;
+  color: var(--input-placeholder);
   opacity: 1;
 }
 
@@ -160,23 +206,18 @@ ion-toolbar {
 .clear-search {
   width: 28px;
   height: 28px;
-
   border: none;
   border-radius: 50%;
-
-  background: #29313d;
-  color: white;
-
+  background: var(--soft-bg);
+  color: var(--text-primary);
   font-size: 20px;
   cursor: pointer;
 }
 
+/* SECCIONES */
 
-/* =========================================
-   SECCIONES
-   ========================================= */
-
-section {
+.quick-section,
+.songs-section {
   margin-bottom: 32px;
 }
 
@@ -185,7 +226,6 @@ section {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-
   margin-bottom: 17px;
 }
 
@@ -200,7 +240,7 @@ section {
   margin: 5px 0 0;
   font-size: 21px;
   font-weight: 750;
-  color: white;
+  color: var(--text-primary);
 }
 
 .section-description {
@@ -209,10 +249,7 @@ section {
   color: var(--text-secondary);
 }
 
-
-/* =========================================
-   ACCESOS RÁPIDOS
-   ========================================= */
+/* ACCESOS RÁPIDOS */
 
 .quick-grid {
   display: grid;
@@ -222,24 +259,18 @@ section {
 
 .quick-card {
   position: relative;
-
   min-height: 137px;
   padding: 17px;
-
   border: 1px solid var(--border-color);
   border-radius: 18px;
-
   background: var(--card-bg);
-  color: white;
-
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-
   text-align: left;
   cursor: pointer;
-
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -248,8 +279,8 @@ section {
 
 .quick-card:hover {
   transform: translateY(-3px);
-  border-color: #36445a;
-  background: #19212c;
+  border-color: var(--primary-color);
+  background: var(--card-hover);
 }
 
 .quick-card:active {
@@ -259,26 +290,21 @@ section {
 .icon-box {
   width: 45px;
   height: 45px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 13px;
-
-  background: #202832;
+  background: var(--soft-bg);
   color: var(--primary-color);
-
   font-size: 23px;
 }
 
 .quick-info strong {
   display: block;
   margin-bottom: 5px;
-
   font-size: 15px;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
 }
 
 .quick-info span {
@@ -287,16 +313,11 @@ section {
   color: var(--text-secondary);
 }
 
-
-/* COLORES POR ACCESO */
-
-.quick-card.agregar {
-  border-color: #29375c;
-}
+/* COLORES DE CADA ACCESO */
 
 .quick-card.agregar .icon-box {
-  background: #1b2a4d;
-  color: #8ea1ff;
+  background: rgba(99, 102, 241, 0.14);
+  color: #818cf8;
 }
 
 .quick-card.canciones .icon-box {
@@ -314,15 +335,21 @@ section {
   color: #ad8cff;
 }
 
-.quick-card.youtube .icon-box {
-  background: rgba(255, 85, 85, 0.12);
-  color: #ff6b73;
+.quick-card.ensayos {
+  border-color: rgba(20, 184, 166, 0.25);
+  background: linear-gradient(
+    135deg,
+    var(--ensayo-bg),
+    var(--ensayo-bg-end)
+  );
 }
 
+.quick-card.ensayos .icon-box {
+  background: rgba(20, 184, 166, 0.14);
+  color: #14b8a6;
+}
 
-/* =========================================
-   BIBLIOTECA
-   ========================================= */
+/* BIBLIOTECA */
 
 .songs-section {
   margin-top: 34px;
@@ -333,16 +360,12 @@ section {
   align-items: center;
   gap: 5px;
   flex-shrink: 0;
-
   padding: 8px 0;
-
   border: none;
   background: transparent;
-
   color: var(--primary-color);
   font-size: 13px;
   font-weight: 600;
-
   cursor: pointer;
 }
 
@@ -356,30 +379,21 @@ section {
   gap: 11px;
 }
 
-
-/* =========================================
-   TARJETAS DE CANCIONES
-   ========================================= */
+/* TARJETAS DE CANCIONES */
 
 .song-card {
   width: 100%;
   min-height: 82px;
-
   display: flex;
   align-items: center;
   gap: 14px;
-
   padding: 14px;
-
   border: 1px solid var(--border-color);
   border-radius: 16px;
-
   background: var(--card-bg);
-  color: white;
-
+  color: var(--text-primary);
   text-align: left;
   cursor: pointer;
-
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
@@ -387,8 +401,8 @@ section {
 }
 
 .song-card:hover {
-  background: #19212c;
-  border-color: #36445a;
+  background: var(--card-hover);
+  border-color: var(--primary-color);
 }
 
 .song-card:active {
@@ -399,16 +413,12 @@ section {
   width: 49px;
   height: 49px;
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 14px;
-
   background: rgba(77, 163, 255, 0.12);
   color: var(--primary-color);
-
   font-size: 24px;
 }
 
@@ -419,11 +429,9 @@ section {
 
 .song-info h3 {
   margin: 0;
-
-  color: white;
+  color: var(--text-primary);
   font-size: 15px;
   font-weight: 700;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -431,10 +439,8 @@ section {
 
 .song-info p {
   margin: 5px 0;
-
   color: var(--text-secondary);
   font-size: 12px;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -442,13 +448,10 @@ section {
 
 .category {
   display: inline-block;
-
   padding: 4px 9px;
   border-radius: 20px;
-
   background: rgba(77, 163, 255, 0.09);
   color: var(--primary-color);
-
   font-size: 10px;
   font-weight: 600;
   text-transform: capitalize;
@@ -458,23 +461,16 @@ section {
   width: 39px;
   height: 39px;
   flex-shrink: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   background: var(--primary-color);
-  color: white;
-
+  color: #ffffff;
   font-size: 18px;
 }
 
-
-/* =========================================
-   CARGANDO
-   ========================================= */
+/* CARGANDO */
 
 .loading {
   padding: 50px 20px;
@@ -485,13 +481,10 @@ section {
 .loader {
   width: 30px;
   height: 30px;
-
   margin: 0 auto 13px;
-
-  border: 3px solid rgba(255, 255, 255, 0.1);
+  border: 3px solid var(--border-color);
   border-top-color: var(--primary-color);
   border-radius: 50%;
-
   animation: spin 0.8s linear infinite;
 }
 
@@ -501,20 +494,14 @@ section {
   }
 }
 
-
-/* =========================================
-   ESTADO VACÍO
-   ========================================= */
+/* SIN RESULTADOS Y ERRORES */
 
 .empty {
   padding: 42px 20px;
-
   text-align: center;
-
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 17px;
-
   color: var(--text-secondary);
 }
 
@@ -525,7 +512,7 @@ section {
 
 .empty h3 {
   margin: 12px 0 6px;
-  color: white;
+  color: var(--text-primary);
   font-size: 17px;
 }
 
@@ -538,57 +525,40 @@ section {
 .retry-button {
   margin-top: 18px;
   padding: 11px 20px;
-
   border: none;
   border-radius: 11px;
-
-  background: #1b2a4d;
-  color: #8ea1ff;
-
+  background: var(--profile-bg);
+  color: var(--profile-text);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
 }
 
-
-/* =========================================
-   NAVEGACIÓN INFERIOR
-   ========================================= */
-
-ion-footer {
-  background: #11161d;
-}
+/* NAVEGACIÓN INFERIOR */
 
 .bottom-nav {
   min-height: 70px;
-
   display: flex;
   align-items: center;
   justify-content: space-around;
-
   padding-bottom: env(safe-area-inset-bottom, 0px);
-
   border-top: 1px solid var(--border-color);
-  background: #11161d;
+  background: var(--nav-bg);
 }
 
 .nav-item {
   flex: 1;
   min-height: 65px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 5px;
-
   border: none;
   background: transparent;
-
-  color: #687381;
+  color: var(--text-secondary);
   font-size: 11px;
   font-weight: 500;
-
   cursor: pointer;
 }
 
@@ -596,44 +566,35 @@ ion-footer {
   font-size: 22px;
 }
 
-.nav-item.active {
+.nav-item.active,
+.nav-item:hover {
   color: var(--primary-color);
 }
 
-.nav-item:hover {
-  color: #a5cfff;
-}
-
-
-/* =========================================
-   TABLET Y COMPUTADORA
-   ========================================= */
+/* TABLET Y COMPUTADORA */
 
 @media (min-width: 700px) {
-
   .quick-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-
-  .home-container {
-    padding-top: 24px;
-  }
-
 }
 
-
-/* =========================================
-   CELULARES PEQUEÑOS
-   ========================================= */
+/* CELULARES PEQUEÑOS */
 
 @media (max-width: 420px) {
-
   ion-toolbar {
     padding: 8px 10px;
   }
 
   .brand-info h1 {
     font-size: 23px;
+  }
+
+  .theme-button,
+  .profile-button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
 
   .home-container {
@@ -665,50 +626,12 @@ ion-footer {
   .song-info h3 {
     font-size: 14px;
   }
-
 }
-
-
-/* =========================================
-   ACCESIBILIDAD
-   ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
-
   .quick-card,
-  .song-card {
+  .song-card,
+  .theme-button {
     transition: none;
   }
-
-}
-
-
-/* ==========================================
-   TARJETA DE ENSAYOS
-   ========================================== */
-
-.quick-card.ensayos {
-  border: 1px solid rgba(20, 184, 166, 0.22);
-  background: linear-gradient(
-    135deg,
-    #10272a,
-    #142027
-  );
-}
-
-.quick-card.ensayos .icon-box {
-  background: rgba(20, 184, 166, 0.14);
-  color: #2dd4bf;
-}
-
-.quick-card.ensayos .quick-info strong {
-  color: #ffffff;
-}
-
-.quick-card.ensayos .quick-info span {
-  color: #94a3b8;
-}
-
-.quick-card.ensayos:active {
-  transform: scale(0.97);
 }

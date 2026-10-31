@@ -1,31 +1,151 @@
 
-ion-content {
-  --background: #050816;
+/* ==========================================
+   VOZ APOSTÓLICA
+   MÓDULO FAVORITOS
+   MODO OSCURO Y CLARO
+========================================== */
+
+/* ==========================================
+   1. VARIABLES MODO OSCURO
+========================================== */
+
+:host {
+  display: block;
+  height: 100%;
+
+  --fondo: #050816;
+  --toolbar: #080d1f;
+  --texto: #ffffff;
+
+  --boton-volver: #111a31;
+  --texto-superior: #7e8aa8;
+
+  --rosa-fondo: #1b1730;
+  --rosa: #e879a9;
+
+  --subtitulo: #7180a2;
+
+  --contador-fondo: #121c35;
+  --contador-texto: #9eafff;
+
+  --tarjeta: #0b1124;
+  --tarjeta-borde: #1c2742;
+  --tarjeta-hover: #0e162d;
+  --borde-hover: #33466f;
+
+  --icono-fondo: #111c3b;
+  --icono-color: #9eafff;
+
+  --descripcion: #8994ae;
+
+  --categoria-fondo: #151e36;
+  --categoria-texto: #8190b4;
+
+  --flecha: #53617f;
+
+  --vacio-icono-fondo: #111a31;
+  --vacio-icono-color: #7584a8;
+  --vacio-texto: #7f8aa5;
+
+  --accion-fondo: #1b2a4d;
+  --accion-texto: #aab8ff;
+
+  --cargando: #7885a4;
+  --loader-borde: #1b2743;
+  --loader-activo: #8799ff;
+
+  --ion-background-color: var(--fondo);
+  --ion-text-color: var(--texto);
+
+  color: var(--texto);
 }
 
+/* ==========================================
+   2. VARIABLES MODO CLARO
+========================================== */
 
-/* ================================
-   TOPBAR
-================================ */
+:host-context(.tema-claro),
+:host(.tema-claro) {
+  --fondo: #f4f7fb;
+  --toolbar: #ffffff;
+  --texto: #172033;
+
+  --boton-volver: #eaf1ff;
+  --texto-superior: #64748b;
+
+  --rosa-fondo: #fce7f3;
+  --rosa: #db2777;
+
+  --subtitulo: #64748b;
+
+  --contador-fondo: #e0e7ff;
+  --contador-texto: #4338ca;
+
+  --tarjeta: #ffffff;
+  --tarjeta-borde: #e2e8f0;
+  --tarjeta-hover: #f8fbff;
+  --borde-hover: #93b4e8;
+
+  --icono-fondo: #eaf1ff;
+  --icono-color: #4f46e5;
+
+  --descripcion: #64748b;
+
+  --categoria-fondo: #f1f5f9;
+  --categoria-texto: #475569;
+
+  --flecha: #94a3b8;
+
+  --vacio-icono-fondo: #eaf1ff;
+  --vacio-icono-color: #64748b;
+  --vacio-texto: #64748b;
+
+  --accion-fondo: #dbeafe;
+  --accion-texto: #1d4ed8;
+
+  --cargando: #64748b;
+  --loader-borde: #e2e8f0;
+  --loader-activo: #4f46e5;
+
+  --ion-background-color: var(--fondo);
+  --ion-text-color: var(--texto);
+
+  color: var(--texto);
+}
+
+/* ==========================================
+   3. FONDO Y TOOLBAR
+========================================== */
+
+ion-content {
+  --background: var(--fondo);
+  --color: var(--texto);
+}
 
 ion-toolbar {
-  --background: #080d1f;
+  --background: var(--toolbar);
+  --color: var(--texto);
   --border-width: 0;
 }
 
+/* ==========================================
+   4. BARRA SUPERIOR
+========================================== */
 
 .topbar {
   min-height: 70px;
+
   display: flex;
   align-items: center;
   gap: 14px;
+
   padding: 0 18px;
 }
-
 
 .back-button {
   width: 44px;
   height: 44px;
+
   border: 0;
   border-radius: 12px;
 
@@ -33,41 +153,37 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
 
-  background: #111a31;
-  color: #ffffff;
+  background: var(--boton-volver);
+  color: var(--texto);
 
   cursor: pointer;
 }
-
 
 .back-button ion-icon {
   font-size: 22px;
 }
 
-
 .topbar-title {
   flex: 1;
+  min-width: 0;
 
   display: flex;
   flex-direction: column;
-
   gap: 2px;
 }
 
-
 .topbar-title span {
-  color: #7e8aa8;
+  color: var(--texto-superior);
+
   font-size: 11px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 
-
 .topbar-title strong {
-  color: #ffffff;
+  color: var(--texto);
   font-size: 18px;
 }
-
 
 .topbar-icon {
   width: 44px;
@@ -79,27 +195,29 @@ ion-toolbar {
 
   border-radius: 12px;
 
-  background: #1b1730;
-  color: #e879a9;
+  background: var(--rosa-fondo);
+  color: var(--rosa);
 }
-
 
 .topbar-icon ion-icon {
   font-size: 22px;
 }
 
-
-/* ================================
-   CONTENEDOR
-================================ */
+/* ==========================================
+   5. CONTENEDOR PRINCIPAL
+========================================== */
 
 .page-container {
   width: min(900px, 100%);
   margin: 0 auto;
 
   padding: 30px 20px 50px;
+  box-sizing: border-box;
 }
 
+/* ==========================================
+   6. ENCABEZADO
+========================================== */
 
 .page-heading {
   display: flex;
@@ -107,36 +225,32 @@ ion-toolbar {
   justify-content: space-between;
 
   gap: 20px;
-
   margin-bottom: 24px;
 }
 
-
 .page-heading span {
-  color: #7180a2;
+  color: var(--subtitulo);
 
   font-size: 11px;
   font-weight: 600;
-
   letter-spacing: 1.5px;
 }
-
 
 .page-heading h1 {
   margin: 5px 0 0;
 
-  color: #ffffff;
+  color: var(--texto);
 
   font-size: 28px;
   font-weight: 700;
 }
-
 
 .count {
   min-width: 42px;
   height: 42px;
 
   padding: 0 12px;
+  box-sizing: border-box;
 
   border-radius: 12px;
 
@@ -144,18 +258,16 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
 
-  background: #121c35;
-
-  color: #9eafff;
+  background: var(--contador-fondo);
+  color: var(--contador-texto);
 
   font-size: 16px;
   font-weight: 700;
 }
 
-
-/* ================================
-   LISTA DE CANCIONES
-================================ */
+/* ==========================================
+   7. LISTA DE CANCIONES
+========================================== */
 
 .songs-list {
   display: flex;
@@ -163,28 +275,23 @@ ion-toolbar {
   gap: 12px;
 }
 
-
 .song-card {
   width: 100%;
-
   min-height: 88px;
 
   padding: 14px 16px;
 
   display: flex;
   align-items: center;
-
   gap: 14px;
 
-  border: 1px solid #1c2742;
+  border: 1px solid var(--tarjeta-borde);
   border-radius: 18px;
 
-  background: #0b1124;
-
-  color: #ffffff;
+  background: var(--tarjeta);
+  color: var(--texto);
 
   text-align: left;
-
   cursor: pointer;
 
   transition:
@@ -193,20 +300,20 @@ ion-toolbar {
     background 0.2s ease;
 }
 
-
 .song-card:hover {
   transform: translateY(-2px);
 
-  border-color: #33466f;
-
-  background: #0e162d;
+  border-color: var(--borde-hover);
+  background: var(--tarjeta-hover);
 }
 
+/* ==========================================
+   8. ICONO DE CANCIÓN
+========================================== */
 
 .song-icon {
   width: 48px;
   height: 48px;
-
   flex-shrink: 0;
 
   border-radius: 14px;
@@ -215,27 +322,27 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
 
-  background: #111c3b;
-
-  color: #9eafff;
+  background: var(--icono-fondo);
+  color: var(--icono-color);
 }
-
 
 .song-icon ion-icon {
   font-size: 23px;
 }
 
+/* ==========================================
+   9. INFORMACIÓN DE CANCIÓN
+========================================== */
 
 .song-info {
   min-width: 0;
   flex: 1;
 }
 
-
 .song-info h2 {
   margin: 0 0 4px;
 
-  color: #ffffff;
+  color: var(--texto);
 
   font-size: 16px;
   font-weight: 600;
@@ -245,11 +352,10 @@ ion-toolbar {
   text-overflow: ellipsis;
 }
 
-
 .song-info p {
   margin: 0 0 7px;
 
-  color: #8994ae;
+  color: var(--descripcion);
 
   font-size: 13px;
 
@@ -258,57 +364,50 @@ ion-toolbar {
   text-overflow: ellipsis;
 }
 
-
 .category {
   display: inline-block;
 
   padding: 4px 9px;
-
   border-radius: 8px;
 
-  background: #151e36;
-
-  color: #8190b4;
+  background: var(--categoria-fondo);
+  color: var(--categoria-texto);
 
   font-size: 10px;
-
   text-transform: uppercase;
-
   letter-spacing: 0.7px;
 }
 
+/* ==========================================
+   10. CORAZÓN Y FLECHA
+========================================== */
 
 .favorite-icon {
   width: 38px;
   height: 38px;
-
   flex-shrink: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  color: #e879a9;
+  color: var(--rosa);
 }
-
 
 .favorite-icon ion-icon {
   font-size: 21px;
 }
 
-
 .arrow {
   flex-shrink: 0;
 
-  color: #53617f;
-
+  color: var(--flecha);
   font-size: 19px;
 }
 
-
-/* ================================
-   ESTADO VACÍO
-================================ */
+/* ==========================================
+   11. ESTADO VACÍO
+========================================== */
 
 .empty {
   min-height: 60vh;
@@ -324,71 +423,62 @@ ion-toolbar {
   text-align: center;
 }
 
-
 .empty-icon {
   width: 76px;
   height: 76px;
 
   margin-bottom: 20px;
-
   border-radius: 24px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #111a31;
-
-  color: #7584a8;
+  background: var(--vacio-icono-fondo);
+  color: var(--vacio-icono-color);
 }
-
 
 .empty-icon.favorite-empty {
-  background: #1b1730;
-  color: #e879a9;
+  background: var(--rosa-fondo);
+  color: var(--rosa);
 }
-
 
 .empty-icon ion-icon {
   font-size: 36px;
 }
 
-
 .empty h2 {
   margin: 0 0 8px;
 
-  color: #ffffff;
-
+  color: var(--texto);
   font-size: 21px;
 }
 
-
 .empty p {
   max-width: 420px;
-
   margin: 0;
 
-  color: #7f8aa5;
+  color: var(--vacio-texto);
 
   font-size: 14px;
-
   line-height: 1.6;
 }
 
+/* ==========================================
+   12. BOTÓN DE ACCIÓN
+========================================== */
 
 .action-button {
   margin-top: 24px;
 
   min-height: 46px;
-
   padding: 0 20px;
 
   border: 0;
   border-radius: 12px;
 
-  background: #1b2a4d;
-
-  color: #aab8ff;
+  background: var(--accion-fondo);
+  color: var(--accion-texto);
 
   font-size: 14px;
   font-weight: 600;
@@ -396,10 +486,9 @@ ion-toolbar {
   cursor: pointer;
 }
 
-
-/* ================================
-   LOADING
-================================ */
+/* ==========================================
+   13. LOADING
+========================================== */
 
 .loading {
   min-height: 60vh;
@@ -410,80 +499,100 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
 
-  color: #7885a4;
+  color: var(--cargando);
 }
-
 
 .loading p {
   margin-top: 16px;
-
   font-size: 14px;
 }
-
 
 .loader {
   width: 34px;
   height: 34px;
 
-  border: 3px solid #1b2743;
-  border-top-color: #8799ff;
+  border: 3px solid var(--loader-borde);
+  border-top-color: var(--loader-activo);
 
   border-radius: 50%;
 
-  animation:
-    spin 0.8s linear infinite;
+  animation: spin 0.8s linear infinite;
 }
 
-
 @keyframes spin {
-
   to {
     transform: rotate(360deg);
   }
-
 }
 
+/* ==========================================
+   14. AJUSTES MODO CLARO
+========================================== */
 
-/* ================================
-   RESPONSIVE
-================================ */
+:host-context(.tema-claro),
+:host(.tema-claro) {
+  ion-content {
+    --background: var(--fondo);
+    --color: var(--texto);
+  }
+
+  ion-toolbar {
+    --background: var(--toolbar);
+    --color: var(--texto);
+  }
+
+  .song-card {
+    box-shadow: 0 4px 16px rgba(
+      15, 23, 42, 0.045
+    );
+  }
+}
+
+/* ==========================================
+   15. RESPONSIVE
+========================================== */
 
 @media (max-width: 600px) {
-
   .topbar {
     padding: 0 14px;
   }
-
 
   .page-container {
     padding: 24px 14px 40px;
   }
 
-
   .page-heading h1 {
     font-size: 23px;
   }
 
-
   .song-card {
     padding: 12px;
   }
-
 
   .song-icon {
     width: 44px;
     height: 44px;
   }
 
-
   .favorite-icon {
     width: 32px;
   }
 
-
   .arrow {
     font-size: 17px;
   }
-
 }
 
+/* ==========================================
+   16. ACCESIBILIDAD
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .song-card {
+    transition: none;
+  }
+
+  .loader {
+    animation: none;
+  }
+}

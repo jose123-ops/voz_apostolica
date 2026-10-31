@@ -1,3 +1,4 @@
+
 import {
   Component,
   OnInit,
@@ -5,7 +6,6 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import {
@@ -16,28 +16,16 @@ import {
   AlertController
 } from '@ionic/angular';
 
-import {
-  EnsayosService,
-  Ensayo
-} from '../services/ensayos';
-
-import {
-  CancionesService,
-  Cancion
-} from '../services/canciones';
-
-import {
-  UsuarioService
-} from '../services/usuario.service';
-import { IonTitle } from "@ionic/angular";
+import { EnsayosService, Ensayo } from '../services/ensayos';
+import { CancionesService, Cancion } from '../services/canciones';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-detalle-ensayo',
   templateUrl: './detalle-ensayo.page.html',
   styleUrls: ['./detalle-ensayo.page.scss'],
   standalone: true,
-  imports: [IonTitle, 
-    CommonModule,
+  imports: [
     IonHeader,
     IonToolbar,
     IonContent,
@@ -95,8 +83,8 @@ export class DetalleEnsayoPage implements OnInit {
       ]);
 
       if (!ensayo) {
-        this.error = 'El ensayo no existe.';
         this.ensayo = null;
+        this.error = 'El ensayo no existe.';
         return;
       }
 
@@ -116,9 +104,15 @@ export class DetalleEnsayoPage implements OnInit {
     return this.canciones.find(c => c.id === id);
   }
 
-  abrirCancion(id: string) {
+  abrirCancion(id: string, indice: number) {
+    if (!this.ensayo?.id) return;
+
     this.router.navigate(['/cancion-detalle'], {
-      queryParams: { id }
+      queryParams: {
+        id,
+        ensayoId: this.ensayo.id,
+        indiceEnsayo: indice
+      }
     });
   }
 
@@ -126,33 +120,72 @@ export class DetalleEnsayoPage implements OnInit {
     if (!fecha) return 'Sin fecha';
 
     const [anio, mes, dia] = fecha.split('-').map(Number);
+    const valor = new Date(anio, mes - 1, dia);
 
-    return new Date(anio, mes - 1, dia)
-      .toLocaleDateString('es-NI', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
+    return valor.toLocaleDateString('es-NI', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
   }
 
   formatearHora(hora: string): string {
     if (!hora) return 'Sin hora';
 
     const [horas, minutos] = hora.split(':').map(Number);
+    const valor = new Date();
 
-    const fecha = new Date();
-    fecha.setHours(horas, minutos, 0, 0);
+    valor.setHours(horas, minutos, 0, 0);
 
-    return fecha.toLocaleTimeString('es-NI', {
+    return valor.toLocaleTimeString('es-NI', {
       hour: 'numeric',
       minute: '2-digit',
       hour12: true
     });
   }
 
+  compartirWhatsApp() {
+    if (!this.ensayo) return;
+
+    const mensaje = [
+      '🎶 *VOZ APOSTÓLICA* 🎶',
+      '',
+      '¡Dios les bendiga, hermanos!',
+      '',
+      'Les invitamos a nuestro próximo ensayo musical.',
+      '',
+      `🎼 *Ensayo:* ${this.ensayo.nombre}`,
+      `📅 *Fecha:* ${this.formatearFecha(this.ensayo.fecha)}`,
+      `🕕 *Hora:* ${this.formatearHora(this.ensayo.hora)}`,
+      `📍 *Lugar:* ${this.ensayo.lugar || 'Por confirmar'}`,
+      '',
+      '🎵 *REPERTORIO MUSICAL*',
+      '',
+      'Las canciones están disponibles en nuestra aplicación *Voz Apostólica*.',
+      '',
+      '📱 Ingresen a la aplicación para revisar y practicar las canciones antes del ensayo.',
+      '',
+      '¡Les esperamos! 🙌'
+    ].join('\n');
+
+    window.open(
+      'https://wa.me/?text=' + encodeURIComponent(mensaje),
+      '_blank',
+      'noopener,noreferrer'
+    );
+  }
+
   volver() {
     this.router.navigate(['/ensayos']);
+  }
+
+  editarEnsayo() {
+    if (!this.esAdmin || !this.ensayo?.id) return;
+
+    this.router.navigate(['/crear-ensayo'], {
+      queryParams: { id: this.ensayo.id }
+    });
   }
 
   async eliminarEnsayo() {
@@ -164,10 +197,7 @@ export class DetalleEnsayoPage implements OnInit {
       header: 'Eliminar ensayo',
       message: '¿Estás seguro de que deseas eliminar este ensayo?',
       buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel'
-        },
+        { text: 'Cancelar', role: 'cancel' },
         {
           text: 'Eliminar',
           role: 'destructive',
@@ -200,16 +230,4 @@ export class DetalleEnsayoPage implements OnInit {
       this.cd.detectChanges();
     }
   }
-
-  editarEnsayo() {
-  if (!this.esAdmin || !this.ensayo?.id) {
-    return;
-  }
-
-  this.router.navigate(['/crear-ensayo'], {
-    queryParams: {
-      id: this.ensayo.id
-    }
-  });
-}
 }

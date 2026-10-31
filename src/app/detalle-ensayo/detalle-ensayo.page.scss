@@ -1,9 +1,8 @@
+@use '../../theme/module-actions';
 
-:host {
-  --ion-background-color: #070b16;
-  --ion-text-color: #ffffff;
-  color: #ffffff;
-}
+/* ==========================================
+   FONDO GENERAL
+   ========================================== */
 
 ion-content {
   --background: #070b16;
@@ -13,185 +12,385 @@ ion-content {
 ion-toolbar {
   --background: #0b1020;
   --color: #ffffff;
+  --border-width: 0;
 }
 
+/* ==========================================
+   BARRA SUPERIOR
+   ========================================== */
+
 .topbar {
-  min-height: 66px;
+  min-height: 64px;
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 0 18px;
+  padding: 0 16px;
 }
 
 .back-button,
 .header-icon {
   width: 42px;
   height: 42px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 13px;
+  background: #151c30;
+  color: #ffffff;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
-  border-radius: 12px;
-  background: #17243a;
-  color: #8bbcff;
-  font-size: 22px;
 }
 
 .back-button {
   cursor: pointer;
 }
 
-.topbar-title {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+.back-button ion-icon,
+.header-icon ion-icon {
+  font-size: 22px;
 }
 
-.topbar-title span,
-.eyebrow,
-.section-heading > div > span {
-  color: #8bbcff;
+.header-icon {
+  color: #8ea1ff;
+}
+
+.topbar-title {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar-title span {
+  color: #737b91;
   font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
 }
 
 .topbar-title strong {
+  margin-top: 3px;
   color: #ffffff;
   font-size: 16px;
+  font-weight: 700;
 }
+
+/* ==========================================
+   CONTENEDOR PRINCIPAL
+   ========================================== */
 
 .detail-container {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 24px 18px 75px;
+
+  padding: 24px 20px 110px;
+  box-sizing: border-box;
 }
 
+/* ==========================================
+   CABECERA DEL ENSAYO
+   ========================================== */
+
 .hero {
-  padding: 28px;
-  border: 1px solid #263653;
+  text-align: center;
+  margin-bottom: 28px;
+  padding: 28px 22px;
+
+  background: #11192c;
+  border: 1px solid #202d49;
   border-radius: 20px;
-  background: linear-gradient(135deg, #12243b, #10192c);
 }
 
 .hero-icon {
-  width: 60px;
-  height: 60px;
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 17px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 18px;
-  border-radius: 17px;
-  background: #1c3552;
-  color: #2dd4bf;
-  font-size: 29px;
+
+  background: linear-gradient(
+    135deg,
+    #263c80,
+    #4b63d8
+  );
+
+  border-radius: 22px;
+  color: #ffffff;
+}
+
+.hero-icon ion-icon {
+  font-size: 35px;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 9px;
+
+  color: #899cff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
 }
 
 .hero h1 {
-  margin: 10px 0 25px;
+  margin: 0 0 26px;
+
   color: #ffffff;
-  font-size: 29px;
-  overflow-wrap: anywhere;
+  font-size: 28px;
+  font-weight: 750;
+  line-height: 1.3;
 }
+
+/* ==========================================
+   FECHA, HORA Y LUGAR
+   ========================================== */
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+  text-align: left;
 }
 
 .info-item {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 11px;
+
+  min-width: 0;
   padding: 15px;
-  border: 1px solid #2a3a56;
-  border-radius: 12px;
-  background: #0e182a;
+
+  background: #172139;
+  border: 1px solid #263450;
+  border-radius: 13px;
 }
 
 .info-item > ion-icon {
   flex-shrink: 0;
-  color: #8bbcff;
-  font-size: 20px;
+  margin-top: 2px;
+  font-size: 22px;
+  color: #8fa5ff;
 }
 
 .info-item div {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
   min-width: 0;
 }
 
 .info-item span {
-  color: #8da1bf;
+  display: block;
+  margin-bottom: 6px;
+
+  color: #8a98b5;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .info-item strong {
+  display: block;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
+/* ==========================================
+   COMPARTIR WHATSAPP
+   ========================================== */
+
+.share-section {
+  width: 100%;
+  margin: 0 0 28px;
+  padding: 20px;
+
+  background: #111a2e;
+  border: 1px solid #273655;
+  border-radius: 16px;
+
+  box-sizing: border-box;
+}
+
+.share-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.share-icon {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #1b2b53;
+  color: #91a5ff;
+  border-radius: 12px;
+}
+
+.share-icon ion-icon {
+  font-size: 24px;
+}
+
+.share-info strong {
+  display: block;
+  margin-bottom: 6px;
+
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.share-info p {
+  margin: 0;
+
+  color: #9ca9c2;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.whatsapp-button {
+  width: 100%;
+  min-height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 12px 16px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #25d366;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.whatsapp-button ion-icon {
+  font-size: 23px;
+}
+
+.whatsapp-button:hover {
+  background: #1fb85a;
+}
+
+.whatsapp-button:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================
+   SECCIONES DE CONTENIDO
+   ========================================== */
+
 .content-section {
-  margin-top: 34px;
+  margin-bottom: 30px;
 }
 
 .section-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 19px;
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.section-heading span:not(.count) {
+  display: block;
+  margin-bottom: 5px;
+
+  color: #8593ad;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
 }
 
 .section-heading h2 {
-  margin: 6px 0 0;
+  margin: 0;
+
   color: #ffffff;
-  font-size: 21px;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .count {
-  padding: 7px 12px;
-  border-radius: 12px;
-  background: #1c2b46;
-  color: #8bbcff;
-  font-size: 13px;
-  font-weight: 800;
-}
+  min-width: 35px;
+  height: 35px;
+  padding: 0 9px;
 
-.song-card {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 11px;
-  padding: 16px;
-  border: 1px solid #263653;
-  border-radius: 14px;
-  background: #10192c;
-  color: #ffffff;
-  text-align: left;
-  cursor: pointer;
-}
-
-.song-card:hover {
-  border-color: #45679b;
-}
-
-.song-number {
-  width: 37px;
-  height: 37px;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  background: #1b2b53;
+  color: #9dafff;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* ==========================================
+   TARJETAS DE CANCIONES
+   ========================================== */
+
+.song-card {
+  width: 100%;
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 10px;
+  padding: 14px 16px;
+
+  text-align: left;
+
+  background: #11192c;
+  border: 1px solid #24304a;
+  border-radius: 14px;
+
+  color: #ffffff;
+  cursor: pointer;
+
+  font-family: inherit;
+}
+
+.song-card:hover {
+  background: #17233d;
+  border-color: #40548a;
+}
+
+.song-number {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #23356b;
   border-radius: 11px;
-  background: #1b2e4a;
-  color: #8bbcff;
+
+  color: #a8b7ff;
   font-size: 14px;
   font-weight: 800;
 }
@@ -202,86 +401,128 @@ ion-toolbar {
 }
 
 .song-info h3 {
-  margin: 0 0 6px;
+  margin: 0 0 5px;
+
   color: #ffffff;
   font-size: 15px;
+  font-weight: 700;
 }
 
 .song-info p {
   margin: 0;
-  color: #9bacc5;
+
+  color: #8e9bb4;
   font-size: 12px;
 }
 
 .song-card > ion-icon {
-  color: #8bbcff;
+  flex-shrink: 0;
+  color: #7183ad;
   font-size: 20px;
 }
 
+.muted {
+  padding: 16px;
+  color: #91a0ba;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ==========================================
+   OBSERVACIONES
+   ========================================== */
+
 .observations {
-  padding: 21px;
-  border: 1px solid #263653;
-  border-radius: 15px;
-  background: #10192c;
-  color: #cbd7e9;
+  padding: 20px;
+
+  background: #11192c;
+  border: 1px solid #24304a;
+  border-radius: 14px;
+
+  color: #d6deed;
   font-size: 14px;
   line-height: 1.8;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+
+  white-space: pre-line;
 }
+
+/* ==========================================
+   ACCIONES DE ADMINISTRADOR
+   ========================================== */
 
 .admin-actions {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 35px;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
 }
 
+.edit-button,
 .delete-button {
-  min-height: 46px;
-  display: inline-flex;
+  flex: 1;
+  min-height: 48px;
+  min-width: 160px;
+
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  padding: 0 20px;
-  border: 1px solid #67313b;
+
+  padding: 12px 16px;
+
   border-radius: 12px;
-  background: #321a25;
-  color: #ff9aa8;
-  font-size: 13px;
+  font-family: inherit;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
 }
 
+.edit-button {
+  background: #233a79;
+  border: 1px solid #405ab1;
+  color: #ffffff;
+}
+
+.delete-button {
+  background: #331a24;
+  border: 1px solid #69313e;
+  color: #ff8799;
+}
+
+.edit-button ion-icon,
+.delete-button ion-icon {
+  font-size: 19px;
+}
+
 .delete-button:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.error-message {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px;
-  border-radius: 12px;
-  background: #321a25;
-  color: #ffb4b4;
-}
+/* ==========================================
+   ESTADOS DE CARGA Y ERROR
+   ========================================== */
 
 .loading {
-  min-height: 50vh;
+  min-height: 60vh;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #9bacc5;
+
+  gap: 15px;
+  color: #93a0b8;
 }
 
 .loader {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 15px;
-  border: 4px solid #263653;
-  border-top-color: #4da3ff;
+  width: 42px;
+  height: 42px;
+
+  border: 4px solid #26314a;
+  border-top-color: #879bff;
   border-radius: 50%;
+
   animation: spin 0.8s linear infinite;
 }
 
@@ -291,26 +532,178 @@ ion-toolbar {
   }
 }
 
-.muted {
-  color: #9bacc5;
-  font-size: 13px;
+.loading p {
+  margin: 0;
+  font-size: 14px;
 }
 
-@media (max-width: 600px) {
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 17px;
+  margin-bottom: 20px;
+
+  background: #341b26;
+  border: 1px solid #713447;
+  border-radius: 12px;
+
+  color: #ff9bad;
+  font-size: 14px;
+}
+
+.error-message ion-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+/* ==========================================
+   TEMA CLARO
+   ========================================== */
+
+:host-context(.tema-claro) {
+
+  ion-content {
+    --background: #f4f7fb;
+    --color: #172033;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #172033;
+  }
+
+  .topbar-title strong,
+  .hero h1,
+  .section-heading h2,
+  .share-info strong,
+  .song-info h3 {
+    color: #172033;
+  }
+
+  .back-button,
+  .header-icon {
+    background: #eaf1ff;
+    color: #2563eb;
+  }
+
+  .hero,
+  .share-section,
+  .song-card,
+  .observations {
+    background: #ffffff;
+    border-color: #e2e8f0;
+  }
+
+  .info-item {
+    background: #f1f5ff;
+    border-color: #dbe5fa;
+  }
+
+  .info-item strong {
+    color: #172033;
+  }
+
+  .info-item span,
+  .section-heading span:not(.count),
+  .share-info p,
+  .song-info p {
+    color: #64748b;
+  }
+
+  .share-icon,
+  .count {
+    background: #eaf1ff;
+    color: #2563eb;
+  }
+
+  .song-number {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .observations {
+    color: #334155;
+  }
+
+  .whatsapp-button {
+    background: #16a34a;
+    color: #ffffff;
+  }
+
+  .edit-button {
+    background: #2563eb;
+    border-color: #2563eb;
+  }
+
+  .delete-button {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    color: #dc2626;
+  }
+
+  .muted,
+  .loading {
+    color: #64748b;
+  }
+
+}
+
+/* ==========================================
+   TABLET Y CELULAR
+   ========================================== */
+
+@media (max-width: 700px) {
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
   .detail-container {
-    padding: 15px 12px 60px;
+    padding: 16px 12px 110px;
   }
 
   .hero {
-    padding: 19px;
+    padding: 22px 16px;
   }
 
   .hero h1 {
     font-size: 24px;
   }
 
-  .info-grid {
-    grid-template-columns: 1fr;
+  .info-item {
+    padding: 13px;
+  }
+
+}
+
+@media (max-width: 420px) {
+
+  .topbar {
+    gap: 9px;
+    padding: 0 10px;
+  }
+
+  .topbar-title strong {
+    font-size: 14px;
+  }
+
+  .hero-icon {
+    width: 66px;
+    height: 66px;
+  }
+
+  .share-section {
+    padding: 16px;
+  }
+
+  .share-info {
+    gap: 10px;
+  }
+
+  .whatsapp-button {
+    font-size: 13px;
   }
 
   .section-heading h2 {
@@ -318,40 +711,22 @@ ion-toolbar {
   }
 
   .song-card {
-    padding: 13px;
+    padding: 12px;
+    gap: 10px;
   }
 
-  .admin-actions,
+  .song-info h3 {
+    font-size: 14px;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+  }
+
+  .edit-button,
   .delete-button {
     width: 100%;
   }
+
 }
 
-.admin-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.edit-button {
-  min-height: 46px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  padding: 0 20px;
-  border: 1px solid #345b83;
-  border-radius: 12px;
-  background: #17314a;
-  color: #8bbcff;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-@media (max-width: 600px) {
-  .edit-button {
-    width: 100%;
-  }
-}

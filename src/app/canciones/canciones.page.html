@@ -5,47 +5,41 @@
 
     <div class="topbar">
 
+      <!-- VOLVER -->
       <button
         class="back-button"
         type="button"
-        (click)="volver()"
-      >
+        (click)="volver()">
 
-        <ion-icon
-          name="arrow-back-outline">
+        <ion-icon name="arrow-back-outline">
         </ion-icon>
 
       </button>
 
-
+      <!-- TÍTULO -->
       <div class="topbar-title">
 
-        <span>
-          VOZ APOSTÓLICA
-        </span>
+        <span>VOZ APOSTÓLICA</span>
 
-        <strong>
-          Canciones
-        </strong>
+        <strong>Canciones</strong>
 
       </div>
 
+      <!-- AGREGAR CANCIÓN SOLO ADMIN -->
+      @if (esAdmin) {
 
-     @if (esAdmin) {
+        <button
+          class="add-button"
+          type="button"
+          (click)="abrirAgregarCancion()"
+          aria-label="Agregar canción">
 
-  <button
-    class="add-button"
-    type="button"
-    (click)="abrirAgregarCancion()"
-  >
+          <ion-icon name="add-circle-outline">
+          </ion-icon>
 
-    <ion-icon
-      name="add-circle-outline">
-    </ion-icon>
+        </button>
 
-  </button>
-
-}
+      }
 
     </div>
 
@@ -53,52 +47,39 @@
 
 </ion-header>
 
-
 <ion-content>
 
+  <!-- CARGANDO -->
   @if (cargando) {
 
     <div class="loading">
 
       <div class="loader"></div>
 
-      <p>
-        Cargando canciones...
-      </p>
+      <p>Cargando canciones...</p>
 
     </div>
 
   }
 
-
+  <!-- ERROR -->
   @if (!cargando && error) {
 
     <div class="empty">
 
       <div class="empty-icon">
-
-        <ion-icon
-          name="alert-circle-outline">
+        <ion-icon name="alert-circle-outline">
         </ion-icon>
-
       </div>
 
+      <h2>No se pudieron cargar</h2>
 
-      <h2>
-        No se pudieron cargar
-      </h2>
-
-
-      <p>
-        {{ error }}
-      </p>
-
+      <p>{{ error }}</p>
 
       <button
         class="action-button"
         type="button"
-        (click)="cargarCanciones()"
-      >
+        (click)="cargarCanciones()">
 
         Intentar nuevamente
 
@@ -108,46 +89,33 @@
 
   }
 
-
+  <!-- CONTENIDO -->
   @if (!cargando && !error) {
 
     <div class="page-container">
 
-
       <!-- ENCABEZADO -->
-
       <div class="page-heading">
 
         <div>
 
-          <span>
-            BIBLIOTECA MUSICAL
-          </span>
+          <span>BIBLIOTECA MUSICAL</span>
 
-          <h1>
-            Todas las canciones
-          </h1>
+          <h1>Todas las canciones</h1>
 
         </div>
 
-
         <div class="count">
-
           {{ cancionesFiltradas.length }}
-
         </div>
 
       </div>
 
-
       <!-- BUSCADOR -->
-
       <div class="search-box">
 
-        <ion-icon
-          name="search-outline">
+        <ion-icon name="search-outline">
         </ion-icon>
-
 
         <ion-input
           [(ngModel)]="busqueda"
@@ -159,30 +127,23 @@
 
       </div>
 
-
       <!-- CATEGORÍAS -->
-
       <div class="filter-container">
 
         <div class="filter-label">
 
-          <ion-icon
-            name="folder-open-outline">
+          <ion-icon name="folder-open-outline">
           </ion-icon>
 
-          <span>
-            Categoría
-          </span>
+          <span>Categoría</span>
 
         </div>
-
 
         <ion-select
           [(ngModel)]="categoriaSeleccionada"
           (ionChange)="cambiarCategoria()"
           interface="popover"
-          aria-label="Seleccionar categoría"
-        >
+          aria-label="Seleccionar categoría">
 
           <ion-select-option value="todas">
             Todas
@@ -194,9 +155,10 @@
           ) {
 
             <ion-select-option
-              [value]="categoria"
-            >
+              [value]="categoria">
+
               {{ categoria }}
+
             </ion-select-option>
 
           }
@@ -205,28 +167,19 @@
 
       </div>
 
-
       <!-- SIN RESULTADOS -->
-
-      @if (
-        cancionesFiltradas.length === 0
-      ) {
+      @if (cancionesFiltradas.length === 0) {
 
         <div class="no-results">
 
           <div class="no-results-icon">
 
-            <ion-icon
-              name="musical-notes-outline">
+            <ion-icon name="musical-notes-outline">
             </ion-icon>
 
           </div>
 
-
-          <h2>
-            No encontramos canciones
-          </h2>
-
+          <h2>No encontramos canciones</h2>
 
           <p>
             Probá con otro título, artista
@@ -237,12 +190,8 @@
 
       }
 
-
-      <!-- LISTA -->
-
-      @if (
-        cancionesFiltradas.length > 0
-      ) {
+      <!-- LISTA DE CANCIONES -->
+      @if (cancionesFiltradas.length > 0) {
 
         <div class="songs-list">
 
@@ -251,64 +200,76 @@
             track cancion.id
           ) {
 
-            <button
-              class="song-card"
-              type="button"
-              (click)="abrirCancion(cancion)"
-            >
+            <div class="song-row">
 
+              <!-- ABRIR CANCIÓN -->
+              <button
+                class="song-card"
+                type="button"
+                (click)="abrirCancion(cancion)">
 
-              <div class="song-icon">
+                <div class="song-icon">
 
-                <ion-icon
-                  name="musical-notes-outline">
-                </ion-icon>
+                  <ion-icon
+                    name="musical-notes-outline">
+                  </ion-icon>
 
-              </div>
+                </div>
 
+                <div class="song-info">
 
-              <div class="song-info">
+                  <h2>{{ cancion.titulo }}</h2>
 
-                <h2>
-                  {{ cancion.titulo }}
-                </h2>
+                  <p>{{ cancion.artista }}</p>
 
+                  @if (cancion.categoria) {
 
-                <p>
-                  {{ cancion.artista }}
-                </p>
+                    <span class="category">
+                      {{ cancion.categoria }}
+                    </span>
 
+                  }
 
-                @if (cancion.categoria) {
+                </div>
 
-                  <span class="category">
+                @if (cancion.youtube) {
 
-                    {{ cancion.categoria }}
-
-                  </span>
+                  <ion-icon
+                    class="youtube-icon"
+                    name="logo-youtube">
+                  </ion-icon>
 
                 }
 
-              </div>
-
-
-              @if (cancion.youtube) {
-
                 <ion-icon
-                  class="youtube-icon"
-                  name="logo-youtube">
+                  class="arrow"
+                  name="arrow-forward-outline">
                 </ion-icon>
+
+              </button>
+
+              <!-- ELIMINAR: SOLO ADMINISTRADOR -->
+              @if (esAdmin) {
+
+                <button
+                  type="button"
+                  class="delete-button"
+                  [disabled]="eliminandoId !== null"
+                  (click)="confirmarEliminar(cancion)"
+                  [attr.aria-label]="'Eliminar canción ' + cancion.titulo"
+                  title="Eliminar canción">
+
+                  <ion-icon
+                    [name]="eliminandoId === cancion.id
+                      ? 'hourglass-outline'
+                      : 'trash-outline'">
+                  </ion-icon>
+
+                </button>
 
               }
 
-
-              <ion-icon
-                class="arrow"
-                name="arrow-forward-outline">
-              </ion-icon>
-
-
-            </button>
+            </div>
 
           }
 
@@ -316,10 +277,8 @@
 
       }
 
-
     </div>
 
   }
 
 </ion-content>
-

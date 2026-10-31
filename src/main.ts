@@ -1,12 +1,15 @@
 
+import { provideHttpClient } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { isDevMode } from '@angular/core';
 
 import {
   RouteReuseStrategy,
   provideRouter,
   withComponentInputBinding,
   withPreloading,
-  PreloadAllModules
+  PreloadAllModules,
+  
 } from '@angular/router';
 
 import {
@@ -14,9 +17,7 @@ import {
   provideIonicAngular
 } from '@ionic/angular';
 
-import {
-  addIcons
-} from 'ionicons';
+import { addIcons } from 'ionicons';
 
 import {
   home,
@@ -45,16 +46,16 @@ import {
   playOutline,
   shareSocialOutline,
   copyOutline,
-   peopleOutline
-
+  peopleOutline,
+  sunnyOutline,
+  moonOutline,
+  notificationsOutline
 } from 'ionicons/icons';
 
+import { provideServiceWorker } from '@angular/service-worker';
+
 import { routes } from './app/app.routes';
-
-import {
-  AppComponent
-} from './app/app.component';
-
+import { AppComponent } from './app/app.component';
 
 // ========================================
 // REGISTRAR ICONOS
@@ -62,56 +63,42 @@ import {
 
 addIcons({
 
-  'home':
-    home,
+  'home': home,
 
-  'person-outline':
-    personOutline,
+  'person-outline': personOutline,
 
-  'musical-notes-outline':
-    musicalNotesOutline,
+  'musical-notes-outline': musicalNotesOutline,
 
-  'heart-outline':
-    heartOutline,
+  'heart-outline': heartOutline,
 
-  'folder-open-outline':
-    folderOpenOutline,
+  'folder-open-outline': folderOpenOutline,
 
-  'logo-youtube':
-    logoYoutube,
+  'logo-youtube': logoYoutube,
 
-  'search-outline':
-    searchOutline,
+  'search-outline': searchOutline,
 
-  'play':
-    play,
+  'play': play,
 
-  'arrow-back-outline':
-    arrowBackOutline,
+  'arrow-back-outline': arrowBackOutline,
 
-  'musical-note-outline':
-    musicalNoteOutline,
+  'musical-note-outline': musicalNoteOutline,
 
-  'document-text-outline':
-    documentTextOutline,
+  'document-text-outline': documentTextOutline,
 
-  'alert-circle-outline':
-    alertCircleOutline,
+  'alert-circle-outline': alertCircleOutline,
 
-  'arrow-forward-outline':
-    arrowForwardOutline,
+  'arrow-forward-outline': arrowForwardOutline,
 
-  'add-circle-outline':
-    addCircleOutline,
+  'add-circle-outline': addCircleOutline,
 
-  'heart':
-    heart,
+  'heart': heart,
 
   'calendar-outline': calendarOutline,
 
   'book-outline': bookOutline,
 
   'star-outline': starOutline,
+
   'create-outline': createOutline,
 
   'trash-outline': trashOutline,
@@ -125,13 +112,18 @@ addIcons({
   'play-outline': playOutline,
 
   'share-social-outline': shareSocialOutline,
-  
+
   'people-outline': peopleOutline,
 
-  'copy-outline': copyOutline
+  'copy-outline': copyOutline,
+
+  'sunny-outline': sunnyOutline,
+
+  'moon-outline': moonOutline,
+  
+  'notifications-outline': notificationsOutline
 
 });
-
 
 // ========================================
 // INICIAR APLICACIÓN
@@ -140,24 +132,35 @@ addIcons({
 bootstrapApplication(
   AppComponent,
   {
-
     providers: [
 
+      // ====================================
+      // HABILITAR HTTP CLIENT
+      // Para buscar letras de canciones
+      // ====================================
+
+      provideHttpClient(),
+
+      // ====================================
+      // ESTRATEGIA DE NAVEGACIÓN IONIC
+      // ====================================
+
       {
-        provide:
-          RouteReuseStrategy,
-
-        useClass:
-          IonicRouteStrategy
-
+        provide: RouteReuseStrategy,
+        useClass: IonicRouteStrategy
       },
 
+      // ====================================
+      // CONFIGURACIÓN IONIC
+      // ====================================
 
       provideIonicAngular(),
 
+      // ====================================
+      // RUTAS DE LA APLICACIÓN
+      // ====================================
 
       provideRouter(
-
         routes,
 
         withPreloading(
@@ -165,11 +168,22 @@ bootstrapApplication(
         ),
 
         withComponentInputBinding()
+      ),
 
+      // ====================================
+      // SERVICE WORKER PWA
+      // ====================================
+
+      provideServiceWorker(
+        'ngsw-worker.js',
+        {
+          enabled: !isDevMode(),
+
+          registrationStrategy:
+            'registerWhenStable:30000'
+        }
       )
 
     ]
-
   }
 );
-

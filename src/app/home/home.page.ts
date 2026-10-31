@@ -1,4 +1,4 @@
-
+import { NotificacionesService } from '../services/notificaciones.service';
 import {
   Component,
   OnInit,
@@ -14,7 +14,12 @@ import {
   IonToolbar,
   IonContent,
   IonFooter,
-  IonIcon
+  IonIcon,
+  IonPopover,
+  IonList,
+  IonItem,
+  IonLabel,
+  AlertController
 } from '@ionic/angular';
 
 import {
@@ -22,12 +27,13 @@ import {
   Cancion
 } from '../services/canciones';
 
-import {
-  UsuarioService
-} from '../services/usuario.service';
+import { AuthService } from '../services/auth.service';
+import { UsuarioService } from '../services/usuario.service';
+import { TemaService, Tema } from '../services/tema.service';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   imports: [
@@ -36,7 +42,11 @@ import {
     IonToolbar,
     IonContent,
     IonFooter,
-    IonIcon
+    IonIcon,
+    IonPopover,
+    IonList,
+    IonItem,
+    IonLabel
   ]
 })
 export class HomePage implements OnInit {
@@ -44,30 +54,49 @@ export class HomePage implements OnInit {
   esAdmin = false;
 
   canciones: Cancion[] = [];
-
   ultimasCanciones: Cancion[] = [];
 
   busqueda = '';
-
   cargando = true;
-
   error = '';
 
+  private authService = inject(AuthService);
+  private alertController = inject(AlertController);
   private cancionesService = inject(CancionesService);
-
   private usuarioService = inject(UsuarioService);
-
   private router = inject(Router);
-
   private changeDetector = inject(ChangeDetectorRef);
+  private temaService = inject(TemaService);
 
+  temaActual: Tema = this.temaService.obtenerTema();
 
-  async ngOnInit() {
+  // ======================================
+  // MODO CLARO / OSCURO
+  // ======================================
+
+  cambiarTema(): void {
+
+    const nuevoTema: Tema =
+      this.temaActual === 'oscuro'
+        ? 'claro'
+        : 'oscuro';
+
+    this.temaService.establecerTema(nuevoTema);
+
+    this.temaActual = nuevoTema;
+  }
+
+  // ======================================
+  // INICIALIZAR HOME
+  // ======================================
+
+  async ngOnInit(): Promise<void> {
+
+    this.temaActual = this.temaService.obtenerTema();
 
     try {
 
-      this.esAdmin =
-        await this.usuarioService.esAdmin();
+      this.esAdmin = await this.usuarioService.esAdmin();
 
     } catch (error) {
 
@@ -77,22 +106,18 @@ export class HomePage implements OnInit {
       );
 
       this.esAdmin = false;
-
     }
 
     await this.cargarCanciones();
-
   }
 
-
-  // ==========================================
+  // ======================================
   // CARGAR CANCIONES
-  // ==========================================
+  // ======================================
 
-  async cargarCanciones() {
+  async cargarCanciones(): Promise<void> {
 
     this.cargando = true;
-
     this.error = '';
 
     this.changeDetector.detectChanges();
@@ -102,18 +127,11 @@ export class HomePage implements OnInit {
       this.canciones =
         await this.cancionesService.obtenerCanciones();
 
-      // ORDENAR POR FECHA DE CREACIÓN
-      // Y MOSTRAR LAS ÚLTIMAS 3
-
       this.ultimasCanciones = [...this.canciones]
-        .sort((a, b) => {
-
-          return (
-            this.convertirFecha(b.fechaCreacion) -
-            this.convertirFecha(a.fechaCreacion)
-          );
-
-        })
+        .sort((a, b) =>
+          this.convertirFecha(b.fechaCreacion) -
+          this.convertirFecha(a.fechaCreacion)
+        )
         .slice(0, 3);
 
     } catch (error) {
@@ -127,31 +145,22 @@ export class HomePage implements OnInit {
         'No se pudieron cargar las canciones.';
 
       this.canciones = [];
-
       this.ultimasCanciones = [];
 
     } finally {
 
       this.cargando = false;
-
       this.changeDetector.detectChanges();
-
     }
-
   }
 
-
-  // ==========================================
-  // CONVERTIR FECHA DE FIREBASE
-  // ==========================================
+  // ======================================
+  // CONVERTIR FECHAS
+  // ======================================
 
   private convertirFecha(valor: unknown): number {
 
-    if (!valor) {
-      return 0;
-    }
-
-    // FIRESTORE TIMESTAMP
+    if (!valor) return 0;
 
     if (
       typeof valor === 'object' &&
@@ -162,8 +171,6 @@ export class HomePage implements OnInit {
       return valor.toMillis();
     }
 
-    // FIRESTORE TIMESTAMP SERIALIZADO
-
     if (
       typeof valor === 'object' &&
       valor !== null &&
@@ -173,13 +180,9 @@ export class HomePage implements OnInit {
       return valor.seconds * 1000;
     }
 
-    // DATE
-
     if (valor instanceof Date) {
       return valor.getTime();
     }
-
-    // STRING O NÚMERO
 
     if (
       typeof valor === 'string' ||
@@ -189,17 +192,14 @@ export class HomePage implements OnInit {
       const fecha = new Date(valor).getTime();
 
       return Number.isNaN(fecha) ? 0 : fecha;
-
     }
 
     return 0;
-
   }
 
-
-  // ==========================================
-  // BUSCADOR
-  // ==========================================
+  // ======================================
+  // NORMALIZAR TEXTO
+  // ======================================
 
   private normalizarTexto(texto: string): string {
 
@@ -208,57 +208,49 @@ export class HomePage implements OnInit {
       .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase()
       .trim();
-
   }
 
+  // ======================================
+  // FILTRAR CANCIONES
+  // ======================================
 
   get cancionesFiltradas(): Cancion[] {
 
     const termino =
       this.normalizarTexto(this.busqueda);
 
-    // SIN BÚSQUEDA:
-    // MOSTRAR SOLO LAS ÚLTIMAS 3
-
     if (!termino) {
       return this.ultimasCanciones;
     }
 
-    // CON BÚSQUEDA:
-    // BUSCAR EN TODA LA BIBLIOTECA
-
     return this.canciones.filter(cancion => {
 
       const contenido = this.normalizarTexto(
-        `${cancion.titulo} ${cancion.artista} ${cancion.categoria}`
+        `${cancion.titulo} ${cancion.artista} ${cancion.categoria || ''}`
       );
 
       return contenido.includes(termino);
-
     });
-
   }
 
+  // ======================================
+  // LIMPIAR BÚSQUEDA
+  // ======================================
 
-  limpiarBusqueda() {
+  limpiarBusqueda(): void {
     this.busqueda = '';
   }
 
+  // ======================================
+  // ABRIR DETALLE DE CANCIÓN
+  // ======================================
 
-  // ==========================================
-  // NAVEGACIÓN
-  // ==========================================
-
-  abrirCancion(cancion: Cancion) {
+  abrirCancion(cancion: Cancion): void {
 
     if (!cancion.id) {
 
-      console.error(
-        'La canción no tiene ID'
-      );
-
+      console.error('La canción no tiene ID');
       return;
-
     }
 
     this.router.navigate(
@@ -269,58 +261,163 @@ export class HomePage implements OnInit {
         }
       }
     );
-
   }
 
+  // ======================================
+  // AGREGAR CANCIÓN (ADMIN)
+  // ======================================
 
-  abrirAgregarCancion() {
+  abrirAgregarCancion(): void {
 
-    if (!this.esAdmin) {
-      return;
+    if (!this.esAdmin) return;
+
+    this.router.navigate(['/agregar-cancion']);
+  }
+
+  // ======================================
+  // NAVEGACIÓN
+  // ======================================
+
+  abrirFavoritos(): void {
+    this.router.navigate(['/favoritos']);
+  }
+
+  abrirCanciones(): void {
+    this.router.navigate(['/canciones']);
+  }
+
+  abrirEventos(): void {
+    this.router.navigate(['/eventos']);
+  }
+
+  abrirEnsayos(): void {
+    this.router.navigate(['/ensayos']);
+  }
+
+  // ======================================
+  // CONFIRMAR CIERRE DE SESIÓN
+  // ======================================
+
+  async confirmarCerrarSesion(): Promise<void> {
+
+    const alerta = await this.alertController.create({
+
+      header: 'Cerrar sesión',
+
+      message:
+        '¿Estás seguro de que deseas salir de Voz Apostólica?',
+
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Sí, cerrar sesión',
+          role: 'destructive',
+          handler: () => {
+            void this.cerrarSesion();
+          }
+        }
+      ]
+    });
+
+    await alerta.present();
+  }
+
+  // ======================================
+  // CERRAR SESIÓN FIREBASE
+  // ======================================
+
+  async cerrarSesion(): Promise<void> {
+
+    try {
+
+      await this.authService.cerrarSesion();
+
+      this.esAdmin = false;
+
+      this.canciones = [];
+      this.ultimasCanciones = [];
+
+      await this.router.navigateByUrl(
+        '/login',
+        {
+          replaceUrl: true
+        }
+      );
+
+    } catch (error) {
+
+      console.error(
+        'Error al cerrar sesión:',
+        error
+      );
+
+      const alerta = await this.alertController.create({
+
+        header: 'Error',
+
+        message:
+          'No se pudo cerrar la sesión. Intentá nuevamente.',
+
+        buttons: ['Aceptar']
+
+      });
+
+      await alerta.present();
+    }
+  }
+
+  
+private notificacionesService =
+  inject(NotificacionesService);
+
+async activarNotificaciones(): Promise<void> {
+
+  try {
+
+    const token =
+      await this.notificacionesService
+        .activarNotificaciones();
+
+    if (token) {
+
+      console.log(
+        'Token FCM para prueba:',
+        token
+      );
+
+      const alerta =
+        await this.alertController.create({
+          header: 'Notificaciones activadas',
+          message:
+            'Tu dispositivo está preparado para recibir avisos de Voz Apostólica.',
+          buttons: ['Aceptar']
+        });
+
+      await alerta.present();
     }
 
-    this.router.navigate([
-      '/agregar-cancion'
-    ]);
+  } catch (error: any) {
 
+    console.error(
+      'Error activando notificaciones:',
+      error
+    );
+
+    const alerta =
+      await this.alertController.create({
+        header: 'Notificaciones',
+        message:
+          error?.message ||
+          'No se pudieron activar las notificaciones.',
+        buttons: ['Aceptar']
+      });
+
+    await alerta.present();
   }
+}
 
-
-  abrirFavoritos() {
-
-    this.router.navigate([
-      '/favoritos'
-    ]);
-
-  }
-
-
-  abrirCanciones() {
-
-    this.router.navigate([
-      '/canciones'
-    ]);
-
-  }
-
-
-  abrirEventos() {
-
-    this.router.navigate([
-      '/eventos'
-    ]);
-
-  }
-
-
-  // NUEVO MÓDULO DE ENSAYOS
-
-  abrirEnsayos() {
-
-    this.router.navigate([
-      '/ensayos'
-    ]);
-
-  }
 
 }

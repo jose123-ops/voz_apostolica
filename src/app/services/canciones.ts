@@ -26,14 +26,18 @@ export interface Cancion {
 
   letra: string;
 
-  acordes: string;
+  // Nuevo campo para el tono musical
+  tono?: string;
+
+  // Compatibilidad con canciones anteriores
+  acordes?: string;
 
   youtube?: string;
 
-  fechaCreacion?: Date;
+  // Fecha de creación
+  fechaCreacion?: any;
 
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -219,6 +223,8 @@ export class CancionesService {
     );
 
   }
+
+  
 
 }
 

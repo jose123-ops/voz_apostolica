@@ -35,3 +35,161 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* MODO OSCURO */
+
+:root.tema-oscuro {
+  --ion-background-color: #0f172a;
+  --ion-text-color: #ffffff;
+  --ion-toolbar-background: #111827;
+  --ion-toolbar-color: #ffffff;
+  --ion-card-background: #1e293b;
+  --ion-item-background: #1e293b;
+  --ion-border-color: #334155;
+}
+
+:root.tema-claro {
+  --ion-background-color: #f4f7fb;
+  --ion-text-color: #172033;
+  --ion-toolbar-background: #ffffff;
+  --ion-toolbar-color: #172033;
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+  --ion-border-color: #e2e8f0;
+}
+
+
+/* ==========================================
+   VOZ APOSTÓLICA - MODO OSCURO
+========================================== */
+
+:root.tema-oscuro {
+  --ion-background-color: #0b0f14;
+  --ion-text-color: #ffffff;
+
+  --ion-toolbar-background: #0b0f14;
+  --ion-toolbar-color: #ffffff;
+
+  --ion-card-background: #151b23;
+  --ion-item-background: #151b23;
+
+  --ion-border-color: #252e3a;
+
+  --app-fondo: #0b0f14;
+  --app-superficie: #151b23;
+  --app-texto: #ffffff;
+  --app-texto-secundario: #8d98a8;
+  --app-borde: #252e3a;
+}
+
+/* ==========================================
+   VOZ APOSTÓLICA - MODO CLARO
+========================================== */
+
+:root.tema-claro {
+  --ion-background-color: #f4f7fb;
+  --ion-text-color: #172033;
+
+  --ion-toolbar-background: #ffffff;
+  --ion-toolbar-color: #172033;
+
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+
+  --ion-border-color: #e2e8f0;
+
+  --app-fondo: #f4f7fb;
+  --app-superficie: #ffffff;
+  --app-texto: #172033;
+  --app-texto-secundario: #64748b;
+  --app-borde: #e2e8f0;
+}
+
+
+/* =====================================
+   VOZ APOSTÓLICA - TEMA GLOBAL
+===================================== */
+
+/* MODO OSCURO */
+
+:root.tema-oscuro {
+  color-scheme: dark;
+
+  --app-bg: #0b0f14;
+  --card-bg: #151b23;
+  --card-hover: #19212c;
+  --border-color: #252e3a;
+  --primary-color: #4da3ff;
+  --text-primary: #ffffff;
+  --text-secondary: #8d98a8;
+  --nav-bg: #11161d;
+  --input-bg: #151b23;
+
+  --ion-background-color: #0b0f14;
+  --ion-text-color: #ffffff;
+  --ion-toolbar-background: #0b0f14;
+  --ion-toolbar-color: #ffffff;
+  --ion-card-background: #151b23;
+  --ion-item-background: #151b23;
+  --ion-border-color: #252e3a;
+}
+
+/* MODO CLARO */
+
+:root.tema-claro {
+  color-scheme: light;
+
+  --app-bg: #f4f7fb;
+  --card-bg: #ffffff;
+  --card-hover: #edf4fc;
+  --border-color: #e2e8f0;
+  --primary-color: #2563eb;
+  --text-primary: #172033;
+  --text-secondary: #64748b;
+  --nav-bg: #ffffff;
+  --input-bg: #ffffff;
+
+  --ion-background-color: #f4f7fb;
+  --ion-text-color: #172033;
+  --ion-toolbar-background: #ffffff;
+  --ion-toolbar-color: #172033;
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+  --ion-border-color: #e2e8f0;
+}
+
+/* COMPONENTES IONIC */
+
+ion-content {
+  --background: var(--app-bg);
+  --color: var(--text-primary);
+}
+
+ion-toolbar {
+  --background: var(--app-bg);
+  --color: var(--text-primary);
+}
+
+ion-card {
+  --background: var(--card-bg);
+  color: var(--text-primary);
+}
+
+ion-item {
+  --background: var(--card-bg);
+  --color: var(--text-primary);
+}
+
+ion-footer {
+  background: var(--nav-bg);
+}
+
+
+/* Espacio inferior para el menú global */
+
+ion-app:has(.bottom-nav) ion-router-outlet
+  ion-content::part(scroll) {
+  padding-bottom: calc(
+    85px + var(--ion-safe-area-bottom, 0px)
+  );
+}

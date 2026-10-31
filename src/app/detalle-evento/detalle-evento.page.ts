@@ -1,39 +1,11 @@
-
-import {
-  Component,
-  inject,
-  ChangeDetectorRef
-} from '@angular/core';
-
-import {
-  IonHeader,
-  IonToolbar,
-  IonContent,
-  IonIcon
-} from '@ionic/angular';
-
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { IonHeader, IonToolbar, IonContent, IonIcon } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import {
-  EventosService,
-  Evento,
-  CancionEvento
-} from '../services/eventos';
-
-import {
-  CancionesService,
-  Cancion
-} from '../services/canciones';
-
+import { EventosService, Evento, CancionEvento } from '../services/eventos';
+import { CancionesService, Cancion } from '../services/canciones';
 import { UsuarioService } from '../services/usuario.service';
 
-type ClaveSeccion =
-  | 'ministracion'
-  | 'lectura'
-  | 'ofrenda'
-  | 'especiales'
-  | 'despedida';
-
+type ClaveSeccion = 'ministracion' | 'lectura' | 'ofrenda' | 'especiales' | 'despedida';
 interface SeccionPrograma {
   clave: ClaveSeccion;
   titulo: string;
@@ -46,25 +18,16 @@ interface SeccionPrograma {
   selector: 'app-detalle-evento',
   templateUrl: './detalle-evento.page.html',
   styleUrls: ['./detalle-evento.page.scss'],
-  imports: [
-    IonHeader,
-    IonToolbar,
-    IonContent,
-    IonIcon
-  ]
+  imports: [IonHeader, IonToolbar, IonContent, IonIcon]
 })
 export class DetalleEventoPage {
-
   evento: Evento | null = null;
   canciones: Cancion[] = [];
-
   secciones: SeccionPrograma[] = [];
-
   cargando = true;
   eliminando = false;
   error = '';
   esAdmin = false;
-
   mostrarConfirmacion = false;
 
   private route = inject(ActivatedRoute);
@@ -80,12 +43,8 @@ export class DetalleEventoPage {
   }
 
   async verificarAdmin() {
-    try {
-      this.esAdmin = await this.usuarioService.esAdmin();
-    } catch (error) {
-      console.error('Error verificando administrador:', error);
-      this.esAdmin = false;
-    }
+    try { this.esAdmin = await this.usuarioService.esAdmin(); }
+    catch (error) { console.error('Error verificando administrador:', error); this.esAdmin = false; }
   }
 
   async cargarDatos() {
@@ -93,36 +52,18 @@ export class DetalleEventoPage {
     this.error = '';
     this.evento = null;
     this.secciones = [];
-
     this.changeDetector.detectChanges();
-
     try {
       const id = this.route.snapshot.queryParamMap.get('id');
-
-      if (!id) {
-        this.error = 'No se encontró el identificador del evento.';
-        return;
-      }
-
+      if (!id) { this.error = 'No se encontró el identificador del evento.'; return; }
       const [evento, canciones] = await Promise.all([
         this.eventosService.obtenerEvento(id),
         this.cancionesService.obtenerCanciones()
       ]);
-
-      if (!evento) {
-        this.error = 'El evento no existe.';
-        return;
-      }
-
-      this.evento = {
-        ...evento,
-        id: evento.id || id
-      };
-
+      if (!evento) { this.error = 'El evento no existe.'; return; }
+      this.evento = { ...evento, id: evento.id || id };
       this.canciones = canciones;
-
       this.construirSecciones();
-
     } catch (error) {
       console.error('Error cargando evento:', error);
       this.error = 'No se pudo cargar la programación.';
@@ -133,277 +74,133 @@ export class DetalleEventoPage {
   }
 
   private construirSecciones() {
-    if (!this.evento) {
-      this.secciones = [];
-      return;
-    }
-
+    if (!this.evento) { this.secciones = []; return; }
     const e = this.evento;
-
-    const todas: SeccionPrograma[] = [
-      {
-        clave: 'ministracion',
-        titulo: 'Ministración',
-        subtitulo: 'ADORACIÓN',
-        icono: 'musical-notes-outline',
-        canciones: e.ministracion || []
-      },
-      {
-        clave: 'lectura',
-        titulo: 'Cantos para la lectura',
-        subtitulo: 'PALABRA',
-        icono: 'book-outline',
-        canciones: e.lectura || []
-      },
-      {
-        clave: 'ofrenda',
-        titulo: 'Cantos para la ofrenda',
-        subtitulo: 'OFRENDA',
-        icono: 'heart-outline',
-        canciones: e.ofrenda || []
-      },
-      {
-        clave: 'especiales',
-        titulo: 'Cantos especiales',
-        subtitulo: 'PARTICIPACIÓN',
-        icono: 'star-outline',
-        canciones: e.especiales || []
-      },
-      {
-        clave: 'despedida',
-        titulo: 'Cantos para despedir',
-        subtitulo: 'CIERRE',
-        icono: 'musical-note-outline',
-        canciones: e.despedida || []
-      }
+    const nuevas: SeccionPrograma[] = [
+      { clave: 'lectura', titulo: 'Canto para Acción de Gracias', subtitulo: '3. ACCIÓN DE GRACIAS', icono: 'heart-outline', canciones: e.lectura || [] },
+      { clave: 'especiales', titulo: 'Canto para los Himnos Especiales', subtitulo: '4. HIMNOS ESPECIALES', icono: 'star-outline', canciones: e.especiales || [] },
+      { clave: 'ofrenda', titulo: 'Canto para la Ofrenda', subtitulo: '5. OFRENDA', icono: 'heart-outline', canciones: e.ofrenda || [] },
+      { clave: 'despedida', titulo: 'Canto para Entregar', subtitulo: '6. ENTREGAR', icono: 'musical-note-outline', canciones: e.despedida || [] },
+      { clave: 'ministracion', titulo: 'Canto de Ministración', subtitulo: '7. MINISTRACIÓN', icono: 'musical-notes-outline', canciones: e.ministracion || [] }
     ];
-
-    this.secciones = todas.filter(
-      seccion => seccion.canciones.length > 0
-    );
+    const anteriores: SeccionPrograma[] = [
+      { clave: 'ministracion', titulo: 'Ministración', subtitulo: 'ADORACIÓN', icono: 'musical-notes-outline', canciones: e.ministracion || [] },
+      { clave: 'lectura', titulo: 'Cantos para la lectura', subtitulo: 'PALABRA', icono: 'book-outline', canciones: e.lectura || [] },
+      { clave: 'ofrenda', titulo: 'Cantos para la ofrenda', subtitulo: 'OFRENDA', icono: 'heart-outline', canciones: e.ofrenda || [] },
+      { clave: 'especiales', titulo: 'Cantos especiales', subtitulo: 'PARTICIPACIÓN', icono: 'star-outline', canciones: e.especiales || [] },
+      { clave: 'despedida', titulo: 'Cantos para despedir', subtitulo: 'CIERRE', icono: 'musical-note-outline', canciones: e.despedida || [] }
+    ];
+    this.secciones = (e.versionPrograma === 2 ? nuevas : anteriores)
+      .filter(seccion => seccion.canciones.length > 0);
   }
 
   obtenerCancion(id: string): Cancion | null {
-    return this.canciones.find(
-      cancion => cancion.id === id
-    ) || null;
+    return this.canciones.find(cancion => cancion.id === id) || null;
   }
-
   obtenerNombreCancion(id: string): string {
-    return this.obtenerCancion(id)?.titulo ||
-      'Canción no encontrada';
+    return this.obtenerCancion(id)?.titulo || 'Canción no encontrada';
   }
-
-  obtenerArtista(id: string): string {
-    return this.obtenerCancion(id)?.artista || '';
-  }
-
+  obtenerArtista(id: string): string { return this.obtenerCancion(id)?.artista || ''; }
   obtenerCantidadCanciones(): number {
-    return this.secciones.reduce(
-      (total, seccion) => total + seccion.canciones.length,
-      0
-    );
+    return this.secciones.reduce((total, seccion) => total + seccion.canciones.length, 0);
   }
+  obtenerCantidadSecciones(): number { return this.secciones.length; }
 
-  obtenerCantidadSecciones(): number {
-    return this.secciones.length;
-  }
-
-  // Encuentra la posición de la canción dentro del
-  // programa completo, incluyendo todas las secciones.
-  obtenerIndiceGlobal(
-    clave: ClaveSeccion,
-    indiceLocal: number
-  ): number {
+  obtenerIndiceGlobal(clave: ClaveSeccion, indiceLocal: number): number {
     let indice = 0;
-
     for (const seccion of this.secciones) {
-      if (seccion.clave === clave) {
-        return indice + indiceLocal;
-      }
-
+      if (seccion.clave === clave) return indice + indiceLocal;
       indice += seccion.canciones.length;
     }
-
     return indiceLocal;
   }
 
-  abrirCancion(
-    item: CancionEvento,
-    clave: ClaveSeccion,
-    indiceLocal: number
-  ) {
-    if (!item.cancionId || !this.evento?.id) {
-      return;
-    }
-
-    // Se conservan los parámetros originales de la
-    // canción y se agrega el contexto del programa.
-    this.router.navigate(
-      ['/cancion-detalle'],
-      {
-        queryParams: {
-          id: item.cancionId,
-          eventoId: this.evento.id,
-          indicePrograma: this.obtenerIndiceGlobal(
-            clave,
-            indiceLocal
-          )
-        }
+  abrirCancion(item: CancionEvento, clave: ClaveSeccion, indiceLocal: number) {
+    if (!item.cancionId || !this.evento?.id) return;
+    void this.router.navigate(['/cancion-detalle'], {
+      queryParams: {
+        id: item.cancionId,
+        eventoId: this.evento.id,
+        indicePrograma: this.obtenerIndiceGlobal(clave, indiceLocal)
       }
-    );
+    });
   }
 
   abrirPrimeraCancion() {
     const primera = this.secciones[0];
-
-    if (!primera?.canciones.length) {
-      return;
-    }
-
-    this.abrirCancion(
-      primera.canciones[0],
-      primera.clave,
-      0
-    );
+    if (!primera?.canciones.length) return;
+    this.abrirCancion(primera.canciones[0], primera.clave, 0);
   }
 
   formatearFecha(fecha: string): string {
     if (!fecha) return '';
-
     const partes = fecha.split('-');
-
-    if (partes.length !== 3) {
-      return fecha;
-    }
-
-    const anio = Number(partes[0]);
-    const mes = Number(partes[1]);
-    const dia = Number(partes[2]);
-
+    if (partes.length !== 3) return fecha;
+    const [anio, mes, dia] = partes.map(Number);
     const fechaLocal = new Date(anio, mes - 1, dia);
-
-    if (Number.isNaN(fechaLocal.getTime())) {
-      return fecha;
-    }
-
+    if (Number.isNaN(fechaLocal.getTime())) return fecha;
     return fechaLocal.toLocaleDateString('es-NI', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
     });
   }
 
   generarTextoPrograma(): string {
     if (!this.evento) return '';
-
     const lineas: string[] = [
-      '🎵 VOZ APOSTÓLICA',
-      '📋 PROGRAMA DEL CULTO',
-      '',
-      `📌 ${this.evento.nombre}`,
-      `📅 ${this.formatearFecha(this.evento.fecha)}`,
-      ''
+      '🎵 VOZ APOSTÓLICA', '📋 PROGRAMA DEL CULTO', '',
+      `📌 ${this.evento.nombre}`, `📅 ${this.formatearFecha(this.evento.fecha)}`, ''
     ];
-
     for (const seccion of this.secciones) {
       lineas.push(`🎶 ${seccion.titulo.toUpperCase()}`);
-
       seccion.canciones.forEach((item, indice) => {
-        lineas.push(
-          `${indice + 1}. ${this.obtenerNombreCancion(item.cancionId)}`
-        );
-
-        if (item.dirige?.trim()) {
-          lineas.push(`   Dirige: ${item.dirige.trim()}`);
-        }
+        lineas.push(`${indice + 1}. ${this.obtenerNombreCancion(item.cancionId)}`);
+        if (item.dirige?.trim()) lineas.push(`   Dirige: ${item.dirige.trim()}`);
       });
-
       lineas.push('');
     }
-
     lineas.push('Dios bendiga nuestro servicio.');
-
     return lineas.join('\n');
   }
 
   compartirWhatsApp() {
     if (!this.evento) return;
-
-    const texto = this.generarTextoPrograma();
-
-    const url =
-      'https://wa.me/?text=' +
-      encodeURIComponent(texto);
-
+    const url = 'https://wa.me/?text=' + encodeURIComponent(this.generarTextoPrograma());
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 
   async copiarPrograma() {
     const texto = this.generarTextoPrograma();
-
     if (!texto) return;
-
-    try {
-      await navigator.clipboard.writeText(texto);
-    } catch (error) {
-      console.error('No se pudo copiar el programa:', error);
-    }
+    try { await navigator.clipboard.writeText(texto); }
+    catch (error) { console.error('No se pudo copiar el programa:', error); }
   }
 
-  volver() {
-    this.router.navigate(['/eventos']);
-  }
+  volver() { void this.router.navigate(['/eventos']); }
 
   editarEvento() {
-    if (!this.esAdmin || !this.evento?.id) {
-      return;
-    }
-
-    // Se prepara el acceso a la pantalla de edición.
-    // CrearEventoPage deberá reconocer este parámetro.
-    this.router.navigate(
-      ['/crear-evento'],
-      {
-        queryParams: {
-          editar: this.evento.id
-        }
-      }
-    );
+    if (!this.esAdmin || !this.evento?.id) return;
+    void this.router.navigate(['/crear-evento'], {
+      queryParams: { editar: this.evento.id }
+    });
   }
 
   solicitarEliminar() {
-    if (!this.esAdmin || !this.evento?.id) {
-      return;
-    }
-
+    if (!this.esAdmin || !this.evento?.id) return;
     this.mostrarConfirmacion = true;
   }
-
   cancelarEliminar() {
     if (this.eliminando) return;
-
     this.mostrarConfirmacion = false;
   }
 
   async confirmarEliminar() {
-    if (!this.esAdmin || !this.evento?.id || this.eliminando) {
-      return;
-    }
-
+    if (!this.esAdmin || !this.evento?.id || this.eliminando) return;
     this.eliminando = true;
     this.error = '';
-
     try {
-      await this.eventosService.eliminarEvento(
-        this.evento.id
-      );
-
+      await this.eventosService.eliminarEvento(this.evento.id);
       this.mostrarConfirmacion = false;
-
       await this.router.navigate(['/eventos']);
-
     } catch (error) {
       console.error('Error eliminando evento:', error);
       this.error = 'No se pudo eliminar el evento.';

@@ -1,0 +1,127 @@
+
+/* BOTONES COMPARTIDOS: ENSAYOS Y EVENTOS */
+
+.module-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 22px 0 30px;
+}
+
+.module-whatsapp-button {
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: #25d366;
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.module-whatsapp-button ion-icon {
+  font-size: 22px;
+}
+
+.module-whatsapp-button:hover {
+  background: #1fb85a;
+}
+
+.module-admin-actions {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+}
+
+.module-edit-button,
+.module-delete-button {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.module-edit-button ion-icon,
+.module-delete-button ion-icon {
+  font-size: 19px;
+}
+
+.module-edit-button {
+  background: #233a79;
+  border: 1px solid #405ab1;
+  color: #ffffff;
+}
+
+.module-edit-button:hover {
+  background: #304b94;
+}
+
+.module-delete-button {
+  background: #331a24;
+  border: 1px solid #69313e;
+  color: #ff8799;
+}
+
+.module-delete-button:hover {
+  background: #45202d;
+}
+
+.module-delete-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+:host-context(.tema-claro) {
+  .module-whatsapp-button {
+    background: #16a34a;
+    color: #ffffff;
+  }
+
+  .module-edit-button {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+  }
+
+  .module-delete-button {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    color: #dc2626;
+  }
+}
+
+@media (max-width: 600px) {
+  .module-actions {
+    margin: 18px 0 25px;
+  }
+
+  .module-admin-actions {
+    flex-direction: column;
+  }
+
+  .module-edit-button,
+  .module-delete-button {
+    width: 100%;
+  }
+
+  .module-whatsapp-button {
+    font-size: 13px;
+  }
+}

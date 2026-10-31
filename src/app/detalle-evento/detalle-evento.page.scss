@@ -1,108 +1,106 @@
 
+/* ==========================================
+   DETALLE DEL EVENTO - VOZ APOSTÓLICA
+   ========================================== */
+
 :host {
-  --fondo: #0b0f14;
-  --tarjeta: #151b23;
-  --borde: #252e3a;
-  --azul: #4da3ff;
-  --secundario: #8d98a8;
+  display: block;
+  --fondo: #090e17;
+  --tarjeta: #151b26;
+  --tarjeta-secundaria: #101827;
+  --borde: #283550;
+  --texto: #ffffff;
+  --secundario: #98a7bf;
+  --azul: #4e7dff;
 }
 
 ion-content {
   --background: var(--fondo);
+  --color: var(--texto);
 }
 
 ion-toolbar {
-  --background: var(--fondo);
-  --color: white;
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--borde);
+  --background: #101722;
+  --color: #ffffff;
+  --border-width: 0;
 }
 
 /* BARRA SUPERIOR */
 
 .topbar {
+  min-height: 64px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  padding: 0 16px;
 }
 
 .back-button,
-.edit-button,
-.delete-button {
+.header-icon {
   width: 42px;
   height: 42px;
+  flex-shrink: 0;
   border: none;
   border-radius: 12px;
+  background: #1a2538;
+  color: #ffffff;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  cursor: pointer;
 }
 
 .back-button {
-  background: var(--tarjeta);
-  color: white;
-}
-
-.edit-button {
-  background: #1b2a4d;
-  color: #8bbcff;
-}
-
-.delete-button {
-  background: #321d28;
-  color: #ff8c9e;
+  cursor: pointer;
 }
 
 .back-button ion-icon,
-.edit-button ion-icon,
-.delete-button ion-icon {
+.header-icon ion-icon {
   font-size: 21px;
 }
 
+.header-icon {
+  color: #91a7ff;
+}
+
 .topbar-title {
-  display: flex;
   flex: 1;
   min-width: 0;
+  display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .topbar-title span {
-  color: var(--azul);
+  color: #8fa3d1;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.3px;
 }
 
 .topbar-title strong {
-  color: white;
+  color: #ffffff;
   font-size: 16px;
-  font-weight: 700;
-}
-
-.topbar-actions {
-  display: flex;
-  gap: 7px;
 }
 
 /* CONTENEDOR */
 
 .event-container {
-  max-width: 950px;
-  margin: auto;
-  padding: 22px 16px 90px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 18px 120px;
+  box-sizing: border-box;
 }
 
-/* ENCABEZADO DEL EVENTO */
+/* TARJETA PRINCIPAL */
 
 .event-header {
-  padding: 21px;
-  margin-bottom: 18px;
+  padding: 24px;
   background: var(--tarjeta);
   border: 1px solid var(--borde);
-  border-radius: 19px;
+  border-radius: 18px;
+  margin-bottom: 20px;
 }
 
 .event-header-top {
@@ -112,190 +110,277 @@ ion-toolbar {
 }
 
 .event-icon {
-  width: 59px;
-  height: 59px;
+  width: 55px;
+  height: 55px;
   flex-shrink: 0;
+  background: #233b78;
+  color: #8cb0ff;
+  border-radius: 13px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 16px;
-  background: #1b2a4d;
-  color: var(--azul);
 }
 
 .event-icon ion-icon {
-  font-size: 29px;
+  font-size: 27px;
 }
 
 .event-info {
-  flex: 1;
   min-width: 0;
+  flex: 1;
 }
 
 .event-label {
-  color: var(--azul);
+  color: #82a9ff;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 1.3px;
+  letter-spacing: 1.1px;
 }
 
 .event-info h1 {
-  margin: 7px 0;
-  color: white;
+  margin: 5px 0 7px;
+  color: var(--texto);
   font-size: 23px;
-  font-weight: 800;
+  line-height: 1.3;
   overflow-wrap: anywhere;
 }
 
 .event-info p {
+  margin: 0;
   display: flex;
   align-items: center;
-  gap: 7px;
-  margin: 0;
+  gap: 6px;
   color: var(--secundario);
-  font-size: 12px;
-  text-transform: capitalize;
+  font-size: 13px;
 }
 
 .event-info p ion-icon {
-  color: var(--azul);
-  flex-shrink: 0;
+  color: #86a6e8;
 }
 
 .event-stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 20px;
-  padding-top: 17px;
+  gap: 15px;
   border-top: 1px solid var(--borde);
+  padding-top: 18px;
+  margin-top: 22px;
 }
 
 .event-stats > div {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--secundario);
-  font-size: 12px;
 }
 
 .event-stats ion-icon {
+  color: #78a5ff;
   font-size: 22px;
-  color: var(--azul);
 }
 
 .event-stats span {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  color: var(--secundario);
+  font-size: 12px;
 }
 
 .event-stats strong {
-  color: white;
-  font-size: 17px;
+  color: var(--texto);
+  font-size: 19px;
 }
 
-/* ACCIONES */
+/* ==========================================
+   BOTONES IGUALES A ENSAYOS
+   ========================================== */
 
-.acciones-programa {
+.module-actions {
+  width: 100%;
   display: flex;
-  gap: 10px;
-  margin-bottom: 32px;
+  flex-direction: column;
+  gap: 12px;
+  margin: 22px 0 30px;
 }
 
-.acciones-programa button {
+/* WHATSAPP */
+
+.module-whatsapp-button {
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: #25d366;
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.module-whatsapp-button ion-icon {
+  font-size: 22px;
+}
+
+.module-whatsapp-button:hover {
+  background: #1fb85a;
+}
+
+/* EDITAR Y ELIMINAR */
+
+.module-admin-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.module-edit-button,
+.module-delete-button {
   flex: 1;
-  min-height: 51px;
+  min-width: 0;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
-  padding: 10px;
-  border: none;
-  border-radius: 14px;
-  font-size: 13px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
 }
 
-.acciones-programa ion-icon {
+.module-edit-button ion-icon,
+.module-delete-button ion-icon {
+  font-size: 19px;
+}
+
+.module-edit-button {
+  background: #233a79;
+  border: 1px solid #405ab1;
+  color: #ffffff;
+}
+
+.module-edit-button:hover {
+  background: #304b94;
+}
+
+.module-delete-button {
+  background: #331a24;
+  border: 1px solid #69313e;
+  color: #ff8799;
+}
+
+.module-delete-button:hover {
+  background: #45202d;
+}
+
+.module-delete-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* INICIAR PROGRAMA */
+
+.accion-iniciar {
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.accion-iniciar ion-icon {
   font-size: 20px;
 }
 
-.accion-iniciar {
-  background: #2563eb;
-  color: white;
+.accion-iniciar:hover {
+  background: #1d4ed8;
 }
 
-.accion-compartir {
-  background: #1b2a4d;
-  color: #a8caff;
-}
-
-/* TÍTULO PROGRAMA */
+/* TÍTULO DE PROGRAMACIÓN */
 
 .programa-titulo {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 12px;
-  margin-bottom: 18px;
+  margin: 28px 0 16px;
 }
 
-.programa-titulo > div:first-child > span {
-  color: var(--azul);
+.programa-titulo > div:first-child span {
+  color: #85a8ff;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.3px;
 }
 
 .programa-titulo h2 {
-  margin: 6px 0 0;
-  color: white;
+  margin: 5px 0 0;
+  color: var(--texto);
   font-size: 20px;
 }
 
 .programa-contador {
   flex-shrink: 0;
-  padding: 7px 11px;
+  padding: 8px 12px;
   border-radius: 20px;
-  background: #1b2a4d;
-  color: #8bbcff;
+  background: #20335c;
+  color: #9ebcff;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
-/* SECCIONES */
+/* SECCIONES DEL PROGRAMA */
 
 .event-section {
-  margin-bottom: 17px;
+  background: var(--tarjeta-secundaria);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
   padding: 18px;
-  background: #101625;
-  border: 1px solid #202a40;
-  border-radius: 18px;
+  margin-bottom: 16px;
 }
 
 .section-title {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .section-icon {
-  width: 43px;
-  height: 43px;
+  width: 42px;
+  height: 42px;
   flex-shrink: 0;
+  border-radius: 12px;
+  background: #1e3464;
+  color: #83a9ff;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background: #1b2a4d;
-  color: var(--azul);
 }
 
 .section-icon ion-icon {
-  font-size: 23px;
+  font-size: 22px;
 }
 
 .section-info {
@@ -304,30 +389,31 @@ ion-toolbar {
 }
 
 .section-info span {
-  color: #8a9ab5;
+  color: #8c9bb7;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.8px;
 }
 
 .section-info h2 {
   margin: 5px 0 0;
-  color: white;
+  color: var(--texto);
   font-size: 17px;
-  font-weight: 700;
+  line-height: 1.35;
 }
 
 .section-count {
-  min-width: 29px;
-  height: 29px;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 9px;
-  background: #1b2a4d;
-  color: #8bbcff;
-  font-size: 12px;
-  font-weight: 700;
+  background: #223a72;
+  color: #9cb8ff;
+  font-size: 13px;
+  font-weight: 800;
 }
 
 /* CANCIONES */
@@ -335,73 +421,68 @@ ion-toolbar {
 .song-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
 }
 
 .song-card {
   width: 100%;
+  min-height: 73px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 13px;
-  border: 1px solid var(--borde);
-  border-radius: 14px;
-  background: var(--tarjeta);
-  color: white;
+  gap: 13px;
+  padding: 12px 14px;
   text-align: left;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  color: var(--texto);
+  font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
 }
 
 .song-card:hover {
-  background: #1b2533;
-  border-color: #385075;
-}
-
-.song-card:active {
-  transform: scale(0.985);
+  background: #1b273c;
+  border-color: #4666a0;
 }
 
 .song-number {
-  width: 39px;
-  height: 39px;
+  width: 37px;
+  height: 37px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 11px;
-  background: #202d43;
-  color: #8bbcff;
-  font-size: 13px;
+  border-radius: 10px;
+  background: #203657;
+  color: #9abaff;
+  font-size: 14px;
   font-weight: 800;
 }
 
 .song-info {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .song-info strong {
-  display: block;
-  color: white;
   font-size: 14px;
-  font-weight: 700;
+  color: var(--texto);
   overflow-wrap: anywhere;
 }
 
 .song-artist {
-  display: block;
-  margin-top: 5px;
-  color: #8895a6;
-  font-size: 11px;
+  color: var(--secundario);
+  font-size: 12px;
 }
 
 .song-leader {
   display: flex;
   align-items: center;
   gap: 5px;
-  margin-top: 7px;
-  color: #8bbcff;
+  color: #8fb3ff;
   font-size: 11px;
 }
 
@@ -410,28 +491,29 @@ ion-toolbar {
 }
 
 .song-arrow {
-  color: var(--azul);
+  color: #75a9ff;
   font-size: 20px;
-  flex-shrink: 0;
 }
+
+/* PIE DE SECCIÓN */
 
 .section-footer {
   display: flex;
   align-items: center;
   gap: 7px;
   margin-top: 15px;
-  padding-top: 12px;
-  border-top: 1px solid #202a40;
-  color: #8291a7;
+  padding-top: 13px;
+  border-top: 1px solid var(--borde);
+  color: #8499c4;
   font-size: 11px;
 }
 
 .section-footer ion-icon {
-  color: var(--azul);
+  color: #6b9cff;
   font-size: 16px;
 }
 
-/* COPIAR */
+/* COPIAR PROGRAMACIÓN */
 
 .copiar-programa {
   width: 100%;
@@ -440,43 +522,40 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
   gap: 9px;
-  margin-top: 23px;
-  border: 1px solid #355079;
-  border-radius: 13px;
+  margin: 18px 0;
+  padding: 12px 16px;
+  border: 1px solid #49699c;
+  border-radius: 12px;
   background: transparent;
-  color: #8bbcff;
+  color: #a7c4ff;
+  font-family: inherit;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
 }
 
-.copiar-programa ion-icon {
-  font-size: 18px;
-}
-
 /* ESTADOS */
 
 .estado {
-  padding: 65px 20px;
-  text-align: center;
+  min-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
   color: var(--secundario);
 }
 
-.estado p {
-  font-size: 13px;
-}
-
 .loader {
-  width: 34px;
-  height: 34px;
-  margin: 0 auto 15px;
-  border: 3px solid #28303b;
-  border-top-color: var(--azul);
+  width: 42px;
+  height: 42px;
+  border: 4px solid #26344d;
+  border-top-color: #739dff;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: girar 0.8s linear infinite;
 }
 
-@keyframes spin {
+@keyframes girar {
   to {
     transform: rotate(360deg);
   }
@@ -484,53 +563,46 @@ ion-toolbar {
 
 .error-message,
 .empty {
-  padding: 42px 20px;
-  border: 1px solid var(--borde);
-  border-radius: 17px;
-  background: var(--tarjeta);
   text-align: center;
+  padding: 30px 20px;
+  border-radius: 16px;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  color: var(--secundario);
 }
 
 .error-message > ion-icon,
 .empty > ion-icon {
-  color: var(--azul);
-  font-size: 42px;
-}
-
-.error-message > ion-icon {
-  color: #ff8c9e;
+  font-size: 40px;
+  color: #83a6ff;
 }
 
 .error-message h2,
 .empty h2 {
-  color: white;
-  font-size: 17px;
-}
-
-.error-message p,
-.empty p {
-  color: var(--secundario);
-  font-size: 13px;
-  line-height: 1.6;
+  color: var(--texto);
+  font-size: 20px;
 }
 
 .error-message button {
-  margin-top: 17px;
-  padding: 11px 20px;
+  margin-top: 12px;
+  padding: 12px 22px;
+  background: #2563eb;
+  color: #ffffff;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
-  color: white;
+  cursor: pointer;
 }
 
 .error-inline {
+  padding: 14px;
   margin-top: 15px;
-  color: #ff8c9e;
-  text-align: center;
-  font-size: 12px;
+  border-radius: 10px;
+  background: #351d28;
+  color: #ff9eac;
+  font-size: 13px;
 }
 
-/* CONFIRMACIÓN ELIMINAR */
+/* CONFIRMACIÓN DE ELIMINACIÓN */
 
 .modal-overlay {
   position: fixed;
@@ -540,68 +612,73 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.75);
 }
 
 .modal-confirmacion {
   width: 100%;
-  max-width: 390px;
-  padding: 26px;
-  border: 1px solid #384154;
-  border-radius: 20px;
-  background: #151b23;
+  max-width: 420px;
+  padding: 28px;
+  background: #151d2d;
+  border: 1px solid #34415b;
+  border-radius: 18px;
   text-align: center;
 }
 
 .modal-icono {
-  width: 58px;
-  height: 58px;
-  margin: 0 auto 15px;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 16px;
-  background: #321d28;
-  color: #ff8c9e;
-  font-size: 28px;
+  border-radius: 18px;
+  background: #3c1d29;
+  color: #ff8496;
+}
+
+.modal-icono ion-icon {
+  font-size: 30px;
 }
 
 .modal-confirmacion h2 {
+  color: #ffffff;
   margin: 0 0 10px;
-  color: white;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .modal-confirmacion p {
-  color: var(--secundario);
-  font-size: 13px;
+  color: #a7b2c6;
+  font-size: 14px;
   line-height: 1.6;
 }
 
 .modal-botones {
   display: flex;
-  gap: 10px;
-  margin-top: 23px;
+  gap: 12px;
+  margin-top: 25px;
 }
 
 .modal-botones button {
   flex: 1;
-  min-height: 45px;
-  border: none;
-  border-radius: 12px;
-  font-size: 13px;
+  min-height: 46px;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
 }
 
 .modal-botones .cancelar {
-  background: #29313d;
-  color: white;
+  background: #263148;
+  border: 1px solid #3c4a63;
+  color: #ffffff;
 }
 
 .modal-botones .confirmar {
-  background: #dc3545;
-  color: white;
+  background: #dc354b;
+  border: none;
+  color: #ffffff;
 }
 
 .modal-botones button:disabled {
@@ -609,24 +686,93 @@ ion-toolbar {
   cursor: not-allowed;
 }
 
-/* MÓVIL */
+/* TEMA CLARO */
 
-@media (max-width: 650px) {
+:host-context(.tema-claro) {
+  --fondo: #f4f7fb;
+  --tarjeta: #ffffff;
+  --tarjeta-secundaria: #ffffff;
+  --borde: #dfe6f1;
+  --texto: #172033;
+  --secundario: #64748b;
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #172033;
+  }
+
+  .topbar-title strong {
+    color: #172033;
+  }
+
+  .back-button,
+  .header-icon {
+    background: #eaf1ff;
+    color: #2563eb;
+  }
+
+  .event-icon,
+  .section-icon,
+  .song-number,
+  .section-count,
+  .programa-contador {
+    background: #eaf1ff;
+    color: #2563eb;
+  }
+
+  .module-whatsapp-button {
+    background: #16a34a;
+    color: #ffffff;
+  }
+
+  .module-edit-button {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+  }
+
+  .module-delete-button {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    color: #dc2626;
+  }
+
+  .song-card:hover {
+    background: #f1f5ff;
+  }
+
+  .copiar-programa {
+    border-color: #93b4ef;
+    color: #2563eb;
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
   .event-container {
-    padding: 16px 12px 75px;
+    padding: 16px 12px 110px;
   }
 
   .event-header {
-    padding: 16px;
-  }
-
-  .event-icon {
-    width: 49px;
-    height: 49px;
+    padding: 18px;
   }
 
   .event-info h1 {
-    font-size: 19px;
+    font-size: 20px;
+  }
+
+  .module-admin-actions {
+    flex-direction: column;
+  }
+
+  .module-edit-button,
+  .module-delete-button {
+    width: 100%;
+  }
+
+  .programa-titulo h2 {
+    font-size: 18px;
   }
 
   .event-section {
@@ -637,32 +783,7 @@ ion-toolbar {
     font-size: 15px;
   }
 
-  .song-card {
-    padding: 11px;
-  }
-
-  .song-info strong {
-    font-size: 13px;
-  }
-
-  .topbar-title strong {
-    font-size: 14px;
-  }
-
-  .edit-button,
-  .delete-button,
-  .back-button {
-    width: 37px;
-    height: 37px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .loader {
-    animation: none;
-  }
-
-  .song-card {
-    transition: none;
+  .modal-confirmacion {
+    padding: 22px 18px;
   }
 }

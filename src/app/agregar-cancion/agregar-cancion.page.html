@@ -1,179 +1,432 @@
 
 <ion-header class="ion-no-border">
-
   <ion-toolbar>
-
     <div class="topbar">
 
       <button
+        type="button"
         class="back-button"
-        (click)="volver()"
-      >
-
-        <ion-icon
-          name="arrow-back-outline">
-        </ion-icon>
-
+        (click)="volver()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
       </button>
 
-
       <div class="topbar-title">
-
         <span>VOZ APOSTÓLICA</span>
-
         <h1>Agregar canción</h1>
-
       </div>
 
     </div>
-
   </ion-toolbar>
-
 </ion-header>
-
 
 <ion-content>
 
   <div class="form-container">
 
-
-    <!-- ========================= -->
     <!-- ENCABEZADO -->
-    <!-- ========================= -->
-
     <div class="page-intro">
 
       <div class="intro-icon">
-
-        <ion-icon
-          name="musical-note-outline">
-        </ion-icon>
-
+        <ion-icon name="musical-note-outline"></ion-icon>
       </div>
 
-
       <div>
-
         <h2>Nueva canción</h2>
-
         <p>
           Agregá una canción al repertorio
           de Voz Apostólica.
         </p>
-
       </div>
 
     </div>
 
-
-    <!-- ========================= -->
-    <!-- MENSAJE DE ÉXITO -->
-    <!-- ========================= -->
+    <!-- MENSAJES GENERALES -->
 
     @if (mensaje) {
-
       <div class="success-message">
-
-        <ion-icon
-          name="checkmark-circle-outline">
-        </ion-icon>
-
-        <span>
-          {{ mensaje }}
-        </span>
-
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <span>{{ mensaje }}</span>
       </div>
-
     }
-
-
-    <!-- ========================= -->
-    <!-- MENSAJE DE ERROR -->
-    <!-- ========================= -->
 
     @if (error) {
-
       <div class="error-message">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>{{ error }}</span>
+      </div>
+    }
 
-        <ion-icon
-          name="alert-circle-outline">
-        </ion-icon>
+    <!-- ================================= -->
+    <!-- 1. BUSCAR LETRA EN INTERNET -->
+    <!-- ================================= -->
 
-        <span>
-          {{ error }}
-        </span>
+    <section
+      class="form-section"
+      id="buscador-letras">
+
+      <div class="section-title">
+
+        <span class="section-number">1</span>
+
+        <div>
+          <span class="section-label">BUSCADOR</span>
+          <h3>Buscar letra en Internet</h3>
+        </div>
 
       </div>
 
-    }
+      @if (mostrarBuscador) {
 
+        <div class="lyrics-search-panel">
 
-    <!-- ========================= -->
-    <!-- INFORMACIÓN -->
-    <!-- ========================= -->
+          <!-- ENCABEZADO DEL BUSCADOR -->
+
+          <div class="lyrics-search-header">
+
+            <ion-icon name="search-outline"></ion-icon>
+
+            <div>
+              <strong>Buscador de canciones</strong>
+              <p>
+                Buscá por el título y artista
+                de la canción.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- CAMPOS DE BÚSQUEDA -->
+
+          <div class="field">
+
+            <label>Título de la canción</label>
+
+            <ion-input
+              [(ngModel)]="consultaTitulo"
+              placeholder="Ej. Yeshua"
+              fill="outline">
+            </ion-input>
+
+          </div>
+
+          <div class="field">
+
+            <label>Artista (opcional)</label>
+
+            <ion-input
+              [(ngModel)]="consultaArtista"
+              placeholder="Ej. Montesanto"
+              fill="outline">
+            </ion-input>
+
+          </div>
+
+          <!-- BOTÓN BUSCAR -->
+
+          <ion-button
+            expand="block"
+            [disabled]="buscandoLetra || !consultaTitulo.trim()"
+            (click)="buscarLetra()">
+
+            <ion-icon
+              name="search-outline"
+              slot="start">
+            </ion-icon>
+
+            {{ buscandoLetra
+              ? 'Buscando canciones...'
+              : 'Buscar canción' }}
+
+          </ion-button>
+
+          <!-- ERROR DE BÚSQUEDA -->
+
+          @if (errorBusqueda) {
+
+            <div class="error-message">
+
+              <ion-icon name="alert-circle-outline"></ion-icon>
+
+              <span>{{ errorBusqueda }}</span>
+
+            </div>
+
+          }
+
+          <!-- ESTADO DE BÚSQUEDA -->
+
+          @if (buscandoLetra) {
+
+            <div class="lyrics-empty">
+              Buscando letras disponibles...
+            </div>
+
+          }
+
+          <!-- ================================= -->
+          <!-- RESULTADOS O LETRA SELECCIONADA -->
+          <!-- ================================= -->
+
+          @if (!resultadoSeleccionado) {
+
+            <!-- SIN RESULTADOS -->
+
+            @if (
+              busquedaRealizada &&
+              resultadosLetras.length === 0 &&
+              !buscandoLetra
+            ) {
+
+              <div class="lyrics-empty">
+
+                No encontramos canciones
+                con esos datos.
+
+                Probá buscando solamente
+                por el título.
+
+              </div>
+
+            }
+
+            <!-- LISTA DE RESULTADOS -->
+
+            @if (resultadosLetras.length > 0) {
+
+              <div class="lyrics-results">
+
+                <h4>
+                  Resultados encontrados:
+                  {{ resultadosLetras.length }}
+                </h4>
+
+                @for (
+                  resultado of resultadosLetras;
+                  track resultado.id
+                ) {
+
+                  <button
+                    type="button"
+                    class="lyrics-result"
+                    (click)="seleccionarResultado(resultado)">
+
+                    <div class="lyrics-result-info">
+
+                      <strong>
+                        {{ resultado.trackName }}
+                      </strong>
+
+                      <span>
+                        {{ resultado.artistName }}
+                      </span>
+
+                      @if (!resultado.plainLyrics) {
+                        <small>
+                          Letra no disponible
+                        </small>
+                      }
+
+                    </div>
+
+                    <ion-icon
+                      name="chevron-forward-outline">
+                    </ion-icon>
+
+                  </button>
+
+                }
+
+              </div>
+
+            }
+
+          } @else {
+
+            <!-- ================================= -->
+            <!-- VISTA PREVIA DE LA LETRA -->
+            <!-- ================================= -->
+
+            <div class="lyrics-preview">
+
+              <div class="lyrics-preview-header">
+
+                <div>
+
+                  <strong>
+                    {{ resultadoSeleccionado.trackName }}
+                  </strong>
+
+                  <p>
+                    {{ resultadoSeleccionado.artistName }}
+                  </p>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="lyrics-close"
+                  (click)="cerrarVistaPrevia()"
+                  aria-label="Volver a resultados">
+
+                  <ion-icon name="arrow-back-outline"></ion-icon>
+
+                </button>
+
+              </div>
+
+              <!-- LETRA COMPLETA -->
+
+              @if (resultadoSeleccionado.plainLyrics) {
+
+                <div
+                  class="lyrics-preview-text"
+                  style="white-space: pre-wrap;"
+                  translate="no">
+
+                  {{ resultadoSeleccionado.plainLyrics }}
+
+                </div>
+
+                <p class="lyrics-notice">
+
+                  Letra consultada en LRCLIB.
+                  Guardá solamente contenido que
+                  tengas autorización para utilizar.
+
+                </p>
+
+                <!-- SELECCIONAR LETRA -->
+
+                <ion-button
+                  expand="block"
+                  class="use-lyrics-button"
+                  (click)="usarLetraEncontrada()">
+
+                  <ion-icon
+                    name="checkmark-circle-outline"
+                    slot="start">
+                  </ion-icon>
+
+                  Usar esta letra
+
+                </ion-button>
+
+              } @else {
+
+                <div class="lyrics-empty">
+
+                  <ion-icon name="alert-circle-outline"></ion-icon>
+
+                  <p>
+                    Esta canción no tiene letra disponible.
+                  </p>
+
+                </div>
+
+              }
+
+              <!-- ELEGIR OTRA CANCIÓN -->
+
+              <ion-button
+                expand="block"
+                fill="outline"
+                (click)="cerrarVistaPrevia()">
+
+                <ion-icon
+                  name="arrow-back-outline"
+                  slot="start">
+                </ion-icon>
+
+                Elegir otra canción
+
+              </ion-button>
+
+            </div>
+
+          }
+
+        </div>
+
+      } @else {
+
+        <!-- BUSCADOR OCULTO DESPUÉS DE USAR LA LETRA -->
+
+        <div class="lyrics-preview">
+
+          <div class="success-message">
+
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+
+            <span>
+              Letra agregada al formulario correctamente.
+            </span>
+
+          </div>
+
+          <ion-button
+            expand="block"
+            fill="outline"
+            (click)="buscarOtraLetra()">
+
+            <ion-icon
+              name="search-outline"
+              slot="start">
+            </ion-icon>
+
+            Buscar otra canción
+
+          </ion-button>
+
+        </div>
+
+      }
+
+    </section>
+
+    <!-- ================================= -->
+    <!-- 2. DATOS DE LA CANCIÓN -->
+    <!-- ================================= -->
 
     <section class="form-section">
 
       <div class="section-title">
 
-        <span class="section-number">
-          1
-        </span>
+        <span class="section-number">2</span>
 
         <div>
-
-          <span class="section-label">
-            INFORMACIÓN
-          </span>
-
+          <span class="section-label">INFORMACIÓN</span>
           <h3>Datos de la canción</h3>
-
         </div>
 
       </div>
 
-
-      <!-- TÍTULO -->
-
       <div class="field">
 
-        <label>
-          Título de la canción
-        </label>
+        <label>Título de la canción</label>
 
         <ion-input
           [(ngModel)]="titulo"
-          placeholder="Ej. Yeshua"
+          placeholder="Título"
           fill="outline">
         </ion-input>
 
       </div>
 
-
-      <!-- ARTISTA -->
-
       <div class="field">
 
-        <label>
-          Artista / Autor
-        </label>
+        <label>Artista / Autor</label>
 
         <ion-input
           [(ngModel)]="artista"
-          placeholder="Ej. Montesanto"
+          placeholder="Artista o autor"
           fill="outline">
         </ion-input>
 
       </div>
 
-
-      <!-- CATEGORÍA -->
-
       <div class="field">
 
-        <label>
-          Categoría
-        </label>
+        <label>Categoría</label>
 
         <ion-select
           [(ngModel)]="categoria"
@@ -211,154 +464,150 @@
 
     </section>
 
-
-    <!-- ========================= -->
-    <!-- ACORDES -->
-    <!-- ========================= -->
+    <!-- ================================= -->
+    <!-- 3. TONO MUSICAL -->
+    <!-- ================================= -->
 
     <section class="form-section">
 
       <div class="section-title">
 
-        <span class="section-number">
-          2
-        </span>
+        <span class="section-number">3</span>
 
         <div>
-
-          <span class="section-label">
-            MÚSICA
-          </span>
-
-          <h3>Acordes</h3>
-
+          <span class="section-label">MÚSICA</span>
+          <h3>Tono de la canción</h3>
         </div>
 
       </div>
 
+      <div class="field">
+
+        <label>Seleccioná el tono musical</label>
+
+        <ion-select
+          [(ngModel)]="tono"
+          fill="outline"
+          interface="popover"
+          placeholder="Seleccione el tono">
+
+          <ion-select-option value="C">C - Do</ion-select-option>
+          <ion-select-option value="C#">C# - Do sostenido</ion-select-option>
+          <ion-select-option value="D">D - Re</ion-select-option>
+          <ion-select-option value="Eb">Eb - Mi bemol</ion-select-option>
+          <ion-select-option value="E">E - Mi</ion-select-option>
+          <ion-select-option value="F">F - Fa</ion-select-option>
+          <ion-select-option value="F#">F# - Fa sostenido</ion-select-option>
+          <ion-select-option value="G">G - Sol</ion-select-option>
+          <ion-select-option value="Ab">Ab - La bemol</ion-select-option>
+          <ion-select-option value="A">A - La</ion-select-option>
+          <ion-select-option value="Bb">Bb - Si bemol</ion-select-option>
+          <ion-select-option value="B">B - Si</ion-select-option>
+
+        </ion-select>
+
+        <small>
+          Seleccioná el tono en el que
+          se cantará esta canción.
+        </small>
+
+      </div>
 
       <div class="field">
 
-        <label>
-          Acordes de la canción
-        </label>
+        <label>Tono seleccionado</label>
 
-        <ion-textarea
-          [(ngModel)]="acordes"
-          placeholder="Ej.
+        <div class="selected-key">
 
-A        B
-Mi orgullo me sacó del jardín
+          <ion-icon name="musical-note-outline"></ion-icon>
 
-C#m      G#m
-Su humildad puso el Edén"
-          fill="outline"
-          [autoGrow]="true"
-          rows="8">
-        </ion-textarea>
+          <strong>{{ tono }}</strong>
 
-        <small>
-          Podés escribir los acordes respetando
-          los saltos de línea.
-        </small>
+        </div>
 
       </div>
 
     </section>
 
+    <!-- ================================= -->
+    <!-- 4. LETRA DE LA CANCIÓN -->
+    <!-- ================================= -->
 
-    <!-- ========================= -->
-    <!-- LETRA -->
-    <!-- ========================= -->
-
-    <section class="form-section">
+    <section
+      class="form-section"
+      id="seccion-letra">
 
       <div class="section-title">
 
-        <span class="section-number">
-          3
-        </span>
+        <span class="section-number">4</span>
 
         <div>
-
-          <span class="section-label">
-            LETRA
-          </span>
-
+          <span class="section-label">LETRA</span>
           <h3>Letra de la canción</h3>
-
         </div>
 
       </div>
 
+      <div class="field lyrics-manual-field">
 
-      <div class="field">
-
-        <label>
-          Letra
-        </label>
+        <label>Letra de la canción</label>
 
         <ion-textarea
           [(ngModel)]="letra"
-          placeholder="Escribí aquí la letra...
-
-Ejemplo:
-
-Mi orgullo me sacó del jardín
-Su humildad puso el Edén
-
-Mi preferido
-Mi predilecto
-Jesús, Jesús
-
-Tú eres santo
-Tú eres digno"
+          placeholder="Seleccioná una canción en el buscador o escribí la letra manualmente..."
           fill="outline"
           [autoGrow]="true"
-          rows="15">
+          rows="15"
+          translate="no">
         </ion-textarea>
 
-
         <small>
-          Respetá los espacios entre estrofas.
-          Los saltos de línea se conservarán.
+          Podés revisar y editar la letra antes de guardarla.
+          Los acordes no se mostrarán entre las estrofas.
         </small>
 
       </div>
 
+      @if (letra.trim()) {
+
+        <ion-button
+          expand="block"
+          fill="outline"
+          (click)="buscarOtraLetra()">
+
+          <ion-icon
+            name="search-outline"
+            slot="start">
+          </ion-icon>
+
+          Cambiar letra seleccionada
+
+        </ion-button>
+
+      }
+
     </section>
 
-
-    <!-- ========================= -->
-    <!-- YOUTUBE -->
-    <!-- ========================= -->
+    <!-- ================================= -->
+    <!-- 5. YOUTUBE -->
+    <!-- ================================= -->
 
     <section class="form-section">
 
       <div class="section-title">
 
-        <span class="section-number">
-          4
-        </span>
+        <span class="section-number">5</span>
 
         <div>
-
-          <span class="section-label">
-            VIDEO
-          </span>
-
+          <span class="section-label">VIDEO</span>
           <h3>YouTube</h3>
-
         </div>
 
       </div>
 
-
       <div class="field">
 
-        <label>
-          Enlace de YouTube
-        </label>
+        <label>Enlace de YouTube</label>
 
         <ion-input
           [(ngModel)]="youtube"
@@ -376,39 +625,30 @@ Tú eres digno"
 
     </section>
 
-
-    <!-- ========================= -->
-    <!-- GUARDAR -->
-    <!-- ========================= -->
+    <!-- ================================= -->
+    <!-- GUARDAR CANCIÓN -->
+    <!-- ================================= -->
 
     <div class="form-actions">
 
-      <ion-button
-        expand="block"
-        class="save-button"
-        [disabled]="guardando"
-        (click)="guardarCancion()">
+   <ion-button
+  type="button"
+  expand="block"
+  class="save-button"
+  [disabled]="guardando"
+  (click)="guardarCancion()">
 
-        @if (guardando) {
+  @if (guardando) {
+    Guardando...
+  } @else {
+    <ion-icon
+      name="save-outline"
+      slot="start">
+    </ion-icon>
+    Guardar canción
+  }
 
-          <ion-icon
-            name="sync-outline">
-          </ion-icon>
-
-          Guardando...
-
-        } @else {
-
-          <ion-icon
-            name="save-outline">
-          </ion-icon>
-
-          Guardar canción
-
-        }
-
-      </ion-button>
-
+</ion-button>
 
       <ion-button
         expand="block"
@@ -423,8 +663,6 @@ Tú eres digno"
 
     </div>
 
-
   </div>
 
 </ion-content>
-

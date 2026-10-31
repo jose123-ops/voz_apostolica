@@ -29,6 +29,7 @@ import {
 } from '../services/usuario.service';
 
 import { auth } from '../firebase';
+import { EnsayosService, Ensayo } from '../services/ensayos';
 
 import {
   DomSanitizer,
@@ -71,6 +72,42 @@ export class CancionDetallePage implements OnInit, OnDestroy {
   rolUsuario = '';
   puedeVerLetra = false;
   puedeVerAcordes = false;
+  tonoSeleccionado = 'C';
+
+  readonly tonosDisponibles = [
+    { valor: 'C', etiqueta: 'C - Do' },
+    { valor: 'C#', etiqueta: 'C# - Do sostenido' },
+    { valor: 'D', etiqueta: 'D - Re' },
+    { valor: 'Eb', etiqueta: 'Eb - Mi bemol' },
+    { valor: 'E', etiqueta: 'E - Mi' },
+    { valor: 'F', etiqueta: 'F - Fa' },
+    { valor: 'F#', etiqueta: 'F# - Fa sostenido' },
+    { valor: 'G', etiqueta: 'G - Sol' },
+    { valor: 'Ab', etiqueta: 'Ab - La bemol' },
+    { valor: 'A', etiqueta: 'A - La' },
+    { valor: 'Bb', etiqueta: 'Bb - Si bemol' },
+    { valor: 'B', etiqueta: 'B - Si' }
+  ];
+
+  cambiarTono(evento: Event) {
+    const selector = evento.target as HTMLSelectElement;
+    this.tonoSeleccionado = selector.value;
+  }
+
+  // CONTEXTO DEL ENSAYO
+  ensayoId: string | null = null;
+  ensayo: Ensayo | null = null;
+  repertorioEnsayo: string[] = [];
+  indiceEnsayo = -1;
+
+  get enEnsayo(): boolean {
+    return !!this.ensayoId && this.indiceEnsayo >= 0 && this.repertorioEnsayo.length > 0;
+  }
+
+  get numeroEnsayo(): number { return this.indiceEnsayo + 1; }
+  get totalEnsayo(): number { return this.repertorioEnsayo.length; }
+  get tieneAnteriorEnsayo(): boolean { return this.enEnsayo && this.indiceEnsayo > 0; }
+  get tieneSiguienteEnsayo(): boolean { return this.enEnsayo && this.indiceEnsayo < this.repertorioEnsayo.length - 1; }
 
   // CONTEXTO DEL EVENTO
   eventoId: string | null = null;
@@ -88,6 +125,7 @@ export class CancionDetallePage implements OnInit, OnDestroy {
   private router = inject(Router);
   private cancionesService = inject(CancionesService);
   private eventosService = inject(EventosService);
+  private ensayosService = inject(EnsayosService);
   private usuarioService = inject(UsuarioService);
   private changeDetector = inject(ChangeDetectorRef);
   private sanitizer = inject(DomSanitizer);
@@ -132,6 +170,8 @@ export class CancionDetallePage implements OnInit, OnDestroy {
       parametros => {
         const id = parametros.get('id');
         const eventoId = parametros.get('eventoId');
+        const ensayoId = parametros.get('ensayoId');
+        const indiceEnsayo = Number(parametros.get('indiceEnsayo') ?? '-1');
 
         const indiceRecibido = Number(
           parametros.get('indicePrograma') ?? '-1'
@@ -142,7 +182,9 @@ export class CancionDetallePage implements OnInit, OnDestroy {
           eventoId,
           Number.isInteger(indiceRecibido)
             ? indiceRecibido
-            : -1
+            : -1,
+          ensayoId,
+          Number.isInteger(indiceEnsayo) ? indiceEnsayo : -1
         );
       }
     );
@@ -156,7 +198,9 @@ export class CancionDetallePage implements OnInit, OnDestroy {
   private async inicializarCancion(
     id: string | null,
     eventoId: string | null,
-    indiceRecibido: number
+    indiceRecibido: number,
+    ensayoId: string | null = null,
+    indiceEnsayoRecibido = -1
   ) {
     const version = ++this.versionCarga;
 
@@ -164,6 +208,11 @@ export class CancionDetallePage implements OnInit, OnDestroy {
     this.error = '';
     this.cancion = null;
     this.esFavorito = false;
+
+    this.ensayoId = eventoId ? null : ensayoId;
+    this.ensayo = null;
+    this.repertorioEnsayo = [];
+    this.indiceEnsayo = -1;
 
     this.eventoId = eventoId;
     this.evento = null;
@@ -188,6 +237,10 @@ export class CancionDetallePage implements OnInit, OnDestroy {
         this.cancionesService.obtenerCancion(id)
       ];
 
+      if (this.ensayoId) {
+        tareas.push(this.ensayosService.obtenerEnsayo(this.ensayoId));
+      }
+
       if (eventoId) {
         this.cargandoPrograma = true;
         tareas.push(
@@ -200,8 +253,11 @@ export class CancionDetallePage implements OnInit, OnDestroy {
       if (version !== this.versionCarga) return;
 
       const cancion = resultados[0] as Cancion | null;
+      const ensayo = this.ensayoId
+        ? resultados[1] as Ensayo | null
+        : null;
       const evento = eventoId
-        ? resultados[1] as Evento | null
+        ? resultados[this.ensayoId ? 2 : 1] as Evento | null
         : null;
 
       if (!cancion) {
@@ -210,6 +266,23 @@ export class CancionDetallePage implements OnInit, OnDestroy {
       }
 
       this.cancion = cancion;
+      this.tonoSeleccionado = cancion.tono || 'C';
+
+      if (this.ensayoId && ensayo) {
+        this.ensayo = ensayo;
+        this.repertorioEnsayo = (ensayo.canciones || []).map(item => item.cancionId);
+        if (
+          indiceEnsayoRecibido >= 0 &&
+          indiceEnsayoRecibido < this.repertorioEnsayo.length &&
+          this.repertorioEnsayo[indiceEnsayoRecibido] === id
+        ) {
+          this.indiceEnsayo = indiceEnsayoRecibido;
+        } else {
+          this.indiceEnsayo = this.repertorioEnsayo.indexOf(id);
+        }
+      } else if (this.ensayoId) {
+        this.errorPrograma = 'No se pudo recuperar el repertorio del ensayo.';
+      }
 
       if (eventoId && evento) {
         this.evento = evento;
@@ -253,34 +326,24 @@ export class CancionDetallePage implements OnInit, OnDestroy {
   }
 
   private construirPrograma(evento: Evento) {
-    const secciones: {
-      nombre: string;
-      canciones: CancionEvento[];
-    }[] = [
-        {
-          nombre: 'Ministración',
-          canciones: evento.ministracion || []
-        },
-        {
-          nombre: 'Lectura',
-          canciones: evento.lectura || []
-        },
-        {
-          nombre: 'Ofrenda',
-          canciones: evento.ofrenda || []
-        },
-        {
-          nombre: 'Especiales',
-          canciones: evento.especiales || []
-        },
-        {
-          nombre: 'Despedida',
-          canciones: evento.despedida || []
-        }
-      ];
+    const nuevo = evento.versionPrograma === 2;
+    const secciones: { nombre: string; canciones: CancionEvento[] }[] = nuevo
+      ? [
+          { nombre: '3. Acción de Gracias', canciones: evento.lectura || [] },
+          { nombre: '4. Himnos Especiales', canciones: evento.especiales || [] },
+          { nombre: '5. Ofrenda', canciones: evento.ofrenda || [] },
+          { nombre: '6. Entregar', canciones: evento.despedida || [] },
+          { nombre: '7. Ministración', canciones: evento.ministracion || [] }
+        ]
+      : [
+          { nombre: 'Ministración', canciones: evento.ministracion || [] },
+          { nombre: 'Lectura', canciones: evento.lectura || [] },
+          { nombre: 'Ofrenda', canciones: evento.ofrenda || [] },
+          { nombre: 'Especiales', canciones: evento.especiales || [] },
+          { nombre: 'Despedida', canciones: evento.despedida || [] }
+        ];
 
     this.programa = [];
-
     for (const seccion of secciones) {
       seccion.canciones.forEach((item, indice) => {
         this.programa.push({
@@ -292,6 +355,35 @@ export class CancionDetallePage implements OnInit, OnDestroy {
         });
       });
     }
+  }
+
+  anteriorCancionEnsayo() {
+    if (!this.tieneAnteriorEnsayo) return;
+    this.irACancionEnsayo(this.indiceEnsayo - 1);
+  }
+
+  siguienteCancionEnsayo() {
+    if (!this.tieneSiguienteEnsayo) return;
+    this.irACancionEnsayo(this.indiceEnsayo + 1);
+  }
+
+  private irACancionEnsayo(indice: number) {
+    if (!this.ensayoId || indice < 0 || indice >= this.repertorioEnsayo.length) return;
+    void this.router.navigate(['/cancion-detalle'], {
+      queryParams: {
+        id: this.repertorioEnsayo[indice],
+        ensayoId: this.ensayoId,
+        indiceEnsayo: indice
+      },
+      replaceUrl: true
+    });
+  }
+
+  volverAlEnsayo() {
+    if (!this.ensayoId) return;
+    void this.router.navigate(['/detalle-ensayo'], {
+      queryParams: { id: this.ensayoId }
+    });
   }
 
   anteriorCancion() {
@@ -339,7 +431,9 @@ export class CancionDetallePage implements OnInit, OnDestroy {
   }
 
   volver() {
-    if (this.eventoId) {
+    if (this.ensayoId) {
+      this.volverAlEnsayo();
+    } else if (this.eventoId) {
       this.volverAlPrograma();
     } else {
       this.router.navigate(['/home']);
@@ -352,7 +446,9 @@ export class CancionDetallePage implements OnInit, OnDestroy {
     await this.inicializarCancion(
       parametros.get('id'),
       parametros.get('eventoId'),
-      Number(parametros.get('indicePrograma') ?? '-1')
+      Number(parametros.get('indicePrograma') ?? '-1'),
+      parametros.get('ensayoId'),
+      Number(parametros.get('indiceEnsayo') ?? '-1')
     );
   }
 
@@ -447,7 +543,7 @@ export class CancionDetallePage implements OnInit, OnDestroy {
         this.puedeVerAcordes = true;
 
       } else if (this.rolUsuario === 'musico') {
-        this.puedeVerLetra = false;
+        this.puedeVerLetra = true;
         this.puedeVerAcordes = true;
 
       } else if (this.rolUsuario === 'cantante') {

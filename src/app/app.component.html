@@ -1,3 +1,48 @@
+
 <ion-app>
+
   <ion-router-outlet></ion-router-outlet>
+
+  @if (mostrarMenu) {
+    <nav class="bottom-nav" aria-label="Menú principal">
+
+      <a
+        routerLink="/home"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        <ion-icon name="home-outline"></ion-icon>
+        <span>Inicio</span>
+      </a>
+
+      <a
+        routerLink="/canciones"
+        routerLinkActive="active">
+        <ion-icon name="musical-notes-outline"></ion-icon>
+        <span>Canciones</span>
+      </a>
+
+      <a
+        routerLink="/eventos"
+        routerLinkActive="active">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span>Eventos</span>
+      </a>
+
+      <a
+        routerLink="/ensayos"
+        routerLinkActive="active">
+        <ion-icon name="people-outline"></ion-icon>
+        <span>Ensayos</span>
+      </a>
+
+      <a
+        routerLink="/favoritos"
+        routerLinkActive="active">
+        <ion-icon name="heart-outline"></ion-icon>
+        <span>Favoritos</span>
+      </a>
+
+    </nav>
+  }
+
 </ion-app>

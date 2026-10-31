@@ -1,848 +1,1597 @@
-
-/* =========================================
-   VOZ APOSTÓLICA
-   DETALLE DE CANCIÓN + NAVEGACIÓN DE EVENTOS
-   ========================================= */
-
-:host {
-  display: block;
-  height: 100%;
-  --ion-background-color: #070b16;
-  --ion-text-color: #ffffff;
-  color: #ffffff;
-}
+/* =====================================================
+   FONDO GENERAL
+   ===================================================== */
 
 ion-content {
   --background: #070b16;
-  --color: #ffffff;
+
+  color: #ffffff;
 }
 
 ion-toolbar {
   --background: #0b1020;
+
   --color: #ffffff;
+
   --border-width: 0;
 }
 
-/* =========================================
-   BARRA SUPERIOR
-   ========================================= */
+
+/* =====================================================
+   TOPBAR
+   ===================================================== */
 
 .topbar {
+
   min-height: 64px;
+
   display: flex;
+
   align-items: center;
+
   gap: 14px;
+
   padding: 0 16px;
+
 }
+
 
 .topbar-title {
+
   flex: 1;
+
   min-width: 0;
+
   display: flex;
+
   flex-direction: column;
-  gap: 4px;
+
 }
+
 
 .topbar-title span {
-  color: #8bbcff;
+
+  color: #737b91;
+
   font-size: 10px;
+
   font-weight: 700;
+
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+
+  letter-spacing: 1.5px;
+
 }
+
 
 .topbar-title strong {
+
+  margin-top: 3px;
+
   color: #ffffff;
+
   font-size: 16px;
+
   font-weight: 700;
+
 }
 
-.back-button,
-.favorite-button {
+
+/* =====================================================
+   BOTÓN VOLVER
+   ===================================================== */
+
+.back-button {
+
   width: 42px;
+
   height: 42px;
+
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   border: none;
-  border-radius: 12px;
+
+  border-radius: 13px;
+
   background: #151c30;
+
   color: #ffffff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
   cursor: pointer;
+
 }
 
-.back-button ion-icon,
-.favorite-button ion-icon {
+
+.back-button ion-icon {
+
   font-size: 22px;
+
 }
+
+
+/* =====================================================
+   FAVORITO SUPERIOR
+   ===================================================== */
+
+.favorite-button {
+
+  width: 42px;
+
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border: none;
+
+  border-radius: 13px;
+
+  background: #151c30;
+
+  color: #7f89a5;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+}
+
+
+.favorite-button ion-icon {
+
+  font-size: 22px;
+
+}
+
 
 .favorite-button.active {
+
   color: #ff5c75;
+
 }
+
 
 .favorite-button:disabled {
-  opacity: 0.5;
+
+  opacity: 0.55;
+
 }
 
-/* =========================================
+
+/* =====================================================
    CONTENEDOR PRINCIPAL
-   ========================================= */
+   ===================================================== */
 
 .detail-container {
+
   width: 100%;
-  max-width: 1000px;
-  min-height: 100%;
+
+  max-width: 1100px;
+
   margin: 0 auto;
-  padding: 22px 20px 75px;
+
+  padding: 20px 22px 70px;
+
   box-sizing: border-box;
-  background: #070b16;
-  color: #ffffff;
+
 }
 
-/* =========================================
-   INFORMACIÓN DEL EVENTO
-   ========================================= */
+
+/* =====================================================
+   CABECERA DE CANCIÓN
+   ===================================================== */
+
+.song-header {
+
+  width: 100%;
+
+  text-align: center;
+
+  padding: 20px 10px 18px;
+
+}
+
+
+.music-icon {
+
+  width: 76px;
+
+  height: 76px;
+
+  margin: 0 auto 16px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #18234b,
+      #30468e
+    );
+
+  color: #ffffff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 35px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0, 0, 0, 0.35);
+
+}
+
+
+/* =====================================================
+   CATEGORÍA
+   ===================================================== */
+
+.category {
+
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  padding: 6px 14px;
+
+  border-radius: 20px;
+
+  background: #18234a;
+
+  color: #8297ff;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.7px;
+
+}
+
+
+/* =====================================================
+   TÍTULO CANCIÓN
+   ===================================================== */
+
+.song-header h1 {
+
+  margin: 5px 0;
+
+  color: #ffffff;
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-transform: capitalize;
+
+}
+
+
+.song-header p {
+
+  margin: 6px 0 0;
+
+  color: #929bad;
+
+  font-size: 15px;
+
+  text-transform: capitalize;
+
+}
+
+
+/* =====================================================
+   ACCIONES
+   ===================================================== */
+
+.actions {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin: 4px 0 34px;
+
+}
+
+
+.action-button {
+
+  min-height: 44px;
+
+  padding: 0 18px;
+
+  border: 1px solid #202942;
+
+  border-radius: 13px;
+
+  background: #11182a;
+
+  color: #dce1ec;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+}
+
+
+.action-button ion-icon {
+
+  font-size: 19px;
+
+}
+
+
+.action-button.youtube {
+
+  background: #211416;
+
+  border-color: #432124;
+
+  color: #ff6b73;
+
+}
+
+
+.favorite-action.active {
+
+  color: #ff5c75;
+
+  border-color: rgba(255, 92, 117, 0.35);
+
+  background: rgba(255, 92, 117, 0.08);
+
+}
+
+
+.action-button:disabled {
+
+  opacity: 0.55;
+
+}
+
+
+/* =====================================================
+   CONTENIDO MUSICAL
+
+   IMPORTANTE:
+   YA NO HAY TARJETAS ALREDEDOR
+   ===================================================== */
+
+.music-content {
+
+  width: 100%;
+
+  margin: 0 0 42px;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: none;
+
+  border-radius: 0;
+
+  box-shadow: none;
+
+}
+
+
+/* =====================================================
+   TÍTULO DE SECCIÓN
+   ===================================================== */
+
+.content-title {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 24px;
+
+}
+
+
+.content-title > ion-icon {
+
+  width: 42px;
+
+  height: 42px;
+
+  flex-shrink: 0;
+
+  padding: 10px;
+
+  box-sizing: border-box;
+
+  border-radius: 12px;
+
+  background: #172348;
+
+  color: #8297ff;
+
+  font-size: 21px;
+
+}
+
+
+.content-title span {
+
+  display: block;
+
+  color: #69738b;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+
+}
+
+
+.content-title h2 {
+
+  margin: 2px 0 0;
+
+  color: #ffffff;
+
+  font-size: 19px;
+
+  font-weight: 700;
+
+}
+
+
+/* =====================================================
+   ACORDES
+
+   AMARILLOS Y SIN CAJA
+   ===================================================== */
+
+.chords-section {
+
+  width: 100%;
+
+}
+
+
+.chords {
+
+  width: 100%;
+
+  padding: 0;
+
+  margin: 0;
+
+  overflow-x: auto;
+
+  background: transparent;
+
+  border: none;
+
+}
+
+
+.chords pre {
+
+  width: 100%;
+
+  margin: 0;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: none;
+
+  color: #ffd54a;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  line-height: 1.8;
+
+  white-space: pre-wrap;
+
+  overflow-wrap: normal;
+
+  word-break: normal;
+
+  tab-size: 4;
+
+}
+
+
+/* =====================================================
+   LETRA
+
+   LIBRE SOBRE TODA LA PÁGINA
+   ===================================================== */
+
+.lyrics-section {
+
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: none;
+
+  border-radius: 0;
+
+}
+
+
+/* =====================================================
+   CONTENEDOR DE LETRA
+   ===================================================== */
+
+.lyrics {
+
+  width: 100%;
+
+  margin: 0;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: none;
+
+  color: #f0f2f7;
+
+}
+
+
+/* =====================================================
+   ESTROFAS
+
+   SIN CUADROS
+   SIN BORDES
+   SIN FONDO
+   ===================================================== */
+
+.estrofa {
+
+  width: 100%;
+
+  margin: 0 0 30px;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: none;
+
+  border-radius: 0;
+
+  box-shadow: none;
+
+  color: #f0f2f7;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 17px;
+
+  font-weight: 400;
+
+  line-height: 1.8;
+
+  white-space: pre-line;
+
+  overflow-wrap: break-word;
+
+  word-break: normal;
+
+}
+
+
+.estrofa:last-child {
+
+  margin-bottom: 0;
+
+}
+
+
+/* =====================================================
+   CLASE PARA ACORDES INTEGRADOS
+
+   La dejamos preparada para el siguiente paso.
+   ===================================================== */
+
+.chord {
+
+  color: #ffd54a;
+
+  font-weight: 700;
+
+}
+
+
+/* =====================================================
+   TEXTO CUANDO NO HAY LETRA
+   ===================================================== */
+
+.no-content {
+
+  width: 100%;
+
+  padding: 15px 0;
+
+  color: #727c91;
+
+  font-size: 14px;
+
+  font-style: italic;
+
+}
+
+
+/* =====================================================
+   YOUTUBE
+   ===================================================== */
+
+.youtube-section {
+
+  width: 100%;
+
+  margin-top: 45px;
+
+  margin-bottom: 20px;
+
+}
+
+
+.youtube-player {
+
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+
+  overflow: hidden;
+
+  border-radius: 15px;
+
+  background: #000000;
+
+  border: 1px solid #202a42;
+
+}
+
+
+.youtube-player iframe {
+
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  border: 0;
+
+}
+
+
+/* =====================================================
+   CARGANDO
+   ===================================================== */
+
+.loading {
+
+  min-height: 70vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #7e879b;
+
+}
+
+
+.loading p {
+
+  margin: 0;
+
+  font-size: 14px;
+
+}
+
+
+.loader {
+
+  width: 42px;
+
+  height: 42px;
+
+  margin-bottom: 15px;
+
+  border: 4px solid #1b2438;
+
+  border-top-color: #7187ff;
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+  to {
+
+    transform: rotate(360deg);
+
+  }
+
+}
+
+
+/* =====================================================
+   ERROR
+   ===================================================== */
+
+.empty {
+
+  min-height: 70vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 30px;
+
+}
+
+
+.empty-icon {
+
+  width: 70px;
+
+  height: 70px;
+
+  margin-bottom: 15px;
+
+  border-radius: 22px;
+
+  background: #21151a;
+
+  color: #ff6975;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 35px;
+
+}
+
+
+.empty h2 {
+
+  margin: 0 0 8px;
+
+  color: #ffffff;
+
+}
+
+
+.empty p {
+
+  margin: 0 0 20px;
+
+  color: #7e879a;
+
+}
+
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 800px) {
+
+  .detail-container {
+
+    padding-left: 16px;
+
+    padding-right: 16px;
+
+  }
+
+}
+
+
+/* =====================================================
+   MÓVIL
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+  .topbar {
+
+    padding: 0 10px;
+
+    gap: 10px;
+
+  }
+
+
+  .topbar-title strong {
+
+    font-size: 15px;
+
+  }
+
+
+  .detail-container {
+
+    width: 100%;
+
+    max-width: none;
+
+    padding:
+      12px
+      10px
+      55px;
+
+  }
+
+
+  /* CABECERA */
+
+  .song-header {
+
+    padding:
+      18px
+      2px
+      18px;
+
+  }
+
+
+  .music-icon {
+
+    width: 68px;
+
+    height: 68px;
+
+    border-radius: 20px;
+
+    font-size: 31px;
+
+  }
+
+
+  .song-header h1 {
+
+    font-size: 25px;
+
+  }
+
+
+  .song-header p {
+
+    font-size: 14px;
+
+  }
+
+
+  /* BOTONES */
+
+  .actions {
+
+    margin-bottom: 32px;
+
+  }
+
+
+  .action-button {
+
+    min-height: 42px;
+
+    padding: 0 14px;
+
+    font-size: 13px;
+
+  }
+
+
+  /* TITULOS */
+
+  .content-title {
+
+    margin-bottom: 20px;
+
+  }
+
+
+  .content-title > ion-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    font-size: 20px;
+
+  }
+
+
+  .content-title h2 {
+
+    font-size: 17px;
+
+  }
+
+
+  /* ACORDES */
+
+  .chords pre {
+
+    font-size: 15px;
+
+    line-height: 1.75;
+
+  }
+
+
+  /* LETRA */
+
+  .lyrics {
+
+    width: 100%;
+
+  }
+
+
+  .estrofa {
+
+    width: 100%;
+
+    margin-bottom: 27px;
+
+    font-size: 16px;
+
+    line-height: 1.75;
+
+  }
+
+
+  /* VIDEO */
+
+  .youtube-section {
+
+    margin-top: 38px;
+
+  }
+
+
+  .youtube-player {
+
+    border-radius: 12px;
+
+  }
+
+}
+
+
+/* =====================================================
+   TELÉFONOS PEQUEÑOS
+   ===================================================== */
+
+@media (max-width: 380px) {
+
+  .detail-container {
+
+    padding-left: 8px;
+
+    padding-right: 8px;
+
+  }
+
+
+  .song-header h1 {
+
+    font-size: 23px;
+
+  }
+
+
+  .estrofa {
+
+    font-size: 15px;
+
+  }
+
+
+  .chords pre {
+
+    font-size: 14px;
+
+  }
+
+}
+
+/* =====================================================
+   TEMA CLARO - SOLO COLORES, CONSERVA EL DISEÑO
+   ===================================================== */
+:host-context(.tema-claro) {
+  color: #172033;
+
+  ion-content {
+    --background: #f4f7fb;
+    --color: #172033;
+    color: #172033;
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: #172033;
+  }
+
+  .topbar-title span,
+  .content-title span { color: #64748b; }
+
+  .topbar-title strong,
+  .song-header h1,
+  .content-title h2,
+  .empty h2 { color: #172033; }
+
+  .back-button,
+  .favorite-button { background: #eaf1ff; color: #2563eb; }
+  .favorite-button.active { color: #e11d48; }
+
+  .music-icon {
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    color: #ffffff;
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.15);
+  }
+
+  .category { background: #dbeafe; color: #1d4ed8; }
+  .song-header p { color: #64748b; }
+
+  .action-button {
+    background: #ffffff;
+    border-color: #e2e8f0;
+    color: #172033;
+  }
+  .action-button.youtube {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    color: #dc2626;
+  }
+  .favorite-action.active {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    color: #e11d48;
+  }
+
+  .content-title > ion-icon { background: #eaf1ff; color: #2563eb; }
+
+  /* Acordes ámbar sobre fondo claro; texto sin recuadros */
+  .chords pre,
+  .chord { color: #a16207; }
+  .lyrics,
+  .estrofa { color: #172033; }
+  .no-content { color: #64748b; }
+  .youtube-player { border-color: #e2e8f0; }
+
+  .loading,
+  .empty p { color: #64748b; }
+  .loader { border-color: #e2e8f0; border-top-color: #2563eb; }
+  .empty-icon { background: #fee2e2; color: #dc2626; }
+
+  /* Navegación de eventos/ensayos si está presente en el HTML */
+  .program-context,
+  .bottom-program-navigation {
+    background: #ffffff;
+    border-color: #e2e8f0;
+  }
+  .program-icon,
+  .program-list-button { background: #eaf1ff; color: #2563eb; }
+  .program-info span,
+  .bottom-program-heading span { color: #2563eb; }
+  .program-info strong,
+  .bottom-program-heading strong { color: #172033; }
+  .section-badge { background: #dbeafe; color: #1d4ed8; }
+  .section-position,
+  .program-progress-text,
+  .navigation-counter { color: #64748b; }
+  .program-progress { background: #e2e8f0; }
+  .program-leader { border-top-color: #e2e8f0; color: #475569; }
+  .program-leader ion-icon { color: #2563eb; }
+  .navigation-button { background: #ffffff; border-color: #cbd5e1; color: #172033; }
+  .navigation-button.next { background: #2563eb; border-color: #2563eb; color: #ffffff; }
+  .navigation-button:disabled { background: #e2e8f0; color: #64748b; }
+  .return-program-button { border-color: #bfdbfe; color: #2563eb; }
+  .program-complete { color: #15803d; }
+  .program-warning { color: #b91c1c; }
+}
+
+/* CONTEXTO DEL ENSAYO Y EVENTO */
 
 .program-context {
-  margin-bottom: 26px;
-  padding: 20px;
-  border: 1px solid #263653;
-  border-radius: 18px;
-  background: #10192c;
+  width: 100%;
+  padding: 22px;
+  margin-bottom: 28px;
+  background: #151e35;
+  border: 1px solid rgba(120, 140, 200, 0.2);
+  border-radius: 16px;
 }
 
 .program-context-top {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
 }
 
 .program-icon {
-  width: 45px;
-  height: 45px;
-  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(83, 111, 255, 0.15);
   border-radius: 12px;
-  background: #1b2a4d;
-  color: #4da3ff;
-  font-size: 22px;
+  color: #8196ff;
+}
+
+.program-icon ion-icon {
+  font-size: 25px;
 }
 
 .program-info {
-  flex: 1;
-  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  flex: 1;
+  min-width: 0;
 }
 
 .program-info span {
-  color: #8bbcff;
-  font-size: 10px;
-  font-weight: 800;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 1px;
+  color: #929db5;
 }
 
 .program-info strong {
+  font-size: 17px;
   color: #ffffff;
-  font-size: 15px;
-  font-weight: 700;
-  overflow-wrap: anywhere;
 }
-
-.program-list-button {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 11px;
-  background: #1b2a4d;
-  color: #8bbcff;
-  font-size: 21px;
-  cursor: pointer;
-}
-
-/* SECCIÓN ACTUAL */
 
 .program-section {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 20px;
 }
 
 .section-badge {
-  display: inline-block;
+  background: rgba(83, 111, 255, 0.15);
+  color: #9aabff;
   padding: 7px 13px;
   border-radius: 20px;
-  background: #20365a;
-  color: #8bbcff;
   font-size: 12px;
   font-weight: 700;
 }
 
 .section-position {
-  color: #a0aabc;
-  font-size: 12px;
+  color: #929db5;
+  font-size: 13px;
 }
 
-/* PROGRESO */
-
 .program-progress {
-  height: 6px;
-  margin-top: 17px;
-  overflow: hidden;
+  height: 7px;
+  background: rgba(120, 140, 200, 0.15);
   border-radius: 10px;
-  background: #2a3549;
+  overflow: hidden;
+  margin-top: 18px;
 }
 
 .program-progress-fill {
   height: 100%;
+  background: #627bff;
   border-radius: 10px;
-  background: linear-gradient(
-    90deg,
-    #2563eb,
-    #4da3ff
-  );
-  transition: width 0.25s ease;
 }
 
 .program-progress-text {
   margin-top: 9px;
-  color: #8e9bb0;
-  font-size: 11px;
-  text-align: right;
-}
-
-.program-leader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 15px;
-  padding-top: 13px;
-  border-top: 1px solid #293955;
-  color: #c5d7f5;
   font-size: 12px;
+  color: #929db5;
 }
 
-.program-leader ion-icon {
-  color: #4da3ff;
-  font-size: 17px;
-}
-
-/* =========================================
-   CABECERA DE CANCIÓN
-   ========================================= */
-
-.song-header {
-  width: 100%;
-  padding: 20px 10px 24px;
-  text-align: center;
-}
-
-.music-icon {
-  width: 76px;
-  height: 76px;
-  margin: 0 auto 17px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 22px;
-  background: linear-gradient(
-    135deg,
-    #18234b,
-    #30468e
-  );
-  color: #ffffff;
-  font-size: 35px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
-}
-
-.category {
-  display: inline-block;
-  margin-bottom: 10px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  background: #18234a;
-  color: #8bbcff;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.7px;
-}
-
-.song-header h1 {
-  margin: 8px 0;
-  color: #ffffff;
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 1.25;
-  text-transform: capitalize;
-  overflow-wrap: anywhere;
-}
-
-.song-header p {
-  margin: 7px 0 0;
-  color: #929bad;
-  font-size: 15px;
-  text-transform: capitalize;
-}
-
-/* =========================================
-   ANTERIOR Y SIGUIENTE
-   ========================================= */
+/* NAVEGACIÓN ENTRE CANCIONES */
 
 .song-navigation {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 12px 0 26px;
+  margin: 24px 0;
 }
 
 .navigation-button {
-  min-height: 46px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 0 18px;
-  border: 1px solid #334563;
-  border-radius: 12px;
-  background: #17243a;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.navigation-button ion-icon {
-  font-size: 18px;
-}
-
-.navigation-button.next {
-  border-color: #2563eb;
-  background: #2563eb;
-  color: #ffffff;
-}
-
-.navigation-button:disabled {
-  background: #29313d;
-  color: #a0a8b5;
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.navigation-counter {
-  color: #a6b5cf;
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-/* =========================================
-   FAVORITOS Y YOUTUBE
-   ========================================= */
-
-.actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 6px 0 35px;
-}
-
-.action-button {
-  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0 18px;
-  border: 1px solid #263653;
-  border-radius: 13px;
-  background: #11182a;
-  color: #dce1ec;
-  font-family: inherit;
+  padding: 12px 18px;
+  border: 1px solid rgba(120, 140, 200, 0.25);
+  border-radius: 10px;
+  background: #151e35;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 600;
-  text-decoration: none;
   cursor: pointer;
 }
 
-.action-button ion-icon {
-  font-size: 19px;
+.navigation-button.next {
+  background: #526cf5;
+  color: #ffffff;
+  border-color: #526cf5;
 }
 
-.favorite-action.active {
-  color: #ff5c75;
-  border-color: rgba(255, 92, 117, 0.35);
-  background: rgba(255, 92, 117, 0.08);
-}
-
-.action-button.youtube {
-  background: #211416;
-  border-color: #432124;
-  color: #ff6b73;
-}
-
-.action-button:disabled {
-  opacity: 0.5;
+.navigation-button:disabled {
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
-/* =========================================
-   CONTENIDO MUSICAL
-   SIN RECUADROS
-   ========================================= */
-
-.music-content {
-  width: 100%;
-  margin: 0 0 42px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+.navigation-counter {
+  font-size: 14px;
+  font-weight: 700;
+  color: #929db5;
 }
 
-/* TÍTULOS */
+/* SELECTOR DE TONO */
 
-.content-title {
+.tono-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  margin: 16px 0;
+  background: #151e35;
+  border: 1px solid rgba(120, 140, 200, 0.2);
+  border-radius: 14px;
+}
+
+.tono-panel label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #c5cde0;
+}
+
+.tono-selector {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #354467;
+  border-radius: 10px;
+  background: #0d1426;
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+}
+
+.tono-selector option {
+  background: #151e35;
+  color: #ffffff;
+}
+
+.selected-tone {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
-  margin-bottom: 24px;
 }
 
-.content-title > ion-icon {
+.selected-tone span {
+  font-size: 12px;
+  color: #929db5;
+}
+
+.selected-tone strong {
+  font-size: 20px;
+  color: #9aabff;
+}
+
+.tone-help {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #929db5;
+  margin: 0;
+}
+
+/* ADAPTACIÓN A CELULARES */
+
+@media (max-width: 600px) {
+  .program-context {
+    padding: 16px;
+  }
+
+  .program-info strong {
+    font-size: 15px;
+  }
+
+  .song-navigation {
+    gap: 8px;
+  }
+
+  .navigation-button {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .navigation-counter {
+    font-size: 12px;
+  }
+
+  .tono-panel {
+    padding: 14px;
+  }
+}
+
+
+/* =====================================================
+   AJUSTES FINALES: TONO, ENSAYOS Y EVENTOS
+   ===================================================== */
+
+.tono-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin: 0 0 26px;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #293756;
+  background: #121c32;
+  box-sizing: border-box;
+}
+
+.tono-panel label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #e6ebf7;
+}
+
+.tono-selector {
+  display: block;
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid #40537a;
+  border-radius: 11px;
+  background: #0b1326;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.tono-selector:focus-visible {
+  outline: 2px solid #91a8ff;
+  outline-offset: 2px;
+}
+
+.tono-selector option { background: #121c32; color: #ffffff; }
+
+.tono-panel small {
+  display: block;
+  color: #a8b5cc;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.program-context,
+.bottom-program-navigation {
+  box-sizing: border-box;
+}
+
+.program-info strong {
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.program-list-button {
   width: 42px;
   height: 42px;
-  flex-shrink: 0;
-  padding: 10px;
-  box-sizing: border-box;
-  border-radius: 12px;
-  background: #172348;
-  color: #8297ff;
-  font-size: 21px;
-}
-
-.content-title span {
-  display: block;
-  color: #8995aa;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.3px;
-}
-
-.content-title h2 {
-  margin: 3px 0 0;
-  color: #ffffff;
-  font-size: 19px;
-  font-weight: 700;
-}
-
-/* =========================================
-   ACORDES AMARILLOS
-   ========================================= */
-
-.chords-section {
-  width: 100%;
-}
-
-.chords {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: auto;
-  background: transparent;
+  flex: 0 0 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
+  border-radius: 11px;
+  background: rgba(83,111,255,.15);
+  color: #9aabff;
+  cursor: pointer;
 }
 
-.chords pre {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: #ffd54a;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.8;
-  white-space: pre-wrap;
-  overflow-wrap: normal;
-  word-break: normal;
-  tab-size: 4;
+.program-list-button ion-icon { font-size: 21px; }
+
+.program-leader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 14px;
+  margin-top: 15px;
+  border-top: 1px solid #2a3550;
+  color: #cbd5e1;
+  font-size: 13px;
 }
 
-/* =========================================
-   LETRA BLANCA SIN RECUADROS
-   ========================================= */
-
-.lyrics-section {
-  width: 100%;
-  margin-top: 10px;
-  padding: 0;
-  background: transparent;
-  border: none;
-}
-
-.lyrics {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: none;
-  color: #f0f2f7;
-}
-
-.estrofa {
-  width: 100%;
-  margin: 0 0 30px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  color: #f0f2f7;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.8;
-  white-space: pre-line;
-  overflow-wrap: break-word;
-}
-
-.estrofa:last-child {
-  margin-bottom: 0;
-}
-
-.chord {
-  color: #ffd54a;
-  font-weight: 700;
-}
-
-.no-content {
-  padding: 15px 0;
-  color: #929bad;
-  font-size: 14px;
-  font-style: italic;
-}
-
-/* =========================================
-   REPRODUCTOR YOUTUBE
-   ========================================= */
-
-.youtube-section {
-  width: 100%;
-  margin-top: 45px;
-  margin-bottom: 25px;
-}
-
-.youtube-player {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border: 1px solid #202a42;
-  border-radius: 15px;
-  background: #000000;
-}
-
-.youtube-player iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* =========================================
-   NAVEGACIÓN INFERIOR
-   ========================================= */
+.program-leader ion-icon { color: #9aabff; font-size: 18px; }
 
 .bottom-program-navigation {
-  margin-top: 35px;
-  padding: 20px;
-  border: 1px solid #263653;
-  border-radius: 18px;
-  background: #10192c;
+  margin: 35px 0 0;
+  padding: 22px;
+  border: 1px solid #293756;
+  border-radius: 16px;
+  background: #121c32;
 }
 
 .bottom-program-heading {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  margin-bottom: 17px;
+  gap: 6px;
 }
 
 .bottom-program-heading span {
-  color: #8bbcff;
-  font-size: 10px;
-  font-weight: 800;
+  color: #91a8ff;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 1px;
 }
 
 .bottom-program-heading strong {
-  color: #ffffff;
+  color: #fff;
   font-size: 17px;
-}
-
-.bottom-program-navigation .song-navigation {
-  margin-bottom: 15px;
+  overflow-wrap: anywhere;
 }
 
 .return-program-button {
-  width: 100%;
-  min-height: 45px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-top: 15px;
-  border: 1px solid #344b70;
-  border-radius: 12px;
+  gap: 9px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #425789;
+  border-radius: 11px;
   background: transparent;
-  color: #8bbcff;
-  font-size: 13px;
+  color: #aabaff;
   font-weight: 700;
   cursor: pointer;
-}
-
-.return-program-button ion-icon {
-  font-size: 19px;
 }
 
 .program-complete {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  margin: 14px 0;
-  color: #9fd5b2;
-  font-size: 12px;
-}
-
-.program-complete ion-icon {
-  font-size: 19px;
+  margin-bottom: 16px;
+  color: #8bd7ac;
+  font-size: 13px;
 }
 
 .program-warning {
-  margin: 10px 0 20px;
-  color: #ffb4b4;
-  font-size: 12px;
-}
-
-/* =========================================
-   CARGANDO
-   ========================================= */
-
-.loading {
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #929bad;
-}
-
-.loading p {
-  margin: 0;
-  font-size: 14px;
-}
-
-.loader {
-  width: 42px;
-  height: 42px;
-  margin-bottom: 15px;
-  border: 4px solid #1b2438;
-  border-top-color: #7187ff;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* =========================================
-   ERRORES
-   ========================================= */
-
-.empty {
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
+  color: #ff9ca5;
+  font-size: 13px;
   text-align: center;
 }
 
-.empty-icon {
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-  border-radius: 22px;
-  background: #21151a;
-  color: #ff6975;
-  font-size: 35px;
-}
-
-.empty h2 {
-  margin: 0 0 8px;
-  color: #ffffff;
-}
-
-.empty p {
-  margin: 0 0 20px;
-  color: #929bad;
-}
-
-/* =========================================
-   TABLET
-   ========================================= */
-
-@media (max-width: 800px) {
-  .detail-container {
-    padding-left: 16px;
-    padding-right: 16px;
+/* Tema claro: debe ir después de los estilos oscuros. */
+:host-context(.tema-claro) {
+  .tono-panel {
+    background: #ffffff;
+    border-color: #d9e3f1;
   }
+  .tono-panel label { color: #172033; }
+  .tono-selector {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #172033;
+  }
+  .tono-selector option { background: #ffffff; color: #172033; }
+  .tono-panel small { color: #64748b; }
+  .program-context,
+  .bottom-program-navigation {
+    background: #ffffff;
+    border-color: #e2e8f0;
+  }
+  .program-info strong,
+  .bottom-program-heading strong { color: #172033; }
+  .program-info span,
+  .bottom-program-heading span { color: #2563eb; }
+  .program-list-button { background: #eaf1ff; color: #2563eb; }
+  .program-leader { color: #475569; border-top-color: #e2e8f0; }
+  .return-program-button { border-color: #bfdbfe; color: #2563eb; }
+  .program-complete { color: #15803d; }
+  .program-warning { color: #b91c1c; }
+  .navigation-button { background: #ffffff; border-color: #cbd5e1; color: #172033; }
+  .navigation-button.next { background: #2563eb; border-color: #2563eb; color: #ffffff; }
+  .section-badge { background: #dbeafe; color: #1d4ed8; }
+  .section-position,
+  .program-progress-text,
+  .navigation-counter { color: #64748b; }
 }
-
-/* =========================================
-   TELÉFONOS
-   ========================================= */
 
 @media (max-width: 600px) {
-  .topbar {
-    padding: 0 10px;
-    gap: 10px;
-  }
-
-  .topbar-title strong {
-    font-size: 14px;
-  }
-
-  .detail-container {
-    padding: 14px 12px 65px;
-  }
-
-  .program-context {
-    padding: 14px;
-  }
-
-  .program-info strong {
-    font-size: 13px;
-  }
-
-  .song-header {
-    padding: 18px 2px;
-  }
-
-  .music-icon {
-    width: 68px;
-    height: 68px;
-    font-size: 31px;
-  }
-
-  .song-header h1 {
-    font-size: 24px;
-  }
-
-  .song-header p {
-    font-size: 14px;
-  }
-
-  .navigation-button {
-    min-height: 43px;
-    padding: 0 10px;
-    font-size: 12px;
-  }
-
-  .navigation-counter {
-    font-size: 11px;
-  }
-
-  .actions {
-    margin-bottom: 30px;
-  }
-
-  .action-button {
-    min-height: 42px;
-    padding: 0 14px;
-    font-size: 13px;
-  }
-
-  .content-title h2 {
-    font-size: 17px;
-  }
-
-  .chords pre {
-    font-size: 15px;
-    line-height: 1.75;
-  }
-
-  .estrofa {
-    font-size: 16px;
-    line-height: 1.75;
-    margin-bottom: 27px;
-  }
-
-  .bottom-program-navigation {
-    padding: 14px;
-  }
-
-  .youtube-player {
-    border-radius: 12px;
-  }
-}
-
-/* =========================================
-   TELÉFONOS PEQUEÑOS
-   ========================================= */
-
-@media (max-width: 380px) {
-  .detail-container {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-
-  .song-header h1 {
-    font-size: 22px;
-  }
-
-  .navigation-button {
-    padding: 0 7px;
-    font-size: 11px;
-  }
-
-  .chords pre {
-    font-size: 14px;
-  }
-
-  .estrofa {
-    font-size: 15px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .loader {
-    animation: none;
-  }
-
-  .program-progress-fill {
-    transition: none;
-  }
+  .tono-panel { padding: 15px; }
+  .bottom-program-navigation { padding: 15px; }
+  .program-context-top { gap: 10px; }
+  .program-icon { width: 42px; height: 42px; min-width: 42px; }
+  .navigation-button { min-height: 42px; }
 }

@@ -1,46 +1,86 @@
 
+/* ==========================================
+   VOZ APOSTÓLICA
+   EVENTOS - DISEÑO COMPLETO
+   MODO OSCURO Y CLARO
+========================================== */
+
+/* ==========================================
+   1. VARIABLES - MODO OSCURO
+========================================== */
+
 :host {
+  display: block;
+  height: 100%;
+
   --fondo: #0b0f14;
   --tarjeta: #151b23;
   --borde: #252e3a;
   --azul: #4da3ff;
   --texto: #ffffff;
   --secundario: #8d98a8;
+
+  --tarjeta-principal: #17223a;
+  --borde-principal: #29375c;
+  --azul-suave: #1b2a4d;
+  --azul-etiqueta: #8bbcff;
+  --hover-tarjeta: #1a2330;
+  --placeholder: #758395;
+  --estado-anterior: #262d36;
+
+  --ion-background-color: var(--fondo);
+  --ion-text-color: var(--texto);
+
+  color: var(--texto);
 }
+
+/* ==========================================
+   2. FONDO GENERAL
+========================================== */
 
 ion-content {
   --background: var(--fondo);
+  --color: var(--texto);
 }
 
 ion-toolbar {
   --background: var(--fondo);
-  --color: white;
+  --color: var(--texto);
+  --border-width: 0;
+
   padding: 8px 12px;
   border-bottom: 1px solid var(--borde);
 }
 
 ion-title {
+  color: var(--texto);
   font-size: 18px;
   font-weight: 700;
 }
 
 ion-toolbar ion-button {
-  --color: white;
+  --color: var(--texto);
 }
 
 ion-toolbar ion-button ion-icon {
   font-size: 23px;
 }
 
-/* CONTENEDOR */
+/* ==========================================
+   3. CONTENEDOR
+========================================== */
 
 .eventos-container {
+  width: 100%;
   max-width: 950px;
-  margin: auto;
+  margin: 0 auto;
   padding: 22px 16px 90px;
+  box-sizing: border-box;
 }
 
-/* ENCABEZADO */
+/* ==========================================
+   4. ENCABEZADO
+========================================== */
 
 .encabezado {
   display: flex;
@@ -59,7 +99,7 @@ ion-toolbar ion-button ion-icon {
 
 .encabezado h1 {
   margin: 7px 0;
-  color: white;
+  color: var(--texto);
   font-size: 28px;
   font-weight: 800;
 }
@@ -81,12 +121,14 @@ ion-toolbar ion-button ion-icon {
   justify-content: center;
 
   border-radius: 16px;
-  background: #1b2a4d;
+  background: var(--azul-suave);
   color: var(--azul);
   font-size: 27px;
 }
 
-/* ESTADÍSTICAS */
+/* ==========================================
+   5. ESTADÍSTICAS
+========================================== */
 
 .estadisticas {
   display: grid;
@@ -109,8 +151,8 @@ ion-toolbar ion-button ion-icon {
 }
 
 .estadistica.principal {
-  border-color: #29375c;
-  background: #17223a;
+  border-color: var(--borde-principal);
+  background: var(--tarjeta-principal);
 }
 
 .estadistica span {
@@ -119,17 +161,19 @@ ion-toolbar ion-button ion-icon {
 }
 
 .estadistica strong {
-  color: white;
+  color: var(--texto);
   font-size: 30px;
   font-weight: 800;
 }
 
 .estadistica small {
-  color: #758395;
+  color: var(--placeholder);
   font-size: 10px;
 }
 
-/* BUSCADOR */
+/* ==========================================
+   6. BUSCADOR
+========================================== */
 
 .buscador {
   height: 53px;
@@ -164,26 +208,32 @@ ion-toolbar ion-button ion-icon {
   outline: none;
 
   background: transparent;
-  color: white;
+  color: var(--texto);
+
+  font-family: inherit;
   font-size: 14px;
 }
 
 .buscador input::placeholder {
-  color: #758395;
+  color: var(--placeholder);
 }
 
 .buscador button {
   border: none;
   background: transparent;
-  color: white;
+  color: var(--texto);
   font-size: 23px;
+  cursor: pointer;
 }
 
-/* FILTROS */
+/* ==========================================
+   7. FILTROS
+========================================== */
 
 .filtros {
   display: flex;
   gap: 9px;
+
   overflow-x: auto;
   margin-bottom: 32px;
   padding-bottom: 4px;
@@ -200,37 +250,44 @@ ion-toolbar ion-button ion-icon {
   background: var(--tarjeta);
   color: var(--secundario);
 
+  font-family: inherit;
   font-size: 12px;
   font-weight: 600;
+
   cursor: pointer;
 }
 
 .filtros button.activo {
-  background: #1b2a4d;
-  border-color: #35588d;
-  color: #8bbcff;
+  background: var(--azul-suave);
+  border-color: var(--borde-principal);
+  color: var(--azul-etiqueta);
 }
 
-/* LISTADO */
+/* ==========================================
+   8. ENCABEZADO DEL LISTADO
+========================================== */
 
 .lista-encabezado {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 17px;
 }
 
 .lista-encabezado h2 {
   margin: 5px 0 0;
-  color: white;
+  color: var(--texto);
   font-size: 21px;
 }
 
 .contador {
   padding: 7px 11px;
   border-radius: 10px;
-  background: #1b2a4d;
+
+  background: var(--azul-suave);
   color: var(--azul);
+
   font-size: 13px;
   font-weight: 700;
 }
@@ -241,7 +298,9 @@ ion-toolbar ion-button ion-icon {
   gap: 13px;
 }
 
-/* TARJETAS */
+/* ==========================================
+   9. TARJETAS DE EVENTOS
+========================================== */
 
 .evento-card {
   width: 100%;
@@ -251,17 +310,20 @@ ion-toolbar ion-button ion-icon {
   border-radius: 18px;
 
   background: var(--tarjeta);
-  color: white;
+  color: var(--texto);
 
   text-align: left;
   cursor: pointer;
 
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
 }
 
 .evento-card:hover {
-  background: #1a2330;
-  border-color: #36445a;
+  background: var(--hover-tarjeta);
+  border-color: var(--borde-principal);
 }
 
 .evento-card:active {
@@ -273,6 +335,10 @@ ion-toolbar ion-button ion-icon {
   align-items: center;
   gap: 14px;
 }
+
+/* ==========================================
+   10. FECHA
+========================================== */
 
 .fecha-cuadro {
   width: 62px;
@@ -286,7 +352,7 @@ ion-toolbar ion-button ion-icon {
   gap: 2px;
 
   border-radius: 14px;
-  background: #1b2a4d;
+  background: var(--azul-suave);
 }
 
 .fecha-cuadro strong {
@@ -296,10 +362,14 @@ ion-toolbar ion-button ion-icon {
 }
 
 .fecha-cuadro span {
-  color: #a8caff;
+  color: var(--azul-etiqueta);
   font-size: 11px;
   font-weight: 700;
 }
+
+/* ==========================================
+   11. INFORMACIÓN DEL EVENTO
+========================================== */
 
 .evento-info {
   flex: 1;
@@ -308,7 +378,7 @@ ion-toolbar ion-button ion-icon {
 
 .evento-info h3 {
   margin: 0 0 7px;
-  color: white;
+  color: var(--texto);
   font-size: 16px;
   font-weight: 700;
 
@@ -322,6 +392,7 @@ ion-toolbar ion-button ion-icon {
 
   margin: 0 0 9px;
   color: var(--secundario);
+
   font-size: 12px;
   text-transform: capitalize;
 }
@@ -337,23 +408,27 @@ ion-toolbar ion-button ion-icon {
   padding: 5px 9px;
   border-radius: 20px;
 
-  background: rgba(77, 163, 255, 0.1);
-  color: #83b8ff;
+  background: var(--azul-suave);
+  color: var(--azul-etiqueta);
 
   font-size: 10px;
   font-weight: 700;
 }
 
 .estado-etiqueta.anterior {
-  background: #262d36;
-  color: #a0aab7;
+  background: var(--estado-anterior);
+  color: var(--secundario);
 }
 
 .flecha {
   flex-shrink: 0;
-  color: #738095;
+  color: var(--secundario);
   font-size: 20px;
 }
+
+/* ==========================================
+   12. PARTE INFERIOR DEL EVENTO
+========================================== */
 
 .evento-inferior {
   display: flex;
@@ -389,7 +464,9 @@ ion-toolbar ion-button ion-icon {
   font-weight: 600;
 }
 
-/* BOTÓN CREAR */
+/* ==========================================
+   13. BOTÓN CREAR EVENTO
+========================================== */
 
 .boton-crear {
   width: 100%;
@@ -407,10 +484,12 @@ ion-toolbar ion-button ion-icon {
   border-radius: 14px;
 
   background: #2563eb;
-  color: white;
+  color: #ffffff;
 
+  font-family: inherit;
   font-size: 14px;
   font-weight: 700;
+
   cursor: pointer;
 }
 
@@ -422,7 +501,9 @@ ion-toolbar ion-button ion-icon {
   background: #3477fa;
 }
 
-/* CARGANDO */
+/* ==========================================
+   14. CARGANDO
+========================================== */
 
 .estado {
   padding: 45px 20px;
@@ -436,7 +517,7 @@ ion-toolbar ion-button ion-icon {
 
   margin: 0 auto 14px;
 
-  border: 3px solid #28303b;
+  border: 3px solid var(--borde);
   border-top-color: var(--azul);
   border-radius: 50%;
 
@@ -449,7 +530,9 @@ ion-toolbar ion-button ion-icon {
   }
 }
 
-/* SIN EVENTOS */
+/* ==========================================
+   15. SIN EVENTOS Y ERRORES
+========================================== */
 
 .sin-eventos,
 .mensaje-error {
@@ -471,7 +554,7 @@ ion-toolbar ion-button ion-icon {
 .sin-eventos h2,
 .mensaje-error h3 {
   margin: 12px 0 8px;
-  color: white;
+  color: var(--texto);
   font-size: 17px;
 }
 
@@ -486,6 +569,10 @@ ion-toolbar ion-button ion-icon {
 .mensaje-error > ion-icon {
   color: #ff7777;
 }
+
+/* ==========================================
+   16. BOTONES ADICIONALES
+========================================== */
 
 .crear-primer-evento,
 .limpiar-filtros,
@@ -503,10 +590,12 @@ ion-toolbar ion-button ion-icon {
   border-radius: 12px;
 
   background: #2563eb;
-  color: white;
+  color: #ffffff;
 
+  font-family: inherit;
   font-size: 13px;
   font-weight: 600;
+
   cursor: pointer;
 }
 
@@ -514,9 +603,12 @@ ion-toolbar ion-button ion-icon {
   font-size: 19px;
 }
 
-/* RESPONSIVE */
+/* ==========================================
+   17. RESPONSIVE - TABLET Y MÓVIL
+========================================== */
 
 @media (max-width: 600px) {
+
   .eventos-container {
     padding: 17px 12px 90px;
   }
@@ -578,7 +670,97 @@ ion-toolbar ion-button ion-icon {
   }
 }
 
+/* ==========================================
+   18. MODO CLARO
+   CAMBIO AUTOMÁTICO POR TEMA SERVICE
+========================================== */
+
+:host-context(.tema-claro) {
+
+  --fondo: #f4f7fb;
+  --tarjeta: #ffffff;
+  --borde: #e2e8f0;
+  --azul: #2563eb;
+  --texto: #172033;
+  --secundario: #64748b;
+
+  --tarjeta-principal: #eaf1ff;
+  --borde-principal: #bfdbfe;
+  --azul-suave: #eaf1ff;
+  --azul-etiqueta: #1d4ed8;
+  --hover-tarjeta: #f0f6ff;
+  --placeholder: #94a3b8;
+  --estado-anterior: #f1f5f9;
+
+  --ion-background-color: var(--fondo);
+  --ion-text-color: var(--texto);
+
+  color: var(--texto);
+
+  ion-content {
+    --background: var(--fondo);
+    --color: var(--texto);
+  }
+
+  ion-toolbar {
+    --background: #ffffff;
+    --color: var(--texto);
+    border-bottom-color: var(--borde);
+  }
+
+  ion-title {
+    color: var(--texto);
+  }
+
+  ion-toolbar ion-button {
+    --color: var(--texto);
+  }
+
+  .estadistica.principal {
+    background: var(--tarjeta-principal);
+    border-color: var(--borde-principal);
+  }
+
+  .filtros button.activo {
+    background: #dbeafe;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+  }
+
+  .evento-card:hover {
+    background: var(--hover-tarjeta);
+    border-color: #93c5fd;
+  }
+
+  .fecha-cuadro span {
+    color: #3158a8;
+  }
+
+  .estado-etiqueta {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .estado-etiqueta.anterior {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+
+  .mensaje-error > ion-icon {
+    color: #dc2626;
+  }
+
+  .boton-crear:hover {
+    background: #1d4ed8;
+  }
+}
+
+/* ==========================================
+   19. ACCESIBILIDAD
+========================================== */
+
 @media (prefers-reduced-motion: reduce) {
+
   .evento-card,
   .loader {
     transition: none;

@@ -1,19 +1,126 @@
 
+/* ==========================================
+   VOZ APOSTÓLICA
+   CREAR ENSAYO
+   MODO CLARO Y OSCURO
+========================================== */
+
+/* ==========================================
+   1. VARIABLES DEL MODO OSCURO
+========================================== */
+
 :host {
-  --ion-background-color: #070b16;
-  --ion-text-color: #ffffff;
-  color: #ffffff;
+  display: block;
+  height: 100%;
+
+  --fondo: #070b16;
+  --toolbar: #0b1020;
+  --texto: #ffffff;
+  --azul: #8bbcff;
+  --borde: #263653;
+
+  --boton-fondo: #17243a;
+  --icono-verde: #2dd4bf;
+  --icono-fondo: #17314a;
+
+  --secundario: #9cacc5;
+  --tarjeta: #10192c;
+  --icono-tarjeta: #1c2d4b;
+  --etiqueta: #c8d5e9;
+
+  --campo-fondo: #0b1221;
+  --campo-borde: #30405c;
+  --placeholder: #8494ad;
+
+  --fila-borde: #293955;
+  --quitar-fondo: #351b29;
+  --quitar-texto: #ff8d9b;
+
+  --agregar-borde: #42618e;
+
+  --error-borde: #67313b;
+  --error-fondo: #321a25;
+  --error-texto: #ffb4b4;
+
+  --exito-borde: #24533f;
+  --exito-fondo: #102d24;
+  --exito-texto: #9fe6c0;
+
+  --cancelar-fondo: #202b3e;
+  --cancelar-texto: #c4d1e5;
+
+  --ion-background-color: var(--fondo);
+  --ion-text-color: var(--texto);
+
+  color: var(--texto);
 }
 
+/* ==========================================
+   2. VARIABLES DEL MODO CLARO
+========================================== */
+
+:host-context(.tema-claro),
+:host(.tema-claro) {
+  --fondo: #f4f7fb;
+  --toolbar: #ffffff;
+  --texto: #172033;
+  --azul: #2563eb;
+  --borde: #e2e8f0;
+
+  --boton-fondo: #eaf1ff;
+  --icono-verde: #0f766e;
+  --icono-fondo: #dbeafe;
+
+  --secundario: #64748b;
+  --tarjeta: #ffffff;
+  --icono-tarjeta: #eaf1ff;
+  --etiqueta: #334155;
+
+  --campo-fondo: #f8fafc;
+  --campo-borde: #cbd5e1;
+  --placeholder: #94a3b8;
+
+  --fila-borde: #e2e8f0;
+  --quitar-fondo: #fff1f2;
+  --quitar-texto: #be123c;
+
+  --agregar-borde: #93b4e8;
+
+  --error-borde: #fecaca;
+  --error-fondo: #fff1f2;
+  --error-texto: #b91c1c;
+
+  --exito-borde: #a7f3d0;
+  --exito-fondo: #ecfdf5;
+  --exito-texto: #047857;
+
+  --cancelar-fondo: #e2e8f0;
+  --cancelar-texto: #334155;
+
+  --ion-background-color: var(--fondo);
+  --ion-text-color: var(--texto);
+
+  color: var(--texto);
+}
+
+/* ==========================================
+   3. FONDO Y TOOLBAR
+========================================== */
+
 ion-content {
-  --background: #070b16;
-  --color: #ffffff;
+  --background: var(--fondo);
+  --color: var(--texto);
 }
 
 ion-toolbar {
-  --background: #0b1020;
-  --color: #ffffff;
+  --background: var(--toolbar);
+  --color: var(--texto);
+  --border-width: 0;
 }
+
+/* ==========================================
+   4. BARRA SUPERIOR
+========================================== */
 
 .topbar {
   min-height: 66px;
@@ -27,13 +134,17 @@ ion-toolbar {
 .header-icon {
   width: 42px;
   height: 42px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border: none;
   border-radius: 12px;
-  background: #17243a;
-  color: #8bbcff;
+
+  background: var(--boton-fondo);
+  color: var(--azul);
+
   font-size: 22px;
 }
 
@@ -43,28 +154,42 @@ ion-toolbar {
 
 .topbar-title {
   flex: 1;
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
 .topbar-title span {
-  color: #8bbcff;
+  color: var(--azul);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1px;
 }
 
 .topbar-title strong {
-  color: #ffffff;
+  color: var(--texto);
   font-size: 16px;
 }
 
+/* ==========================================
+   5. CONTENEDOR DEL FORMULARIO
+========================================== */
+
 .form-container {
+  width: 100%;
   max-width: 850px;
+
   margin: 0 auto;
   padding: 24px 18px 70px;
+
+  box-sizing: border-box;
 }
+
+/* ==========================================
+   6. INTRODUCCIÓN
+========================================== */
 
 .page-intro {
   margin-bottom: 28px;
@@ -73,18 +198,23 @@ ion-toolbar {
 .intro-icon {
   width: 56px;
   height: 56px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   margin-bottom: 18px;
+
   border-radius: 16px;
-  background: #17314a;
-  color: #2dd4bf;
+
+  background: var(--icono-fondo);
+  color: var(--icono-verde);
+
   font-size: 27px;
 }
 
 .page-intro > span {
-  color: #8bbcff;
+  color: var(--azul);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -92,44 +222,56 @@ ion-toolbar {
 
 .page-intro h1 {
   margin: 9px 0;
-  color: #ffffff;
+
+  color: var(--texto);
   font-size: 30px;
 }
 
 .page-intro p {
-  color: #9cacc5;
+  color: var(--secundario);
   font-size: 14px;
   line-height: 1.7;
 }
 
+/* ==========================================
+   7. TARJETAS DEL FORMULARIO
+========================================== */
+
 .form-card {
   margin-bottom: 22px;
   padding: 24px;
-  border: 1px solid #263653;
+
+  border: 1px solid var(--borde);
   border-radius: 19px;
-  background: #10192c;
+
+  background: var(--tarjeta);
 }
 
 .card-heading {
   display: flex;
   align-items: center;
   gap: 13px;
+
   margin-bottom: 24px;
 }
 
 .card-heading > ion-icon {
   width: 44px;
   height: 44px;
+
   padding: 11px;
   box-sizing: border-box;
+
   border-radius: 12px;
-  background: #1c2d4b;
-  color: #8bbcff;
+
+  background: var(--icono-tarjeta);
+  color: var(--azul);
+
   font-size: 23px;
 }
 
 .card-heading span {
-  color: #8bbcff;
+  color: var(--azul);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -137,9 +279,14 @@ ion-toolbar {
 
 .card-heading h2 {
   margin: 5px 0 0;
-  color: #ffffff;
+
+  color: var(--texto);
   font-size: 19px;
 }
+
+/* ==========================================
+   8. CAMPOS DEL FORMULARIO
+========================================== */
 
 .field {
   margin-bottom: 20px;
@@ -148,7 +295,9 @@ ion-toolbar {
 .field label {
   display: block;
   margin-bottom: 9px;
-  color: #c8d5e9;
+
+  color: var(--etiqueta);
+
   font-size: 13px;
   font-weight: 700;
 }
@@ -156,31 +305,51 @@ ion-toolbar {
 ion-input,
 ion-textarea,
 ion-select {
-  --background: #0b1221;
-  --color: #ffffff;
-  --placeholder-color: #8494ad;
-  --highlight-color: #4da3ff;
-  --border-color: #30405c;
-  color: #ffffff;
+  --background: var(--campo-fondo);
+  --color: var(--texto);
+  --placeholder-color: var(--placeholder);
+  --highlight-color: var(--azul);
+  --border-color: var(--campo-borde);
+
+  color: var(--texto);
 }
+
+/* ==========================================
+   9. DOS COLUMNAS
+========================================== */
 
 .two-columns {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
+
+/* ==========================================
+   10. CAMPOS NATIVOS
+========================================== */
 
 .native-input {
   width: 100%;
   min-height: 52px;
+
   padding: 0 14px;
-  border: 1px solid #30405c;
+
+  border: 1px solid var(--campo-borde);
   border-radius: 10px;
-  background: #0b1221;
-  color: #ffffff;
+
+  background: var(--campo-fondo);
+  color: var(--texto);
+
   font-family: inherit;
   font-size: 14px;
+
+  box-sizing: border-box;
   color-scheme: dark;
+}
+
+:host-context(.tema-claro) .native-input,
+:host(.tema-claro) .native-input {
+  color-scheme: light;
 }
 
 .native-input:focus {
@@ -190,32 +359,45 @@ ion-select {
 
 .helper-text {
   margin: -6px 0 20px;
-  color: #9cacc5;
+
+  color: var(--secundario);
+
   font-size: 13px;
   line-height: 1.6;
 }
+
+/* ==========================================
+   11. FILAS DE CANCIONES
+========================================== */
 
 .song-row {
   display: flex;
   align-items: center;
   gap: 12px;
+
   margin-bottom: 14px;
   padding: 12px;
-  border: 1px solid #293955;
+
+  border: 1px solid var(--fila-borde);
   border-radius: 13px;
-  background: #0b1221;
+
+  background: var(--campo-fondo);
 }
 
 .song-number {
   width: 33px;
   height: 33px;
   flex-shrink: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border-radius: 10px;
-  background: #1c2d4b;
-  color: #8bbcff;
+
+  background: var(--icono-tarjeta);
+  color: var(--azul);
+
   font-size: 13px;
   font-weight: 800;
 }
@@ -225,35 +407,53 @@ ion-select {
   min-width: 0;
 }
 
+/* ==========================================
+   12. QUITAR CANCIÓN
+========================================== */
+
 .remove-button {
   width: 37px;
   height: 37px;
   flex-shrink: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border: none;
   border-radius: 10px;
-  background: #351b29;
-  color: #ff8d9b;
+
+  background: var(--quitar-fondo);
+  color: var(--quitar-texto);
+
   font-size: 19px;
   cursor: pointer;
 }
 
+/* ==========================================
+   13. AGREGAR CANCIÓN
+========================================== */
+
 .add-song-button {
   min-height: 44px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+
   margin-top: 8px;
   padding: 0 17px;
-  border: 1px dashed #42618e;
+
+  border: 1px dashed var(--agregar-borde);
   border-radius: 12px;
-  background: #17243a;
-  color: #8bbcff;
+
+  background: var(--boton-fondo);
+  color: var(--azul);
+
   font-size: 13px;
   font-weight: 700;
+
   cursor: pointer;
 }
 
@@ -261,54 +461,72 @@ ion-select {
   font-size: 20px;
 }
 
+/* ==========================================
+   14. MENSAJES
+========================================== */
+
 .error-message,
 .success-message {
   display: flex;
   align-items: center;
   gap: 10px;
+
   margin-bottom: 18px;
   padding: 15px;
+
   border-radius: 12px;
   font-size: 13px;
 }
 
 .error-message {
-  border: 1px solid #67313b;
-  background: #321a25;
-  color: #ffb4b4;
+  border: 1px solid var(--error-borde);
+
+  background: var(--error-fondo);
+  color: var(--error-texto);
 }
 
 .success-message {
-  border: 1px solid #24533f;
-  background: #102d24;
-  color: #9fe6c0;
+  border: 1px solid var(--exito-borde);
+
+  background: var(--exito-fondo);
+  color: var(--exito-texto);
 }
+
+/* ==========================================
+   15. BOTONES DEL FORMULARIO
+========================================== */
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
+
   margin-top: 25px;
 }
 
 .cancel-button,
 .save-button {
   min-height: 48px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
+
   padding: 0 23px;
+
   border: none;
   border-radius: 12px;
+
   font-size: 14px;
   font-weight: 700;
+
   cursor: pointer;
 }
 
 .cancel-button {
-  background: #202b3e;
-  color: #c4d1e5;
+  background: var(--cancelar-fondo);
+  color: var(--cancelar-texto);
 }
 
 .save-button {
@@ -326,13 +544,53 @@ ion-select {
   cursor: not-allowed;
 }
 
+/* ==========================================
+   16. CARGANDO
+========================================== */
+
 .loading {
   padding: 50px;
-  color: #9cacc5;
+
+  color: var(--secundario);
   text-align: center;
 }
 
+/* ==========================================
+   17. AJUSTES DEL MODO CLARO
+========================================== */
+
+:host-context(.tema-claro) {
+  ion-content {
+    --background: var(--fondo);
+    --color: var(--texto);
+  }
+
+  ion-toolbar {
+    --background: var(--toolbar);
+    --color: var(--texto);
+  }
+
+  .form-card {
+    box-shadow: 0 5px 22px rgba(
+      15, 23, 42, 0.04
+    );
+  }
+
+  .native-input {
+    color-scheme: light;
+  }
+}
+
+/* ==========================================
+   18. RESPONSIVE
+========================================== */
+
 @media (max-width: 600px) {
+  .topbar {
+    padding: 0 12px;
+    gap: 10px;
+  }
+
   .form-container {
     padding: 18px 12px 60px;
   }
@@ -362,5 +620,17 @@ ion-select {
   .cancel-button,
   .save-button {
     width: 100%;
+  }
+}
+
+/* ==========================================
+   19. ACCESIBILIDAD
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .save-button,
+  .cancel-button,
+  .add-song-button {
+    transition: none;
   }
 }

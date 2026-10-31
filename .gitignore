@@ -72,3 +72,5 @@ servidor-notificaciones/.env
 servidor-notificaciones/.env.*
 servidor-notificaciones/node_modules/
 servidor-notificaciones/serviceAccountKey.json
+servidor-notificaciones/.env
+servidor-notificaciones/.env.*

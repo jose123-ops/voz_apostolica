@@ -1,0 +1,97 @@
+
+:host {
+  --menu-height: 68px;
+}
+
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+
+  height: calc(
+    var(--menu-height) + var(--ion-safe-area-bottom, 0px)
+  );
+
+  padding-bottom: var(--ion-safe-area-bottom, 0px);
+
+  background: #0b1020;
+
+  border-top: 1px solid #26304a;
+
+  box-sizing: border-box;
+}
+
+.bottom-nav a {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  text-decoration: none;
+
+  color: #8995b1;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  transition: color 0.2s ease;
+}
+
+.bottom-nav ion-icon {
+  font-size: 23px;
+}
+
+.bottom-nav a.active {
+  color: #879bff;
+}
+
+.bottom-nav a.active ion-icon {
+  color: #879bff;
+}
+
+.bottom-nav a:active {
+  opacity: 0.75;
+}
+
+/* TEMA CLARO */
+
+:host-context(.tema-claro) .bottom-nav {
+  background: #ffffff;
+  border-top-color: #e2e8f0;
+}
+
+:host-context(.tema-claro) .bottom-nav a {
+  color: #64748b;
+}
+
+:host-context(.tema-claro) .bottom-nav a.active,
+:host-context(.tema-claro) .bottom-nav a.active ion-icon {
+  color: #2563eb;
+}
+
+/* TELÉFONOS PEQUEÑOS */
+
+@media (max-width: 380px) {
+
+  .bottom-nav a {
+    font-size: 9px;
+    gap: 4px;
+  }
+
+  .bottom-nav ion-icon {
+    font-size: 21px;
+  }
+
+}

@@ -1,35 +1,146 @@
 
 <ion-header class="ion-no-border">
   <ion-toolbar>
+
     <div class="topbar">
 
+      <!-- NOMBRE DE LA APLICACIÓN -->
       <div class="brand-info">
+
         <span class="app-label">
           VOZ APOSTÓLICA
         </span>
 
         <h1>
-          Bienvenido <span class="wave">👋</span>
+          Bienvenido
+          <span class="wave">👋</span>
         </h1>
 
-        <p>
-          Tu música, en un solo lugar
-        </p>
+        <p>Tu música, en un solo lugar</p>
+
       </div>
 
-      <div class="profile-button">
-        <ion-icon name="person-outline"></ion-icon>
+      <!-- ACCIONES SUPERIORES -->
+      <div class="topbar-actions">
+
+        <!-- NOTIFICACIONES PUSH -->
+        <button
+          type="button"
+          class="theme-button"
+          (click)="activarNotificaciones()"
+          aria-label="Activar notificaciones"
+          title="Activar notificaciones">
+
+          <ion-icon
+            name="notifications-outline">
+          </ion-icon>
+
+        </button>
+
+        <!-- MODO CLARO / OSCURO -->
+        <button
+          type="button"
+          class="theme-button"
+          (click)="cambiarTema()"
+          [attr.aria-label]="temaActual === 'oscuro'
+            ? 'Activar modo claro'
+            : 'Activar modo oscuro'"
+          [title]="temaActual === 'oscuro'
+            ? 'Modo claro'
+            : 'Modo oscuro'">
+
+          <ion-icon
+            [name]="temaActual === 'oscuro'
+              ? 'sunny-outline'
+              : 'moon-outline'">
+          </ion-icon>
+
+        </button>
+
+        <!-- PERFIL -->
+        <button
+          type="button"
+          id="perfil-trigger"
+          class="profile-button"
+          aria-label="Abrir menú de perfil"
+          title="Mi cuenta">
+
+          <ion-icon
+            name="person-outline">
+          </ion-icon>
+
+        </button>
+
       </div>
 
     </div>
+
   </ion-toolbar>
 </ion-header>
+
+<!-- ====================================== -->
+<!-- MENÚ DE PERFIL -->
+<!-- ====================================== -->
+
+<ion-popover
+  trigger="perfil-trigger"
+  triggerAction="click"
+  [dismissOnSelect]="true"
+  side="bottom"
+  alignment="end">
+
+  <ng-template>
+
+    <ion-list lines="none">
+
+      <ion-item>
+
+        <ion-icon
+          name="person-circle-outline"
+          slot="start">
+        </ion-icon>
+
+        <ion-label>
+          Mi cuenta
+        </ion-label>
+
+      </ion-item>
+
+      <!-- CERRAR SESIÓN -->
+      <ion-item
+        button
+        detail="false"
+        (click)="confirmarCerrarSesion()">
+
+        <ion-icon
+          name="log-out-outline"
+          color="danger"
+          slot="start">
+        </ion-icon>
+
+        <ion-label color="danger">
+          Cerrar sesión
+        </ion-label>
+
+      </ion-item>
+
+    </ion-list>
+
+  </ng-template>
+
+</ion-popover>
+
+<!-- ====================================== -->
+<!-- CONTENIDO PRINCIPAL -->
+<!-- ====================================== -->
 
 <ion-content>
 
   <div class="home-container">
 
-    <!-- BUSCADOR -->
+    <!-- ================================== -->
+    <!-- BUSCADOR DE CANCIONES -->
+    <!-- ================================== -->
 
     <div class="search-section">
 
@@ -44,31 +155,36 @@
           type="search"
           placeholder="Buscar canción, artista o categoría..."
           [(ngModel)]="busqueda"
-          aria-label="Buscar canciones"
-        />
+          aria-label="Buscar canciones" />
 
         @if (busqueda) {
+
           <button
             type="button"
             class="clear-search"
             (click)="limpiarBusqueda()"
-            aria-label="Limpiar búsqueda"
-          >
+            aria-label="Limpiar búsqueda">
+
             ×
+
           </button>
+
         }
 
       </div>
 
     </div>
 
-
+    <!-- ================================== -->
     <!-- ACCESOS RÁPIDOS -->
+    <!-- ================================== -->
 
     <section class="quick-section">
 
       <div class="section-header">
+
         <div>
+
           <span class="section-subtitle">
             EXPLORAR
           </span>
@@ -76,108 +192,164 @@
           <h2>
             Accesos rápidos
           </h2>
+
         </div>
+
       </div>
 
       <div class="quick-grid">
 
+        <!-- AGREGAR CANCIÓN: SOLO ADMIN -->
         @if (esAdmin) {
 
           <button
             type="button"
             class="quick-card agregar"
-            (click)="abrirAgregarCancion()"
-          >
+            (click)="abrirAgregarCancion()">
+
             <div class="icon-box">
-              <ion-icon name="add-circle-outline"></ion-icon>
+
+              <ion-icon
+                name="add-circle-outline">
+              </ion-icon>
+
             </div>
 
             <div class="quick-info">
-              <strong>Agregar</strong>
-              <span>Nueva canción</span>
+
+              <strong>
+                Agregar
+              </strong>
+
+              <span>
+                Nueva canción
+              </span>
+
             </div>
+
           </button>
 
         }
 
-
         <!-- CANCIONES -->
-
         <button
           type="button"
           class="quick-card canciones"
-          (click)="abrirCanciones()"
-        >
+          (click)="abrirCanciones()">
+
           <div class="icon-box">
-            <ion-icon name="musical-notes-outline"></ion-icon>
+
+            <ion-icon
+              name="musical-notes-outline">
+            </ion-icon>
+
           </div>
 
           <div class="quick-info">
-            <strong>Canciones</strong>
-            <span>Ver repertorio</span>
+
+            <strong>
+              Canciones
+            </strong>
+
+            <span>
+              Ver repertorio
+            </span>
+
           </div>
+
         </button>
 
-
         <!-- FAVORITOS -->
-
         <button
           type="button"
           class="quick-card favoritos"
-          (click)="abrirFavoritos()"
-        >
+          (click)="abrirFavoritos()">
+
           <div class="icon-box">
-            <ion-icon name="heart-outline"></ion-icon>
+
+            <ion-icon
+              name="heart-outline">
+            </ion-icon>
+
           </div>
 
           <div class="quick-info">
-            <strong>Favoritos</strong>
-            <span>Mis canciones</span>
+
+            <strong>
+              Favoritos
+            </strong>
+
+            <span>
+              Mis canciones
+            </span>
+
           </div>
+
         </button>
 
-
         <!-- EVENTOS -->
-
         <button
           type="button"
           class="quick-card eventos"
-          (click)="abrirEventos()"
-        >
+          (click)="abrirEventos()">
+
           <div class="icon-box">
-            <ion-icon name="calendar-outline"></ion-icon>
+
+            <ion-icon
+              name="calendar-outline">
+            </ion-icon>
+
           </div>
 
           <div class="quick-info">
-            <strong>Eventos</strong>
-            <span>Programas y cultos</span>
+
+            <strong>
+              Eventos
+            </strong>
+
+            <span>
+              Programas y cultos
+            </span>
+
           </div>
+
         </button>
 
-
-        <!-- NUEVO MÓDULO: ENSAYOS -->
-
+        <!-- ENSAYOS -->
         <button
           type="button"
           class="quick-card ensayos"
-          (click)="abrirEnsayos()"
-        >
+          (click)="abrirEnsayos()">
+
           <div class="icon-box">
-            <ion-icon name="people-outline"></ion-icon>
+
+            <ion-icon
+              name="people-outline">
+            </ion-icon>
+
           </div>
 
           <div class="quick-info">
-            <strong>Ensayos</strong>
-            <span>Prácticas musicales</span>
+
+            <strong>
+              Ensayos
+            </strong>
+
+            <span>
+              Prácticas musicales
+            </span>
+
           </div>
+
         </button>
 
       </div>
 
     </section>
 
-
+    <!-- ================================== -->
     <!-- ÚLTIMAS CANCIONES -->
+    <!-- ================================== -->
 
     <section class="songs-section">
 
@@ -190,75 +362,92 @@
           </span>
 
           <h2>
-            {{ busqueda ? 'Resultados de búsqueda' : 'Últimas canciones' }}
+            {{
+              busqueda
+                ? 'Resultados de búsqueda'
+                : 'Últimas canciones'
+            }}
           </h2>
 
           @if (!cargando && !error) {
 
             <p class="section-description">
+
               {{
                 busqueda
-                  ? cancionesFiltradas.length + ' canciones encontradas'
+                  ? cancionesFiltradas.length
+                    + ' canciones encontradas'
                   : 'Las 3 canciones más recientes'
               }}
+
             </p>
 
           }
 
         </div>
 
-
+        <!-- VER TODAS -->
         <button
           type="button"
           class="see-all"
-          (click)="abrirCanciones()"
-        >
+          (click)="abrirCanciones()">
+
           Ver todas
-          <ion-icon name="arrow-forward-outline"></ion-icon>
+
+          <ion-icon
+            name="arrow-forward-outline">
+          </ion-icon>
+
         </button>
 
       </div>
 
-
       <!-- CARGANDO -->
-
       @if (cargando) {
 
         <div class="loading">
+
           <div class="loader"></div>
-          <p>Cargando canciones...</p>
+
+          <p>
+            Cargando canciones...
+          </p>
+
         </div>
 
       }
 
-
       <!-- ERROR -->
-
       @if (!cargando && error) {
 
         <div class="empty">
 
-          <ion-icon name="alert-circle-outline"></ion-icon>
+          <ion-icon
+            name="alert-circle-outline">
+          </ion-icon>
 
-          <h3>No se pudo cargar</h3>
+          <h3>
+            No se pudo cargar
+          </h3>
 
-          <p>{{ error }}</p>
+          <p>
+            {{ error }}
+          </p>
 
           <button
             type="button"
             class="retry-button"
-            (click)="cargarCanciones()"
-          >
+            (click)="cargarCanciones()">
+
             Reintentar
+
           </button>
 
         </div>
 
       }
 
-
-      <!-- LISTADO DE CANCIONES -->
-
+      <!-- LISTA DE CANCIONES -->
       @if (!cargando && !error) {
 
         <div class="songs-list">
@@ -271,13 +460,18 @@
             <button
               type="button"
               class="song-card"
-              (click)="abrirCancion(cancion)"
-            >
+              (click)="abrirCancion(cancion)">
 
+              <!-- ÍCONO -->
               <div class="song-icon">
-                <ion-icon name="musical-notes-outline"></ion-icon>
+
+                <ion-icon
+                  name="musical-notes-outline">
+                </ion-icon>
+
               </div>
 
+              <!-- INFORMACIÓN -->
               <div class="song-info">
 
                 <h3>
@@ -291,42 +485,57 @@
                 @if (cancion.categoria) {
 
                   <span class="category">
+
                     {{ cancion.categoria }}
+
                   </span>
 
                 }
 
               </div>
 
+              <!-- BOTÓN ABRIR -->
               <span class="play-button">
-                <ion-icon name="play"></ion-icon>
+
+                <ion-icon
+                  name="play">
+                </ion-icon>
+
               </span>
 
             </button>
 
           }
 
-
-          <!-- SIN CANCIONES -->
-
+          <!-- SIN RESULTADOS -->
           @if (cancionesFiltradas.length === 0) {
 
             <div class="empty">
 
               <ion-icon
-                [name]="busqueda ? 'search-outline' : 'musical-notes-outline'">
+                [name]="busqueda
+                  ? 'search-outline'
+                  : 'musical-notes-outline'">
               </ion-icon>
 
               <h3>
-                {{ busqueda ? 'Sin resultados' : 'No hay canciones' }}
+
+                {{
+                  busqueda
+                    ? 'Sin resultados'
+                    : 'No hay canciones'
+                }}
+
               </h3>
 
               <p>
+
                 {{
                   busqueda
                     ? 'No encontramos canciones que coincidan con tu búsqueda.'
                     : 'Todavía no hay canciones registradas.'
                 }}
+
               </p>
 
               @if (busqueda) {
@@ -334,9 +543,10 @@
                 <button
                   type="button"
                   class="retry-button"
-                  (click)="limpiarBusqueda()"
-                >
+                  (click)="limpiarBusqueda()">
+
                   Limpiar búsqueda
+
                 </button>
 
               }
@@ -355,50 +565,76 @@
 
 </ion-content>
 
-
+<!-- ====================================== -->
 <!-- NAVEGACIÓN INFERIOR -->
+<!-- ====================================== -->
 
 <ion-footer class="ion-no-border">
 
   <nav
     class="bottom-nav"
-    aria-label="Navegación principal"
-  >
+    aria-label="Navegación principal">
 
+    <!-- INICIO -->
     <button
       type="button"
       class="nav-item active"
-      aria-current="page"
-    >
+      aria-current="page">
+
       <ion-icon name="home"></ion-icon>
-      <span>Inicio</span>
+
+      <span>
+        Inicio
+      </span>
+
     </button>
 
+    <!-- CANCIONES -->
     <button
       type="button"
       class="nav-item"
-      (click)="abrirCanciones()"
-    >
-      <ion-icon name="musical-notes-outline"></ion-icon>
-      <span>Canciones</span>
+      (click)="abrirCanciones()">
+
+      <ion-icon
+        name="musical-notes-outline">
+      </ion-icon>
+
+      <span>
+        Canciones
+      </span>
+
     </button>
 
+    <!-- FAVORITOS -->
     <button
       type="button"
       class="nav-item"
-      (click)="abrirFavoritos()"
-    >
-      <ion-icon name="heart-outline"></ion-icon>
-      <span>Favoritos</span>
+      (click)="abrirFavoritos()">
+
+      <ion-icon
+        name="heart-outline">
+      </ion-icon>
+
+      <span>
+        Favoritos
+      </span>
+
     </button>
 
+    <!-- EVENTOS -->
     <button
       type="button"
       class="nav-item"
-      (click)="abrirEventos()"
-    >
-      <ion-icon name="calendar-outline"></ion-icon>
-      <span>Eventos</span>
+      (click)="abrirEventos()">
+
+      <ion-icon
+        name="calendar-outline">
+      </ion-icon>
+
+      <span>
+        Eventos
+      </span>
+
     </button>
 
   </nav>

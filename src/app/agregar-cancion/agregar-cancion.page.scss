@@ -1,14 +1,128 @@
 
-ion-content {
-  --background: #070b16;
+/* ==========================================
+   VOZ APOSTÓLICA
+   AGREGAR CANCIÓN
+   MODO OSCURO Y CLARO
+========================================== */
+
+/* ==========================================
+   1. VARIABLES DEL MODO OSCURO
+========================================== */
+
+:host {
+  display: block;
+  min-height: 100%;
+
+  --fondo: #070b16;
+  --toolbar: #0b1020;
+  --texto: #ffffff;
+  --texto-secundario: #8d96aa;
+  --texto-superior: #7280a3;
+
+  --boton-volver-fondo: #11182b;
+  --boton-volver-borde: #202a42;
+
+  --intro-icono-fondo: #18244d;
+  --intro-icono-color: #8b9cff;
+
+  --seccion-fondo: #0d1425;
+  --seccion-borde: #1b263d;
+
+  --numero-fondo: #1b2a5a;
+  --numero-texto: #91a1ff;
+  --seccion-etiqueta: #657392;
+
+  --label: #cbd2e1;
+  --ayuda: #65718a;
+
+  --campo-fondo: #11192c;
+  --campo-borde: #27334e;
+  --placeholder: #5e6a83;
+  --resaltado: #7184ff;
+
+  --exito-fondo: #10291e;
+  --exito-borde: #1c5c3c;
+  --exito-texto: #6ee7a2;
+
+  --error-fondo: #30151b;
+  --error-borde: #6d2834;
+  --error-texto: #ff8997;
+
+  --cancelar-texto: #7d879d;
+
+  --ion-background-color: var(--fondo);
+  --ion-text-color: var(--texto);
+
+  color: var(--texto);
 }
 
+/* ==========================================
+   2. VARIABLES DEL MODO CLARO
+========================================== */
+
+:host-context(.tema-claro),
+:host(.tema-claro) {
+  --fondo: #f4f7fb;
+  --toolbar: #ffffff;
+  --texto: #172033;
+  --texto-secundario: #64748b;
+  --texto-superior: #64748b;
+
+  --boton-volver-fondo: #eaf1ff;
+  --boton-volver-borde: #dbe4f0;
+
+  --intro-icono-fondo: #e0e7ff;
+  --intro-icono-color: #4f46e5;
+
+  --seccion-fondo: #ffffff;
+  --seccion-borde: #e2e8f0;
+
+  --numero-fondo: #e0e7ff;
+  --numero-texto: #4338ca;
+  --seccion-etiqueta: #64748b;
+
+  --label: #334155;
+  --ayuda: #64748b;
+
+  --campo-fondo: #f8fafc;
+  --campo-borde: #cbd5e1;
+  --placeholder: #94a3b8;
+  --resaltado: #4f46e5;
+
+  --exito-fondo: #ecfdf5;
+  --exito-borde: #a7f3d0;
+  --exito-texto: #047857;
+
+  --error-fondo: #fff1f2;
+  --error-borde: #fecaca;
+  --error-texto: #b91c1c;
+
+  --cancelar-texto: #475569;
+
+  --ion-background-color: var(--fondo);
+  --ion-text-color: var(--texto);
+
+  color: var(--texto);
+}
+
+/* ==========================================
+   3. FONDO Y TOOLBAR
+========================================== */
+
+ion-content {
+  --background: var(--fondo);
+  --color: var(--texto);
+}
 
 ion-toolbar {
-  --background: #0b1020;
+  --background: var(--toolbar);
+  --color: var(--texto);
   --border-width: 0;
 }
 
+/* ==========================================
+   4. BARRA SUPERIOR
+========================================== */
 
 .topbar {
   display: flex;
@@ -16,7 +130,6 @@ ion-toolbar {
   gap: 14px;
   padding: 8px 18px;
 }
-
 
 .back-button {
   width: 42px;
@@ -26,379 +139,694 @@ ion-toolbar {
   align-items: center;
   justify-content: center;
 
-  border: 1px solid #202a42;
+  border: 1px solid var(--boton-volver-borde);
   border-radius: 12px;
 
-  background: #11182b;
-  color: #ffffff;
+  background: var(--boton-volver-fondo);
+  color: var(--texto);
 
   cursor: pointer;
 }
-
 
 .back-button ion-icon {
   font-size: 21px;
 }
 
-
 .topbar-title {
   flex: 1;
+  min-width: 0;
 }
-
 
 .topbar-title span {
   display: block;
 
-  color: #7280a3;
+  color: var(--texto-superior);
 
   font-size: 10px;
   font-weight: 700;
-
   letter-spacing: 1.5px;
 }
-
 
 .topbar-title h1 {
   margin: 2px 0 0;
 
-  color: #ffffff;
+  color: var(--texto);
 
   font-size: 20px;
   font-weight: 700;
 }
 
-
-/* ========================= */
-/* CONTENEDOR */
-/* ========================= */
+/* ==========================================
+   5. CONTENEDOR
+========================================== */
 
 .form-container {
   width: 100%;
   max-width: 850px;
 
   margin: 0 auto;
-
   padding: 30px 20px 50px;
+
+  box-sizing: border-box;
 }
 
-
-/* ========================= */
-/* INTRO */
-/* ========================= */
+/* ==========================================
+   6. INTRODUCCIÓN
+========================================== */
 
 .page-intro {
   display: flex;
-
   align-items: center;
-
   gap: 16px;
 
   margin-bottom: 30px;
 }
 
-
 .intro-icon {
   width: 58px;
   height: 58px;
-
   flex-shrink: 0;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
   border-radius: 16px;
 
-  background: #18244d;
-
-  color: #8b9cff;
+  background: var(--intro-icono-fondo);
+  color: var(--intro-icono-color);
 }
-
 
 .intro-icon ion-icon {
   font-size: 28px;
 }
 
-
 .page-intro h2 {
   margin: 0 0 5px;
 
-  color: #ffffff;
-
+  color: var(--texto);
   font-size: 24px;
 }
-
 
 .page-intro p {
   margin: 0;
 
-  color: #8d96aa;
+  color: var(--texto-secundario);
 
   font-size: 14px;
-
   line-height: 1.5;
 }
 
-
-/* ========================= */
-/* MENSAJES */
-/* ========================= */
+/* ==========================================
+   7. MENSAJES
+========================================== */
 
 .success-message,
 .error-message {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
 
   padding: 14px 16px;
-
   margin-bottom: 22px;
 
   border-radius: 12px;
-
   font-size: 14px;
 }
 
-
 .success-message {
-  background: #10291e;
-
-  border: 1px solid #1c5c3c;
-
-  color: #6ee7a2;
+  background: var(--exito-fondo);
+  border: 1px solid var(--exito-borde);
+  color: var(--exito-texto);
 }
-
 
 .error-message {
-  background: #30151b;
-
-  border: 1px solid #6d2834;
-
-  color: #ff8997;
+  background: var(--error-fondo);
+  border: 1px solid var(--error-borde);
+  color: var(--error-texto);
 }
-
 
 .success-message ion-icon,
 .error-message ion-icon {
+  flex-shrink: 0;
   font-size: 21px;
 }
 
-
-/* ========================= */
-/* SECCIONES */
-/* ========================= */
+/* ==========================================
+   8. SECCIONES DEL FORMULARIO
+========================================== */
 
 .form-section {
   margin-bottom: 25px;
-
   padding: 24px;
 
-  background: #0d1425;
+  background: var(--seccion-fondo);
 
-  border: 1px solid #1b263d;
-
+  border: 1px solid var(--seccion-borde);
   border-radius: 18px;
 }
 
-
 .section-title {
   display: flex;
-
   align-items: center;
-
   gap: 13px;
 
   margin-bottom: 25px;
 }
 
-
 .section-number {
   width: 34px;
   height: 34px;
+  flex-shrink: 0;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
   border-radius: 10px;
 
-  background: #1b2a5a;
-
-  color: #91a1ff;
+  background: var(--numero-fondo);
+  color: var(--numero-texto);
 
   font-size: 14px;
-
   font-weight: 700;
 }
-
 
 .section-label {
   display: block;
 
-  color: #657392;
+  color: var(--seccion-etiqueta);
 
   font-size: 9px;
-
   font-weight: 700;
-
   letter-spacing: 1.5px;
 }
-
 
 .section-title h3 {
   margin: 2px 0 0;
 
-  color: #ffffff;
-
+  color: var(--texto);
   font-size: 18px;
 }
 
-
-/* ========================= */
-/* CAMPOS */
-/* ========================= */
+/* ==========================================
+   9. CAMPOS
+========================================== */
 
 .field {
   margin-bottom: 22px;
 }
 
-
 .field:last-child {
   margin-bottom: 0;
 }
 
-
 .field label {
   display: block;
-
   margin-bottom: 8px;
 
-  color: #cbd2e1;
+  color: var(--label);
 
   font-size: 13px;
-
   font-weight: 600;
 }
 
-
 .field small {
   display: block;
-
   margin-top: 7px;
 
-  color: #65718a;
+  color: var(--ayuda);
 
   font-size: 11px;
-
   line-height: 1.5;
 }
 
-
-/* ========================= */
-/* ION INPUT */
-/* ========================= */
+/* ==========================================
+   10. COMPONENTES IONIC
+========================================== */
 
 ion-input,
 ion-textarea,
 ion-select {
-  --background: #11192c;
-
-  --border-color: #27334e;
-
+  --background: var(--campo-fondo);
+  --border-color: var(--campo-borde);
   --border-radius: 12px;
 
-  --color: #ffffff;
-
-  --placeholder-color: #5e6a83;
-
-  --highlight-color: #7184ff;
+  --color: var(--texto);
+  --placeholder-color: var(--placeholder);
+  --highlight-color: var(--resaltado);
 
   --padding-start: 14px;
-
   --padding-end: 14px;
-}
 
+  color: var(--texto);
+}
 
 ion-textarea {
   --padding-top: 14px;
   --padding-bottom: 14px;
 }
 
-
-/* ========================= */
-/* BOTONES */
-/* ========================= */
+/* ==========================================
+   11. BOTONES
+========================================== */
 
 .form-actions {
   margin-top: 10px;
 }
 
-
 .save-button {
   --background: #536dfe;
-
   --background-hover: #627aff;
-
+  --background-activated: #4058e8;
   --color: #ffffff;
-
   --border-radius: 13px;
 
   height: 52px;
 
   font-size: 15px;
-
   font-weight: 700;
 }
-
 
 .save-button ion-icon {
   margin-right: 8px;
 }
 
-
 .cancel-button {
-  --color: #7d879d;
-
+  --color: var(--cancelar-texto);
   margin-top: 5px;
 }
 
+/* ==========================================
+   12. AJUSTES MODO CLARO
+========================================== */
 
-/* ========================= */
-/* MÓVIL */
-/* ========================= */
+:host-context(.tema-claro),
+:host(.tema-claro) {
+  ion-content {
+    --background: var(--fondo);
+    --color: var(--texto);
+  }
+
+  ion-toolbar {
+    --background: var(--toolbar);
+    --color: var(--texto);
+  }
+
+  .form-section {
+    box-shadow: 0 5px 22px rgba(
+      15, 23, 42, 0.04
+    );
+  }
+
+  ion-input,
+  ion-textarea,
+  ion-select {
+    --background: var(--campo-fondo);
+    --color: var(--texto);
+    --placeholder-color: var(--placeholder);
+    --border-color: var(--campo-borde);
+  }
+}
+
+/* ==========================================
+   13. RESPONSIVE MÓVIL
+========================================== */
 
 @media (max-width: 600px) {
-
   .form-container {
     padding: 22px 14px 40px;
   }
 
-
   .form-section {
     padding: 18px;
-
     border-radius: 15px;
   }
-
 
   .page-intro h2 {
     font-size: 21px;
   }
 
-
   .page-intro p {
     font-size: 13px;
   }
-
 
   .topbar {
     padding-left: 12px;
     padding-right: 12px;
   }
-
 }
 
+/* ==========================================
+   14. ACCESIBILIDAD
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .save-button,
+  .cancel-button {
+    transition: none;
+  }
+}
+
+
+/* ==========================================
+   BUSCADOR DE LETRAS
+   MODO OSCURO Y CLARO
+========================================== */
+
+:host {
+  --buscador-fondo: #101a30;
+  --buscador-borde: #263653;
+  --buscador-item: #17243a;
+  --buscador-texto: #ffffff;
+  --buscador-secundario: #9cacc5;
+  --buscador-azul: #8b9cff;
+}
+
+:host-context(.tema-claro),
+:host(.tema-claro) {
+  --buscador-fondo: #f8fafc;
+  --buscador-borde: #dbe4f0;
+  --buscador-item: #ffffff;
+  --buscador-texto: #172033;
+  --buscador-secundario: #64748b;
+  --buscador-azul: #4f46e5;
+}
+
+.lyrics-search-toggle {
+  width: 100%;
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin-bottom: 20px;
+  padding: 12px;
+
+  border: 1px dashed var(--buscador-azul);
+  border-radius: 12px;
+
+  background: var(--buscador-fondo);
+  color: var(--buscador-azul);
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.lyrics-search-toggle ion-icon {
+  font-size: 20px;
+}
+
+.lyrics-search-panel {
+  padding: 18px;
+  margin-bottom: 22px;
+
+  border: 1px solid var(--buscador-borde);
+  border-radius: 16px;
+
+  background: var(--buscador-fondo);
+}
+
+.lyrics-search-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.lyrics-search-header > ion-icon {
+  color: var(--buscador-azul);
+  font-size: 25px;
+  flex-shrink: 0;
+}
+
+.lyrics-search-header strong {
+  color: var(--buscador-texto);
+  font-size: 15px;
+}
+
+.lyrics-search-header p {
+  margin: 6px 0 0;
+  color: var(--buscador-secundario);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.lyrics-results {
+  margin-top: 22px;
+}
+
+.lyrics-results h4 {
+  margin: 0 0 12px;
+  color: var(--buscador-texto);
+  font-size: 14px;
+}
+
+.lyrics-result {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 9px;
+  padding: 13px;
+
+  border: 1px solid var(--buscador-borde);
+  border-radius: 11px;
+
+  background: var(--buscador-item);
+  color: var(--buscador-texto);
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.lyrics-result-info {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.lyrics-result-info strong {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.lyrics-result-info span {
+  color: var(--buscador-secundario);
+  font-size: 12px;
+}
+
+.lyrics-result > ion-icon {
+  color: var(--buscador-azul);
+  font-size: 19px;
+}
+
+.lyrics-preview {
+  margin-top: 20px;
+  padding: 16px;
+
+  border: 1px solid var(--buscador-borde);
+  border-radius: 12px;
+
+  background: var(--buscador-item);
+}
+
+.lyrics-preview-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-bottom: 16px;
+}
+
+.lyrics-preview-header strong {
+  color: var(--buscador-texto);
+  font-size: 15px;
+}
+
+.lyrics-preview-header p {
+  margin: 5px 0 0;
+  color: var(--buscador-secundario);
+  font-size: 12px;
+}
+
+.lyrics-close {
+  width: 30px;
+  height: 30px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: var(--buscador-fondo);
+  color: var(--buscador-texto);
+
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.lyrics-preview-text {
+  max-height: 350px;
+  overflow-y: auto;
+
+  padding: 15px;
+
+  border: 1px solid var(--buscador-borde);
+  border-radius: 10px;
+
+  background: var(--buscador-fondo);
+  color: var(--buscador-texto);
+
+  font-size: 14px;
+  line-height: 1.9;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.lyrics-notice {
+  margin: 12px 0 0;
+
+  color: var(--buscador-secundario);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.lyrics-empty {
+  margin-top: 16px;
+  padding: 16px;
+
+  border: 1px solid var(--buscador-borde);
+  border-radius: 10px;
+
+  color: var(--buscador-secundario);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.lyrics-manual-field {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .lyrics-search-panel {
+    padding: 13px;
+  }
+
+  .lyrics-preview {
+    padding: 12px;
+  }
+
+  .lyrics-preview-text {
+    padding: 12px;
+  }
+}
+
+.use-lyrics-button {
+  margin-top: 16px;
+  min-height: 48px;
+
+  --background: #4f46e5;
+  --background-hover: #4338ca;
+  --color: #ffffff;
+  --border-radius: 12px;
+
+  font-weight: 700;
+  text-transform: none;
+}
+
+
+/* =========================================
+   TONO MUSICAL
+========================================= */
+
+.selected-key {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 16px 20px;
+
+  border: 1px solid var(--ion-color-primary);
+  border-radius: 14px;
+
+  background: var(--ion-item-background, var(--ion-background-color));
+
+  color: var(--ion-text-color);
+}
+
+.selected-key ion-icon {
+  font-size: 25px;
+  color: var(--ion-color-primary);
+}
+
+.selected-key strong {
+  font-size: 25px;
+  font-weight: 800;
+}
+
+/* BOTÓN USAR LETRA */
+
+.use-lyrics-button {
+  margin-top: 16px;
+  min-height: 48px;
+
+  --background: #4f46e5;
+  --color: #ffffff;
+  --border-radius: 12px;
+
+  font-weight: 700;
+  text-transform: none;
+}
+
+#buscador-letras,
+#seccion-letra {
+  scroll-margin-top: 20px;
+}
+
+#buscador-letras {
+  ion-input {
+    margin-bottom: 10px;
+  }
+}
+
+#seccion-letra {
+  .lyrics-manual-field ion-textarea {
+    width: 100%;
+  }
+}
+
+.lyrics-preview-text {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  font-size: 15px;
+  padding: 16px;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.lyrics-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lyrics-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.use-lyrics-button {
+  margin-top: 12px;
+}
